@@ -1,33 +1,39 @@
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Schedule {
 
     private GregorianCalendar today = new GregorianCalendar();
-    private ArrayList<String> dayInWeek;
+    private static ArrayList<String> dayInWeek;
 
-    private static final char AVAILABLE = '0';
+    private static final char AVAILABLE = 'O';
     private static final char UNAVAILABLE = 'X';
 
     private ArrayList<ArrayList<Character>> symbols = new ArrayList<>();
-    private HashMap<Customer, HashMap<Integer, Integer>> recordPosition = new HashMap<>();
+    private HashMap<Reservation, HashMap<Integer, Integer>> recordPosition = new HashMap<>();
 
 
     Schedule() {
         this.defaultSlot();
-        this.setDayInWeek(dayInWeekCalc(today.get(Calendar.DAY_OF_WEEK)));// monday - sunday sorting
-
-        setSlotStatus(2, 3, UNAVAILABLE);
-        setSlotStatus(5, 1, UNAVAILABLE);
+        setDayInWeek(dayInWeekCalc(today.get(Calendar.DAY_OF_WEEK)));// monday - sunday sorting
     }
 
     // Getter & Setter
-    public HashMap<Customer, HashMap<Integer, Integer>> getRecordPosition() {
+    public static char getAvailable() {
+        return AVAILABLE;
+    }
+
+    public static char getUnavailable() {
+        return UNAVAILABLE;
+    }
+
+    public HashMap<Reservation, HashMap<Integer, Integer>> getRecordPosition() {
         return recordPosition;
     }
 
-    public void setRecordPosition(HashMap<Customer, HashMap<Integer, Integer>> recordPosition) {
+    public void setRecordPosition(HashMap<Reservation, HashMap<Integer, Integer>> recordPosition) {
         this.recordPosition = recordPosition;
     }
 
@@ -39,12 +45,12 @@ public class Schedule {
         this.today = today;
     }
 
-    public ArrayList<String> getDayInWeek() {
+    public static ArrayList<String> getDayInWeek() {
         return dayInWeek;
     }
 
-    public void setDayInWeek(ArrayList<String> dayInWeek) {
-        this.dayInWeek = dayInWeek;
+    public static void setDayInWeek(ArrayList<String> dayInWeek) {
+        Schedule.dayInWeek = dayInWeek;
     }
 
     public ArrayList<ArrayList<Character>> getSymbols() {
@@ -56,14 +62,14 @@ public class Schedule {
     }
 
     // Methods
-
-    public void addToSchedule(int x, int y, Customer obj) {
+    public void addToSchedule(int x, int y, Reservation obj) {
         recordPosition.put(obj, new HashMap<>());
         recordPosition.get(obj).put(x,y);
         setSlotStatus(x, y, UNAVAILABLE);
     }
 
-    public void removeFromSchedule(Customer obj) {
+    // Remove reservation from schedule
+    public void removeFromSchedule(Reservation obj) {
         HashMap<Integer, Integer> position = recordPosition.get(obj);
         int x = (int) position.keySet().toArray()[0];
         int y = (int) position.values().toArray()[0];
@@ -71,25 +77,39 @@ public class Schedule {
         recordPosition.remove(obj);
     }
 
-    public String futureDate(int count) {
+    // check if reservation is in the employee record
+    public boolean getReservation(Reservation reservation) {
+        for (var obj : recordPosition.entrySet()) {
+            if (reservation.equals(obj.getKey())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static String futureDate(int count) {
         return LocalDate.now().plusDays(count).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
+
+    public static LocalDateTime futureDateLocal(int count) {
+        return LocalDateTime.now().plusDays(count);
     }
 
     // Shorten obtainSchedules method code
     public String slotStatusByRow(int index) {
-        StringBuilder str = new StringBuilder("+  ");
+        StringBuilder str = new StringBuilder("| ");
         str.append(dayInWeek.get(index)).append(" ");
         str.append(futureDate(index+1));
-        str.append(" +    ");
+        str.append("  |     ");
 
         for (int i = 0; i < 4; i++ ) {
             str.append(getSlotStatus(index, i));
             // last part in row
             if (i != 3) {
-                str.append("     +    ");
+                str.append("      |     ");
             }
             else {
-                str.append("     +");
+                str.append("      |   ");
             }
         }
         return str.toString();
@@ -97,24 +117,24 @@ public class Schedule {
 
     public String[] obtainSchedules() {
         return new String[] {
-                "---------------------------------------------------------------",
-                "+                 +  Ses1    +  Ses2    +  Ses3    +  Ses4    +",
-                "+                 + 9am-11am + 11am-1pm + 2pm-4pm  + 4pm-6pm  +",
-                "---------------------------------------------------------------" + "\t\t\tLegends",
+                "+---------------------------------------------------------------------+",
+                "|                 |    Ses1    |    Ses2    |    Ses3    |    Ses4    |",
+                "|                 |  9am-11am  |  11am-1pm  |   2pm-4pm  |   4pm-6pm  |",
+                "+---------------------------------------------------------------------+" + "\t\t\tLegends",
                 slotStatusByRow(0),
-                "---------------------------------------------------------------" + "\t\t\t--------",
+                "|---------------------------------------------------------------------|" + "\t\t\t--------",
                 slotStatusByRow(1),
-                "---------------------------------------------------------------" + "\t\t\tAvailable -> 'O'",
+                "|---------------------------------------------------------------------|" + "\t\t\tAvailable -> 'O'",
                 slotStatusByRow(2),
-                "---------------------------------------------------------------" + "\t\t\tUnavailable -> 'X'",
+                "|---------------------------------------------------------------------|" + "\t\t\tUnavailable -> 'X'",
                 slotStatusByRow(3),
-                "---------------------------------------------------------------",
+                "|---------------------------------------------------------------------|",
                 slotStatusByRow(4),
-                "---------------------------------------------------------------",
+                "|---------------------------------------------------------------------|",
                 slotStatusByRow(5),
-                "---------------------------------------------------------------",
+                "|---------------------------------------------------------------------|",
                 slotStatusByRow(6),
-                "---------------------------------------------------------------"
+                "+---------------------------------------------------------------------+"
         };
     }
 
@@ -147,6 +167,13 @@ public class Schedule {
         }
     }
 
+    // prints out schedule
+    public void displaySchedule() {
+        for (String line : this.obtainSchedules()) {
+            System.out.println(line);
+        }
+    }
+
     // Modify slot status
     public void setSlotStatus(int x, int y, char symbol) {
         symbols.get(x).set(y, symbol);
@@ -156,5 +183,4 @@ public class Schedule {
     public char getSlotStatus(int x, int y) {
         return symbols.get(x).get(y);
     }
-
 }

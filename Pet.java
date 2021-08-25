@@ -9,14 +9,9 @@ abstract class Pet {
     private static int currentPetCount;
 
     // Constructor
-    protected Pet() {
-        // no-args
-    }
-
-    protected Pet(int age, char gender, String ID, String color, Level aggressive, Size size) {
+    protected Pet(int age, char gender, String color, Level aggressive, Size size) {
         this.age = age;
         this.gender = gender;
-        this.ID = ID;
         this.color = color;
         this.aggressive = aggressive;
         this.size = size;
@@ -88,6 +83,9 @@ abstract class Pet {
     public static void setCurrentPetCount(int currentPetCount) {
         Pet.currentPetCount = currentPetCount;
     }
-    // Methods
 
+    // Methods
+    public void displayPet() {
+        System.out.println(this);
+    }
 }

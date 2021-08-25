@@ -1,18 +1,14 @@
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 
-public class Customer extends Person {
+public class Customer extends Person implements Displayable, Identifiable {
 
     private LocalDateTime regDate;
-    private ArrayList<Pet> pets;
-    private ArrayList<Reservation> reservation;
-    private ArrayList<Reservation> reservationHistory;
-    private ArrayList<Billing> bill;
-    private ArrayList<Billing> billHistory;
-    private ArrayList<Card> cards;
+    private ArrayList<Pet> pets = new ArrayList<>();
+    private ArrayList<Reservation> reservation = new ArrayList<>();
+    private Billing bill;
+    private ArrayList<Billing> billHistory = new ArrayList<>();
+    private ArrayList<Card> cards = new ArrayList<>();
     private static int currentCustCount;
     private static int totalCustCount;
 
@@ -20,27 +16,19 @@ public class Customer extends Person {
     Customer() {
         // no-args
         this.regDate = LocalDateTime.now();
+        this.age = (LocalDateTime.now().getYear() - dob.getYear());
         currentCustCount++;
         totalCustCount++;
+        this.id = generateID(currentCustCount);;
     }
 
-    Customer(ArrayList<Pet> pets,
-                    ArrayList<Reservation> reservation,
-                    ArrayList<Reservation> reservationHistory,
-                    ArrayList<Billing> bill,
-                    ArrayList<Billing> billHistory,
-                    ArrayList<Card> cards,
-                    String firstName, String lastName, int age, String tel, char gender, String id, LocalDateTime dob, Address address, String email) {
-        super(firstName, lastName, age, tel, gender, id, dob, address, email);
-        this.pets = pets;
-        this.reservation = reservation;
-        this.reservationHistory = reservationHistory;
-        this.bill = bill;
-        this.billHistory = billHistory;
-        this.cards = cards;
+    Customer(String firstName, String lastName, String tel, char gender, LocalDateTime dob, Address address, String email, String username, String password) {
+        super(firstName, lastName, tel, gender, dob, address, email, username, password);
         this.regDate = LocalDateTime.now();
+        this.age = (LocalDateTime.now().getYear() - dob.getYear());
         currentCustCount++;
         totalCustCount++;
+        this.id = generateID(currentCustCount);;
     }
 
     // Getter & Setter
@@ -68,19 +56,11 @@ public class Customer extends Person {
         this.reservation = reservation;
     }
 
-    public ArrayList<Reservation> getReservationHistory() {
-        return reservationHistory;
-    }
-
-    public void setReservationHistory(ArrayList<Reservation> reservationHistory) {
-        this.reservationHistory = reservationHistory;
-    }
-
-    public ArrayList<Billing> getBill() {
+    public Billing getBill() {
         return bill;
     }
 
-    public void setBill(ArrayList<Billing> bill) {
+    public void setBill(Billing bill) {
         this.bill = bill;
     }
 
@@ -117,5 +97,104 @@ public class Customer extends Person {
     }
 
     // Methods
+    public void addPet(Pet pet) {
+        this.getPets().add(pet);
+    }
 
+    public void addReservation(Reservation reservation) {
+        this.getReservation().add(reservation);
+    }
+
+    public void addCard(Card card) {
+        this.getCards().add(card);
+    }
+
+    public void removePet(Pet pet) {
+        this.getPets().remove(pet);
+    }
+
+    public void removeReservation(Reservation reservation) {
+        this.getReservation().remove(reservation);
+    }
+
+    public void removeCard(Card card) {
+        this.getCards().remove(card);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Customer) {
+            return ((Customer) o).getUsername().equals(this.username) && (((Customer) o).getPassword().equals(this.password));
+        }
+        return false;
+    }
+
+    @Override
+    public String displayRow() {
+        return String.format("""
+        	|  %6s   |%s %-5s| %3s   |     %c    |  %11s   | %s |%-20s | %-15s|   %s  |%-30s     |""",
+                getId(),
+                getFirstName(),
+                getLastName(),
+                getAge(),
+                getGender(),
+                getTel(),
+                Main.dateToString(getDob()),
+                getEmail(),
+                getUsername(),
+                Main.dateToString(getRegDate()),
+                getAddress().displayRow());
+    }
+
+
+    @Override
+    public String toString() {
+        return String.format("""
+        		ID : %s
+        		+--------------------------------------------------------------------------+
+        		|                                    |                                     |
+        		|   First Name > %-20s|   Age        > %-4s                 |
+        		|	Last Name  > %-20s|   Gender     > %c                    |
+        		|	                                 |   Phone No.  > %-12s         |
+        		|                                    |   Birth Date > %-8s           |
+        		|--------------------------------------------------------------------------|
+        		|                                                                          |
+        		|                                        Register Date > %-10s        |
+        		|                                                                          |
+        		|   Username > %-20s                                        |
+        		|   Email    > %-30s                              |
+        		|   Address  > %-20s            |
+        		|                                                                          |
+        		+--------------------------------------------------------------------------+""",
+                getId(),
+                getFirstName(),
+                getAge(),
+                getLastName(),
+                getGender(),
+                getTel(),
+                Main.dateToString(getDob()),
+                Main.dateToString(getRegDate()),
+                getUsername(),
+                getEmail(),
+                getAddress().displayRow());
+    }
+
+    @Override
+    public String generateID(int count){
+        String additionalZero = "";
+        String idNum = String.valueOf(count);
+        if(idNum.length() == 1){
+            additionalZero = "0000";
+        }
+        else if (idNum.length() == 2){
+            additionalZero = "000";
+        }
+        else if (idNum.length() == 3){
+            additionalZero = "00";
+        }
+        else if (idNum.length() == 4){
+            additionalZero = "0";
+        }
+        return "C" + additionalZero + idNum;
+    }
 }

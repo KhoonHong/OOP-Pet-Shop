@@ -1,19 +1,16 @@
-public class Bird extends Pet {
+public class Bird extends Pet implements Identifiable {
 
     private static int totalBirdAge;
     private static int totalBirdCount;
     private static int currentBirdCount;
 
     // Constructor
-    Bird() {
-        // no-args
-    }
-
-    Bird(int age, char gender, String ID, String color, Level aggressive, Size size) {
-        super(age, gender, ID, color, aggressive, size);
+    Bird(int age, char gender, String color, Level aggressive, Size size) {
+        super(age, gender, color, aggressive, size);
         totalBirdCount++;
         currentBirdCount++;
         totalBirdAge+=age;
+        this.ID = generateID(currentBirdCount);;
     }
 
     // Getter and Setter
@@ -42,5 +39,55 @@ public class Bird extends Pet {
     }
 
     // Methods
+    public static void displayServices() {
+        System.out.println("\n\n\tServices available");
+        System.out.println("------------------------");
+        System.out.printf("1. Shelter (%s per night)\n", Main.convertCurrency(120));
+    }
 
+    @Override
+    public String toString() {
+        return String.format("""
+        	\n\t\t  HERE IS YOUR PET INFORMATION !
+        		+---------------------------------------+
+        		| Pet ID > %-6s                      |
+        		| Type   > %-6s                       |
+        		|---------------------------------------|
+        		| Age    > %-3d      Color  > %-8s   |
+        		| Gender > %c                            |
+        		|                                       |
+        		|---------------------------------------|
+        		|            Characteristic             |
+        		|---------------------------------------|
+        		|                                       |
+        		| Size  --> %-15s            |
+        		| Aggressiveness --> %-10s         |
+        		|                                       |
+        		+---------------------------------------+""", getId(),
+                getClass().getSimpleName(),
+                getAge(),
+                getColor(),
+                getGender(),
+                Main.displaySize(getSize()),
+                Main.displayLevel(getAggressive()));
+    }
+
+    @Override
+    public String generateID(int count){
+        String additionalZero = "";
+        String idNum = String.valueOf(count);
+        if(idNum.length() == 1){
+            additionalZero = "0000";
+        }
+        else if (idNum.length() == 2){
+            additionalZero = "000";
+        }
+        else if (idNum.length() == 3){
+            additionalZero = "00";
+        }
+        else if (idNum.length() == 4){
+            additionalZero = "0";
+        }
+        return "BD" + additionalZero + idNum;
+    }
 }

@@ -2,9 +2,8 @@ import java.util.HashMap;
 
 abstract class Service {
     private static int totalCustomer;
-    protected String desc;
     protected static double price;
-    protected static HashMap<String, Double> addOnPrice;
+    protected HashMap<String, Double> addOnPrice = new HashMap<>();
 
     // Constructor
     protected Service() {
@@ -12,8 +11,8 @@ abstract class Service {
         totalCustomer++;
     }
 
-    protected Service(String desc) {
-        this.desc = desc;
+    protected Service(HashMap<String, Double> addOnPrice) {
+        this.addOnPrice = addOnPrice;
         totalCustomer++;
     }
 
@@ -26,19 +25,11 @@ abstract class Service {
         Service.totalCustomer = totalCustomer;
     }
 
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
-    public double getPrice() {
+    public static double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public static void setPrice(double price) {
         Service.price = price;
     }
 
@@ -47,9 +38,17 @@ abstract class Service {
     }
 
     public void setAddOnPrice(HashMap<String, Double> addOnPrice) {
-        Service.addOnPrice = addOnPrice;
+        this.addOnPrice = addOnPrice;
     }
 
     // Methods
+    public abstract void calculateAddOnPrice();
 
+    public double sumAddOnPrice() {
+        double sum = 0;
+        for (Double price : getAddOnPrice().values()) {
+            sum += price;
+        }
+        return sum;
+    }
 }

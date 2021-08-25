@@ -1,5 +1,4 @@
 import java.time.LocalDateTime;
-import java.util.Date;
 
 abstract class Person {
     protected String firstName;
@@ -11,22 +10,25 @@ abstract class Person {
     protected LocalDateTime dob;
     protected Address address;
     protected String email;
+    protected String username;
+    protected String password;
 
     // Constructor
     protected Person() {
         // no-args
     }
 
-    protected Person(String firstName, String lastName, int age, String tel, char gender, String id, LocalDateTime dob, Address address, String email) {
+    protected Person(String firstName, String lastName, String tel, char gender, LocalDateTime dob, Address address, String email, String username, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.age = age;
+        this.age = (LocalDateTime.now().getYear() - dob.getYear());
         this.tel = tel;
         this.gender = gender;
-        this.id = id;
         this.dob = dob;
         this.address = address;
         this.email = email;
+        this.username = username;
+        this.password = password;
     }
 
     // Getter & Setter
@@ -102,6 +104,29 @@ abstract class Person {
         this.email = email;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
     // Methods
+
+    public static String censorPassword(String password) {
+        return "" + String.valueOf('*').repeat(password.length());
+    }
+
+    public String fullName() {
+        return firstName + " " + lastName;
+    }
 
 }

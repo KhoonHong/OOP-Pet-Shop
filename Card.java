@@ -7,19 +7,21 @@ public class Card {
     private String nameOnCard;
     private String issuer;
     private Address billingAddress;
+    private String CVV;
 
     // Constructor
     Card() {
         // no-args
     }
 
-    Card(String number, String type, LocalDateTime expireDate, String nameOnCard, String issuer, Address billingAddress) {
+    Card(String nameOnCard, String number, String CVV, LocalDateTime expireDate, String type, String issuer, Address billingAddress) {
         this.number = number;
         this.type = type;
         this.expireDate = expireDate;
         this.nameOnCard = nameOnCard;
         this.issuer = issuer;
         this.billingAddress = billingAddress;
+        this.CVV = CVV;
     }
 
     // Getter & Setter
@@ -71,11 +73,49 @@ public class Card {
         this.billingAddress = billingAddress;
     }
 
-    // Methods
-    public void displayCardMenu() {
+    public String getCVV() {
+        return CVV;
+    }
 
+    public void setCVV(String CVV) {
+        this.CVV = CVV;
+    }
+
+    // Methods
+
+    @Override
+    public String toString(){
+        return String.format("""
+      
+						Name on Card > %s
+						Card Number > %s
+						CVV Number > %s
+						Expire Date > %s
+						Type of Card > %s
+						Issuer > %s
+						
+						Billing Address >
+						%s""",
+
+                getNameOnCard(),
+                censorCardNo(),
+                getCVV(),
+                getExpireDate().getMonthValue()+"/"+Integer.toString(getExpireDate().getYear()).substring(2,4),
+                getType(),
+                getIssuer(),
+                getBillingAddress().toString());
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Card card) {
+            return card.equals(this);
+        }
+        return false;
+    }
 
+    public String censorCardNo() {
+        return "************" + this.number.substring(12, 16);
+    }
 }

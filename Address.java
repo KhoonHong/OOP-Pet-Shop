@@ -1,4 +1,4 @@
-public class Address {
+public class Address implements Displayable{
     private String city;
     private String zipcode;
     private String state;
@@ -7,17 +7,17 @@ public class Address {
     private String region;
 
     // Constructor
-    Address() {
-        // No-args
-    }
-
-    Address(String city, String zipcode, String state, String country, String street, String region) {
+    Address(String street, String city, String zipcode, String region, String state, String country) {
         this.city = city;
         this.zipcode = zipcode;
         this.state = state;
         this.region = region;
         this.country = country;
         this.street = street;
+    }
+
+    Address() {
+        // no-args
     }
 
     // Getter & Setter
@@ -70,4 +70,20 @@ public class Address {
     }
     // Methods
 
+    // display row in table form
+    @Override
+    public String displayRow() {
+        return String.format("%s, %s %s, %s, %s", getStreet(), getZipcode(), getCity(), getState(), getCountry());
+    }
+
+    @Override
+    public String toString() {
+        return String.format("""
+                 Street   > %s
+                 Zip Code > %s
+                 City     > %s
+                 Region   > %s
+                 State    > %s
+                 Country  > %s""", getStreet(), getZipcode(), getCity(), getRegion(), getState(), getCountry());
+    }
 }

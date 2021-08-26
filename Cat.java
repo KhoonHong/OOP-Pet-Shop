@@ -1,3 +1,17 @@
+
+
+/**
+ * The cat class store the basic information, inherited from the pet class such as age, gender, color etc. ,
+ * and certain specific data related to the cat such as the neuter status, pregnancy status etc.
+ * In the cat class, users will have to key in more details than the basic one, which is the pregnancy status. When
+ * a user creates a new pet cat record, the information keyed in will be stored in the cat class and partitioned
+ * with the others through a new ID. All the cat information within an ID will be displayed in a table when there
+ * is a necessity. For example, displaying the pet information after the user finishes keying in the details for a
+ * quick checking.
+ * Cats are eligible for all services provided in this pet shop.
+ *
+ * @author Tan Shi Jing
+ */
 public class Cat extends Pet implements Identifiable {
 
     private boolean neutered;
@@ -7,7 +21,16 @@ public class Cat extends Pet implements Identifiable {
     private static int currentCatCount;
 
     // Constructor
-
+    /**
+     * Creates a {@code Cat} class object when called
+     *
+     * @param neutered Store cat neutered boolean status
+     * @param age The age of cat
+     * @param gender The gender of cat
+     * @param color The color of cat
+     * @param aggressive The aggressiveness of cat stored with {@code Level} enum
+     * @param size The size of cat stored with {@code Size} enum
+     */
     Cat(boolean neutered, int age, char gender, String color, Level aggressive, Size size) {
         super(age, gender, color, aggressive, size);
         this.neutered = neutered;
@@ -71,6 +94,11 @@ public class Cat extends Pet implements Identifiable {
         System.out.printf("4. Shelter (%s per night)\n", Main.convertCurrency(120));
     }
 
+    /**
+     * Overrides the {@code toString()} method in {@code Object}.
+     *
+     * @return formatted {@code Cat} attributes
+     */
     @Override
     public String toString() {
         return String.format("""
@@ -101,6 +129,13 @@ public class Cat extends Pet implements Identifiable {
                 Main.displayLevel(getAggressive()));
     }
 
+    /**
+     * Overrides the {@code generateID()} method in {@code Identifiable} interface.
+     *
+     * @param count The current {@code Cat} object total count
+     * @return A formatted ID with cat in abbreviation at the front, current {@code Cat} count at the back
+     */
+    @Override
     public String generateID(int count) {
         String additionalZero = "";
         String idNum = String.valueOf(count);
@@ -114,5 +149,19 @@ public class Cat extends Pet implements Identifiable {
             additionalZero = "0";
         }
         return "CT" + additionalZero + idNum;
+    }
+
+    /**
+     * Overrides the {@code equals()} method in {@code Object} and {@code Pet}.
+     *
+     * @param o Object to be compared
+     * @return True if equals, else return false
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Cat cat) {
+            return cat.equals(this);
+        }
+        return false;
     }
 }

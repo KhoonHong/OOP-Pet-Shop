@@ -1,5 +1,15 @@
 import java.time.LocalDateTime;
 
+
+/**
+ * Person class is a superclass for the employee class, owner class and customer class. All of the three classes
+ * inherited data and methods from it. The data field being inherited are the name, age, phone number, gender,
+ * date of birth, address, email, username and password. The address is created through and stored in the Address
+ * class while both the username and the password work in a pair to validate the login process in the system.
+ * Both the username and password have certain restrictions, which if not obeyed, will be denied sign up.
+ *
+ * @author Chan Jia Wei
+ */
 abstract class Person {
     protected String firstName;
     protected String lastName;
@@ -18,6 +28,19 @@ abstract class Person {
         // no-args
     }
 
+    /**
+     * {@code Person} is an abstract (super) class, thus can't be used to create objects.
+     *
+     * @param firstName Person first name
+     * @param lastName Person last name
+     * @param tel Person phone number
+     * @param gender Person gender
+     * @param dob Person date of birth
+     * @param address Person housing address
+     * @param email Person email address
+     * @param username Person username
+     * @param password Person password
+     */
     protected Person(String firstName, String lastName, String tel, char gender, LocalDateTime dob, Address address, String email, String username, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -121,12 +144,36 @@ abstract class Person {
     }
     // Methods
 
+    /**
+     * Convert password into censored String of text for security purposes.
+     *
+     * @param password Visible password in String
+     * @return Censored password
+     */
     public static String censorPassword(String password) {
         return "" + String.valueOf('*').repeat(password.length());
     }
 
+    /**
+     * Combine {@code firstName} and {@code lastName}
+     *
+     * @return Full name of a person
+     */
     public String fullName() {
         return firstName + " " + lastName;
     }
 
+    /**
+     * Overrides the {@code equals()} method in {@code Object}.
+     *
+     * @param o Object to be compared
+     * @return True if equals, else return false
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Person person) {
+            return person.equals(this);
+        }
+        return false;
+    }
 }

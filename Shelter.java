@@ -1,6 +1,19 @@
 import java.time.LocalDateTime;
-import java.util.HashMap;
 
+
+/**
+ * The Shelter class is a class for shelter services.
+ * The shelter class stores data and methods related to the basic information of the shelter service (inherits from
+ * the service class) and the add-on requirement specifically for shelter service. Users are allowed to customize
+ * the shelter services precisely based on their demands. A list of total 5 add-on together with the price will be
+ * printed out accordingly for the users reference. The add-on selected by the users will show a 'O' , which by
+ * default, they are all in 'X'.
+ * The class also consists of basic information related to the shelter service such as price and description that
+ * is retrievable and modifiable when necessary. The total price of all the services required will then be calculated
+ * accordingly based on the day required for shelter and add-on selection.
+ *
+ * @author Ong Jia Hui
+ */
 public class Shelter extends Service {
     private boolean vegetarian = false;
     private boolean halalFood = false;
@@ -32,6 +45,20 @@ public class Shelter extends Service {
 												""";
 
     // Constructor
+
+    /**
+     * Creates a {@code Shelter} class object when called
+     *
+     * @param vegetarian True if customer picks vegetarian
+     * @param halalFood True if customer picks halal food
+     * @param aircond True if customer want air conditioning
+     * @param foodPortion The food portion of pet stored with {@code Size} enum
+     * @param checkInDate The check-in date of shelter
+     * @param checkOutDate The check-out date of shelter
+     * @param totalNumOfDays The total number of days stayed
+     * @param playRoom True if customer want play room facility
+     * @param oneOnOneCare True if customer want one on one care
+     */
     Shelter(boolean vegetarian,
                    boolean halalFood,
                    boolean aircond,
@@ -52,8 +79,8 @@ public class Shelter extends Service {
         this.oneOnOneCare = oneOnOneCare;
     }
 
-    public Shelter() {
-
+    Shelter() {
+        // no-args
     }
 
     // Getter & Setter
@@ -158,6 +185,10 @@ public class Shelter extends Service {
     }
 
     // Methods
+
+    /**
+     These methods below when called will toggle the boolean "buttons" within the {@code Shelter} class attributes
+     */
     public void toggleVegetarian() {
         vegetarian = !vegetarian;
     }
@@ -178,6 +209,11 @@ public class Shelter extends Service {
         oneOnOneCare = !oneOnOneCare;
     }
 
+    /**
+     * Overrides the {@code calculateAddOnPrice()} method in {@code Service}
+     *
+     * This method will add the add-on name and prices of {@code Shelter} service to the {@code addOnPrice} hashmap
+     */
     @Override
     public void calculateAddOnPrice() {
         addOnPrice.clear(); // clear add on price hashmap
@@ -210,6 +246,11 @@ public class Shelter extends Service {
         }
     }
 
+    /**
+     * Overrides the {@code toString()} method in {@code Object}.
+     *
+     * @return formatted {@code Shelter} attributes
+     */
     @Override
     public String toString() {
         return String.format("""
@@ -233,5 +274,19 @@ public class Shelter extends Service {
                 Main.booleanToSymbol(isAircond()),
                 Main.booleanToSymbol(isPlayRoom()),
                 Main.booleanToSymbol(isOneOnOneCare()));
+    }
+
+    /**
+     * Overrides the {@code equals()} method in {@code Object} and {@code Service}.
+     *
+     * @param o Object to be compared
+     * @return True if equals, else return false
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Shelter shelter) {
+            return shelter.equals(this);
+        }
+        return false;
     }
 }

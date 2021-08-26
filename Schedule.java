@@ -1,8 +1,20 @@
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 
+
+/**
+ * The schedule class allows the customers to make their reservation at a specific time. When a time slot is being
+ * occupied, it will show a cross at that particular row and column, while showing a circle when the time slot is
+ * still available. In this class, each employee owns a schedule. The customers can also select the day they
+ * want, but there is a limit of 7 days in the future (excluding today).
+ *
+ * @author Lee Khoon Hong
+ */
 public class Schedule {
 
     private GregorianCalendar today = new GregorianCalendar();
@@ -14,7 +26,10 @@ public class Schedule {
     private ArrayList<ArrayList<Character>> symbols = new ArrayList<>();
     private HashMap<Reservation, HashMap<Integer, Integer>> recordPosition = new HashMap<>();
 
-
+    /**
+     * Creates a {@code Schedule} class object when called
+     *
+     */
     Schedule() {
         this.defaultSlot();
         setDayInWeek(dayInWeekCalc(today.get(Calendar.DAY_OF_WEEK)));// monday - sunday sorting
@@ -62,13 +77,25 @@ public class Schedule {
     }
 
     // Methods
+
+    /**
+     * Initialize an employee schedule slot with {@code Reservation} object.
+     *
+     * @param x Schedule slot index by row
+     * @param y Schedule slot index by column
+     * @param obj {@code Reservation} object created by customer
+     */
     public void addToSchedule(int x, int y, Reservation obj) {
         recordPosition.put(obj, new HashMap<>());
         recordPosition.get(obj).put(x,y);
         setSlotStatus(x, y, UNAVAILABLE);
     }
 
-    // Remove reservation from schedule
+    /**
+     * Remove reservation from employee schedule and change slot status to available.
+     *
+     * @param obj {@code Reservation} object selected by customer
+     */
     public void removeFromSchedule(Reservation obj) {
         HashMap<Integer, Integer> position = recordPosition.get(obj);
         int x = (int) position.keySet().toArray()[0];
@@ -77,7 +104,12 @@ public class Schedule {
         recordPosition.remove(obj);
     }
 
-    // check if reservation is in the employee record
+    /**
+     * Check if reservation is in the employee record.
+     *
+     * @param reservation {@code Reservation} object selected by customer
+     * @return true if exist in employee schedule, else false
+     */
     public boolean getReservation(Reservation reservation) {
         for (var obj : recordPosition.entrySet()) {
             if (reservation.equals(obj.getKey())) {
@@ -87,15 +119,32 @@ public class Schedule {
         return false;
     }
 
+    /**
+     * Obtain formatted date depends on how many days in the future needed.
+     *
+     * @param count Number of days to be added to current date
+     * @return Formatted date in String
+     */
     public static String futureDate(int count) {
         return LocalDate.now().plusDays(count).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
+    /**
+     * Obtain date depends on how many days in the future needed.
+     *
+     * @param count Number of days to be added to current date
+     * @return Date in {@code LocalDateTime}
+     */
     public static LocalDateTime futureDateLocal(int count) {
         return LocalDateTime.now().plusDays(count);
     }
 
-    // Shorten obtainSchedules method code
+    /**
+     * Shorten {@code obtainSchedules} method code.
+     *
+     * @param index Depending on which row it is
+     * @return Formatted slot status by row
+     */
     public String slotStatusByRow(int index) {
         StringBuilder str = new StringBuilder("| ");
         str.append(dayInWeek.get(index)).append(" ");
@@ -115,6 +164,11 @@ public class Schedule {
         return str.toString();
     }
 
+    /**
+     * To format the schedule to be displayed
+     *
+     * @return A 2D array of formatted employee schedule
+     */
     public String[] obtainSchedules() {
         return new String[] {
                 "+---------------------------------------------------------------------+",
@@ -138,7 +192,12 @@ public class Schedule {
         };
     }
 
-    // Sort days in week
+    /**
+     * Sort days in week according to current date.
+     *
+     * @param dayOfWeek Current day in week in integer form
+     * @return An ArrayList of days in week sorted accordingly (if tomorrow is monday, then monday will be the first one in the ArrayList)
+     */
     public ArrayList<String> dayInWeekCalc(int dayOfWeek) {
         String[] daysInWeeks = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
         ArrayList<String> results = new ArrayList<>();
@@ -152,7 +211,9 @@ public class Schedule {
         return results;
     }
 
-    // Reset all slot to available
+    /**
+     * Initialize all the slots with {@code AVAILABLE}.
+     */
     public void defaultSlot() {
         // Vertical
         for (int outer = 0; outer < 7 ; outer++) {
@@ -167,7 +228,9 @@ public class Schedule {
         }
     }
 
-    // prints out schedule
+    /**
+     * Prints the employee schedule.
+     */
     public void displaySchedule() {
         for (String line : this.obtainSchedules()) {
             System.out.println(line);
@@ -175,12 +238,39 @@ public class Schedule {
     }
 
     // Modify slot status
+    /**
+     * Modify employee schedule slot status.
+     *
+     * @param x Schedule slot index by row
+     * @param y Schedule slot index by column
+     * @param symbol {@code AVAILABLE} or {@code UNAVAILABLE}
+     */
     public void setSlotStatus(int x, int y, char symbol) {
         symbols.get(x).set(y, symbol);
     }
 
-    // Check slot status
+    /**
+     * Check employee schedule slot status.
+     *
+     * @param x Schedule slot index by row
+     * @param y Schedule slot index by column
+     * @return {@code AVAILABLE} or {@code UNAVAILABLE}
+     */
     public char getSlotStatus(int x, int y) {
         return symbols.get(x).get(y);
+    }
+
+    /**
+     * Overrides the {@code equals()} method in {@code Object}.
+     *
+     * @param o Object to be compared
+     * @return True if equals, else return false
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Schedule schedule) {
+            return schedule.equals(this);
+        }
+        return false;
     }
 }

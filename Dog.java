@@ -1,3 +1,17 @@
+
+
+/**
+ * The dog class store the basic information, inherited from the pet class such as age, gender, color etc. ,
+ * and some specific information related to dogs such as the neuter status, pregnancy status etc.
+ * In the dog class, users will have to key in the neuter, pregnancy status of the pet other than the basic data.
+ * When a user creates a new pet dog record, the information keyed in will be stored in the dog class and divided
+ * among the other existing records through a unique ID, which is generated every time a new record is keyed in.
+ * All the dog information within an ID will be displayed in a table when requested. For example, displaying the
+ * pet information after the user finishes keying in the details for a quick checking.
+ * Dogs are eligible for all the services provided in this pet shop.
+ *
+ * @author Tan Shi Jing
+ */
 public class Dog extends Pet implements Identifiable {
 
     private boolean neutered;
@@ -7,6 +21,17 @@ public class Dog extends Pet implements Identifiable {
     private static int currentDogCount;
 
     // Constructor
+
+    /**
+     * Creates a {@code Dog} class object when called
+     *
+     * @param neutered Store dog neutered boolean status
+     * @param age The age of dog
+     * @param gender The gender of dog
+     * @param color The color of dog
+     * @param aggressive The aggressiveness of dog stored with {@code Level} enum
+     * @param size The size of dog stored with {@code Size} enum
+     */
     Dog(boolean neutered, int age, char gender, String color, Level aggressive, Size size) {
         super(age, gender, color, aggressive, size);
         this.neutered = neutered;
@@ -70,6 +95,11 @@ public class Dog extends Pet implements Identifiable {
         System.out.printf("4. Shelter (%s per night)\n", Main.convertCurrency(120));
     }
 
+    /**
+     * Overrides the {@code toString()} method in {@code Object}.
+     *
+     * @return formatted {@code Dog} attributes
+     */
     @Override
     public String toString() {
         return String.format("""
@@ -101,6 +131,13 @@ public class Dog extends Pet implements Identifiable {
                 Main.displayLevel(getAggressive()));
     }
 
+    /**
+     * Overrides the {@code generateID()} method in {@code Identifiable} interface.
+     *
+     * @param count The current {@code Dog} object total count
+     * @return A formatted ID with dog in abbreviation at the front, current {@code Dog} count at the back
+     */
+    @Override
     public String generateID(int count){
         String additionalZero = "";
         String idNum = String.valueOf(count);
@@ -117,5 +154,19 @@ public class Dog extends Pet implements Identifiable {
             additionalZero = "0";
         }
         return "DG" + additionalZero + idNum;
+    }
+
+    /**
+     * Overrides the {@code equals()} method in {@code Object} and {@code Pet}.
+     *
+     * @param o Object to be compared
+     * @return True if equals, else return false
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Dog dog) {
+            return dog.equals(this);
+        }
+        return false;
     }
 }

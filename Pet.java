@@ -1,3 +1,14 @@
+
+
+/**
+ * Pet class is a superclass for the rabbit class, cat class, dog class and bird class. All of the four classes
+ * inherited data and methods from it. The data field being inherited are the age, gender, color, aggressive, size,
+ * ID and total number of the particular pet kinds registered in the shop. The ID for the pets will be generated
+ * automatically in the subclass as they are of different kinds. The total amount of pet registered will only be
+ * calculated among the subclass.
+ *
+ * @author Tan Shi Jing
+ */
 abstract class Pet {
     protected int age;
     protected char gender;
@@ -9,6 +20,15 @@ abstract class Pet {
     private static int currentPetCount;
 
     // Constructor
+    /**
+     * {@code Pet} is an abstract (super) class, thus can't be used to create objects
+     *
+     * @param age The age of pet
+     * @param gender The gender of pet
+     * @param color The color of pet
+     * @param aggressive The aggressiveness of pet stored in {@code Level} enum
+     * @param size The size of pet stored in {@code Size} enum
+     */
     protected Pet(int age, char gender, String color, Level aggressive, Size size) {
         this.age = age;
         this.gender = gender;
@@ -85,7 +105,25 @@ abstract class Pet {
     }
 
     // Methods
+
+    /**
+     * Prints the {@code toString} method of the subclasses
+     */
     public void displayPet() {
         System.out.println(this);
+    }
+
+    /**
+     * Overrides the {@code equals()} method in {@code Object}.
+     *
+     * @param o Object to be compared
+     * @return True if equals, else return false
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Pet pet) {
+            return pet.equals(this);
+        }
+        return false;
     }
 }

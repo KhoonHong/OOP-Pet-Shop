@@ -1,5 +1,19 @@
 import java.util.HashMap;
 
+
+/**
+ * The bath class is a class for bath services.
+ * The bath class stores data and methods related to the basic information of the bath service (inherits from the
+ * service class) and the add-on requirement specifically for bath service. Users are allowed to customize the bath
+ * services precisely based on their demands. A list of total 8 add-on together with the price will be printed out
+ * accordingly for the users reference. The add-on selected by the users will show a 'O' , which by default, they
+ * are all in 'X'.
+ * The class also consists of basic information related to the bath service such as price and description that is
+ * retrievable and modifiable when necessary.The total price of all the services required will then be calculated
+ * accordingly after the selection.
+ *
+ * @author Ong Jia Hui
+ */
 public class Bath extends Service{
     private boolean scentedShampoo = false;
     private boolean lowShedShampoo = false;
@@ -35,6 +49,19 @@ public class Bath extends Service{
 
     }
 
+    /**
+     * Creates a {@code Bath} class object when called
+     *
+     * @param scentedShampoo True if customer want scented shampoo
+     * @param lowShedShampoo True if customer want low shed shampoo
+     * @param antiTickFleaShampoo True if customer want anti tick & flea shampoo
+     * @param earCleaning True if customer want ear cleaning
+     * @param analGlandCleaning True if customer want anal gland cleaning
+     * @param hairRemover_Flushing True if customer want hair remover & flushing
+     * @param breathFreshener True if customer want breath freshener
+     * @param teethCleanse True if customer want teeth cleanse
+     * @param addOnPrice A hashmap of add-ons selected with name as key and price as value
+     */
     Bath(boolean scentedShampoo,
          boolean lowShedShampoo,
          boolean antiTickFleaShampoo,
@@ -135,7 +162,7 @@ public class Bath extends Service{
     // Methods
 
     /**
-     These methods below when called will toggle the boolean "buttons" within the Bath class attributes
+     These methods below when called will toggle the boolean "buttons" within the {@code Bath} class attributes
      */
     public void toggleScentedShampoo() {
         scentedShampoo = !scentedShampoo;
@@ -170,6 +197,8 @@ public class Bath extends Service{
     }
 
     /**
+     * Overrides the {@code calculateAddOnPrice()} method in {@code Service}
+     *
      * This method will add the add-on name and prices of Bath service to the addOnPrice hashmap
      */
     @Override
@@ -201,6 +230,11 @@ public class Bath extends Service{
         }
     }
 
+    /**
+     * Overrides the {@code toString()} method in {@code Object}.
+     *
+     * @return formatted {@code Bath} attributes
+     */
     @Override
     public String toString() {
         return String.format("""
@@ -223,4 +257,17 @@ public class Bath extends Service{
                 Main.booleanToSymbol(isTeethCleanse()));
     }
 
+    /**
+     * Overrides the {@code equals()} method in {@code Object} and {@code Service}.
+     *
+     * @param o Object to be compared
+     * @return True if equals, else return false
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Bath bath) {
+            return bath.equals(this);
+        }
+        return false;
+    }
 }

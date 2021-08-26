@@ -1,5 +1,17 @@
 import java.time.LocalDateTime;
 
+
+/**
+ * This Report Class is to generate reports that are believed will bring lots of useful information to the pet shop
+ * in terms of profits earning and reducing unnecessary expenditure.
+ * In this class, there will be a few report type for selection and some allow the user to manage the time duration
+ * for the report.
+ *
+ * @author Lee Khoon Hong
+ * @author Chan Jia Wei
+ * @author Tan Shi Jing
+ * @author Ong Jia Hui
+ */
 public class Report {
     private static LocalDateTime dateCreated;
     private static LocalDateTime reportStartDate;

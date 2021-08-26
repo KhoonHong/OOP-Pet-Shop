@@ -1,3 +1,17 @@
+
+
+/**
+ * Rabbit class store the basic information, inherited from the pet class such as age, gender, color etc., and
+ * some specific data related to the rabbit such as the neuter status, pregnancy status etc.
+ * In the rabbit class, users will have to key in more details than the basic one, which is the pregnancy status.
+ * When a user creates a new pet rabbit record, the information keyed in will be stored in the rabbit class and
+ * partitioned with the others through a new ID. All the rabbit information within an ID will be displayed in a
+ * table when there is a necessity. For example, displaying the pet information after the user finishes keying in
+ * the details for a quick checking.
+ * Rabbit are eligible for all services provided except massage in this pet shop.
+ *
+ * @author Tan Shi Jing
+ */
 public class Rabbit extends Pet implements Identifiable {
 
     private boolean neutered;
@@ -7,6 +21,16 @@ public class Rabbit extends Pet implements Identifiable {
     private static int currentRabbitCount;
 
     // Constructor
+    /**
+     * Creates a {@code Rabbit} class object when called
+     *
+     * @param neutered Store rabbit neutered boolean status
+     * @param age The age of rabbit
+     * @param gender The gender of rabbit
+     * @param color The color of rabbit
+     * @param aggressive The aggressiveness of rabbit stored with {@code Level} enum
+     * @param size The size of rabbit stored with {@code Size} enum
+     */
     Rabbit(boolean neutered, int age, char gender, String color, Level aggressive, Size size) {
         super(age, gender, color, aggressive, size);
         this.neutered = neutered;
@@ -69,6 +93,11 @@ public class Rabbit extends Pet implements Identifiable {
         System.out.printf("3. Shelter (%s per night)\n", Main.convertCurrency(120));
     }
 
+    /**
+     * Overrides the {@code toString()} method in {@code Object}.
+     *
+     * @return formatted {@code Rabbit} attributes
+     */
     @Override
     public String toString() {
         return String.format("""
@@ -100,6 +129,13 @@ public class Rabbit extends Pet implements Identifiable {
                 Main.displayLevel(getAggressive()));
     }
 
+    /**
+     * Overrides the {@code generateID()} method in {@code Identifiable} interface.
+     *
+     * @param count The current {@code Rabbit} object total count
+     * @return A formatted ID with rabbit in abbreviation at the front, current {@code Rabbit} count at the back
+     */
+    @Override
     public String generateID(int count){
         String additionalZero = "";
         String idNum = String.valueOf(count);
@@ -118,4 +154,17 @@ public class Rabbit extends Pet implements Identifiable {
         return "RT" + additionalZero + idNum;
     }
 
+    /**
+     * Overrides the {@code equals()} method in {@code Object} and {@code Pet}.
+     *
+     * @param o Object to be compared
+     * @return True if equals, else return false
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Rabbit rabbit) {
+            return rabbit.equals(this);
+        }
+        return false;
+    }
 }

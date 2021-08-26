@@ -1,5 +1,19 @@
 import java.util.HashMap;
 
+
+/**
+ * The groom class is a class for grooming services.
+ * The groom class stores data and methods related to the basic information of the groom service (inherits from the
+ * service class) and the add-on requirement specifically for groom service. Users are allowed to customize the
+ * grooming services precisely based on their demands. A list of total 7 add-on together with the price will be
+ * printed out accordingly for the users reference. The add-on selected by the users will show a 'O' , which by
+ * default, they are all in 'X'.
+ * The class also consists of basic information related to the grooming service such as price and description that
+ * is retrievable and modifiable when necessary. The total price of all the services required will then be calculated
+ * accordingly after the selection.
+ *
+ * @author Ong Jia Hui
+ */
 public class Groom extends Service{
     private boolean fancyCut = false;
     private boolean sanitaryTrim = false;
@@ -34,6 +48,18 @@ public class Groom extends Service{
         // no-args
     }
 
+    /**
+     * Creates a {@code Groom} class object when called
+     *
+     * @param fancyCut True if customer wants fancy cut
+     * @param sanitaryTrim True if customer wants sanitary trim
+     * @param nailClip True if customer want nail clip
+     * @param nailGrind True if customer want nail grind
+     * @param scissoringFeet True if customer want scissoring feet
+     * @param padShaving True if customer want pad shaving
+     * @param coatStyling True if customer want coat styling
+     * @param addOnPrice A hashmap of add-ons selected with name as key and price as value
+     */
     Groom(boolean fancyCut,
           boolean sanitaryTrim,
           boolean nailClip,
@@ -123,6 +149,10 @@ public class Groom extends Service{
 
 
     // Methods
+
+    /**
+     These methods below when called will toggle the boolean "buttons" within the {@code Groom} class attributes
+     */
     public void toggleFancyCut() {
         fancyCut = !fancyCut;
     }
@@ -151,6 +181,11 @@ public class Groom extends Service{
         coatStyling = !coatStyling;
     }
 
+    /**
+     * Overrides the {@code calculateAddOnPrice()} method in {@code Service}
+     *
+     * This method will add the add-on name and prices of {@code Groom} service to the addOnPrice hashmap
+     */
     public void calculateAddOnPrice() {
         addOnPrice.clear(); // clear add on price hashmap
         if (fancyCut) {
@@ -176,6 +211,11 @@ public class Groom extends Service{
         }
     }
 
+    /**
+     * Overrides the {@code toString()} method in {@code Object}.
+     *
+     * @return formatted {@code Groom} attributes
+     */
     @Override
     public String toString() {
         return String.format("""
@@ -194,5 +234,19 @@ public class Groom extends Service{
                 Main.booleanToSymbol(isScissoringFeet()),
                 Main.booleanToSymbol(isPadShaving()),
                 Main.booleanToSymbol(isCoatStyling()));
+    }
+
+    /**
+     * Overrides the {@code equals()} method in {@code Object} and {@code Service}.
+     *
+     * @param o Object to be compared
+     * @return True if equals, else return false
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Groom groom) {
+            return groom.equals(this);
+        }
+        return false;
     }
 }

@@ -1,11 +1,14 @@
 import java.time.LocalDateTime;
 
-/**
- *
- *
- * @author Ong Jia Hui
- */
 
+/**
+ * Promotion class is defined for the usage of promotion. It stores the information of the promotion and will apply
+ * the relevant discount rate when used by the customer before payment. When a promotion code is used, the system
+ * will always verify the promotion code is still before the expiry date. All the promotion records that are being
+ * generated in this class will be assigned an ID to differentiate every single of them.
+ *
+ * @author Lee Khoon Hong
+ */
 public class Promotion implements Identifiable {
     private String promoID;
     private String promoCode;
@@ -24,6 +27,15 @@ public class Promotion implements Identifiable {
         this.promoID = generateID(currentPromoCount); //generateID
     }
 
+    /**
+     * Creates a {@code Promotion} class object when called
+     *
+     * @param promoCode The promotion code
+     * @param promoStartDate The promotion starting date
+     * @param promoEndDate The promotion ending date
+     * @param promoRate The promotion rate
+     * @param description The promotion description
+     */
     Promotion(String promoCode, LocalDateTime promoStartDate, LocalDateTime promoEndDate, double promoRate, String description) {
         currentPromoCount++;
         totalPromoCount++;
@@ -101,6 +113,13 @@ public class Promotion implements Identifiable {
     }
 
     // Methods
+
+    /**
+     * Overrides the {@code equals()} method in {@code Object}.
+     *
+     * @param o Object to be compared
+     * @return True if equals, else return false
+     */
     @Override
     public boolean equals(Object o) {
         if (o instanceof Promotion promo) {
@@ -112,6 +131,11 @@ public class Promotion implements Identifiable {
         return false;
     }
 
+    /**
+     * Overrides the {@code toString()} method in {@code Object}.
+     *
+     * @return formatted {@code Promotion} attributes
+     */
     @Override
     public String toString() {
         return String.format("|%-10s|%-20s|%-20s| %-6.2f|%-60s|\n", promoID,
@@ -121,7 +145,12 @@ public class Promotion implements Identifiable {
                 description);
     }
 
-    // to generate ID
+    /**
+     * Overrides the {@code generateID()} method in {@code Identifiable} interface.
+     *
+     * @param count The current {@code Bird} object total count
+     * @return A formatted ID with promotion in abbreviation at the front, current {@code Bird} count at the back
+     */
     @Override
     public String generateID(int count){
         String additionalZero = "";

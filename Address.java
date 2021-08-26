@@ -1,3 +1,14 @@
+
+
+/**
+ * The address class is used to ensure that not a single detail is left off when the user key in the information
+ * regarding the address when requested. Every single detail of an address such as city, state, country etc.
+ * are all included in this class. Every single address that key in will be stored as an object in this class, and
+ * methods are provided to display the address. Every single component of the particular address will be shown out
+ * in a single row accordingly to the proper address format.
+ *
+ * @author Lee Khoon Hong
+ */
 public class Address implements Displayable{
     private String city;
     private String zipcode;
@@ -7,6 +18,17 @@ public class Address implements Displayable{
     private String region;
 
     // Constructor
+
+    /**
+     * Creates a {@code Address} class object when called
+     *
+     * @param street Street name
+     * @param city City name
+     * @param zipcode zipcode
+     * @param region Region in a state
+     * @param state State name
+     * @param country Country name
+     */
     Address(String street, String city, String zipcode, String region, String state, String country) {
         this.city = city;
         this.zipcode = zipcode;
@@ -68,14 +90,24 @@ public class Address implements Displayable{
     public void setRegion(String region) {
         this.region = region;
     }
+
     // Methods
 
-    // display row in table form
+    /**
+     * Overrides the {@code displayRow()} method in {@code Displayable} interface.
+     *
+     * @return formatted address attribute in row
+     */
     @Override
     public String displayRow() {
         return String.format("%s, %s %s, %s, %s", getStreet(), getZipcode(), getCity(), getState(), getCountry());
     }
 
+    /**
+     * Overrides the {@code toString()} method in {@code Object}.
+     *
+     * @return Formatted {@code Address} attributes
+     */
     @Override
     public String toString() {
         return String.format("""
@@ -85,5 +117,19 @@ public class Address implements Displayable{
                  Region   > %s
                  State    > %s
                  Country  > %s""", getStreet(), getZipcode(), getCity(), getRegion(), getState(), getCountry());
+    }
+
+    /**
+     * Overrides the {@code equals()} method in {@code Object}.
+     *
+     * @param o Object to be compared
+     * @return True if equals, else return false
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Address address) {
+            return address.equals(this);
+        }
+        return false;
     }
 }

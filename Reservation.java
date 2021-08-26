@@ -1,6 +1,17 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+
+/**
+ * The reservation class allows the customers to make a reservation for a certain pet service. Once the customers
+ * request to add a reservation in this class, a reservation record with an auto-generated ID will be created to
+ * store the reservation details. The customers are allowed to select either one of the four time slots and also
+ * the employee to serve when making the reservation.
+ * When the customers complete the reservation, a table with the reservation details will be shown to the
+ * customers.
+ *
+ * @author Lee Khoon Hong
+ */
 public class Reservation implements Displayable, Identifiable {
     private String reserveID;
     private LocalDateTime reserveDateTime;
@@ -23,6 +34,16 @@ public class Reservation implements Displayable, Identifiable {
         this.reserveID = generateID(currentReserveCount);
     }
 
+    /**
+     * Creates a {@code Reservation} class object when called
+     *
+     * @param reserveDateTime Reservation timestamp
+     * @param services Service details such as add-ons
+     * @param pet Pet that was reserved for
+     * @param remarks Remarks that to be passed on to the responsible employee
+     * @param reserveSession Session that was reserved
+     * @param employeeSelected The employee that was selected by customer
+     */
     Reservation(LocalDateTime reserveDateTime,
                 Service services,
                 Pet pet,
@@ -129,7 +150,14 @@ public class Reservation implements Displayable, Identifiable {
     public static void setTotalReserveCount(int totalReserveCount) {
         Reservation.totalReserveCount = totalReserveCount;
     }
+
     // Methods
+
+    /**
+     * Overrides the {@code displayRow()} method in {@code Displayable} interface.
+     *
+     * @return Formatted {@code Reservation} attribute in row
+     */
     public String displayRow() {
         return String.format("""
                         | %8s | %-8s | %s | %-8s   |  %-6s   |  %-2d   | %s |%-10s |""",
@@ -143,6 +171,11 @@ public class Reservation implements Displayable, Identifiable {
                 getEmployeeSelected().fullName());
     }
 
+    /**
+     * Overrides the {@code toString()} method in {@code Object}.
+     *
+     * @return formatted {@code Reservation} attributes
+     */
     @Override
     public String toString() {
         return String.format("""
@@ -171,17 +204,14 @@ public class Reservation implements Displayable, Identifiable {
                 getEmployeeSelected().getFirstName() + " " + getEmployeeSelected().getLastName());
     }
 
-    public static void displayReservation(Person currentUser, ArrayList<Customer> customerList) {
-        // check if current user is an owner
-        if (currentUser instanceof Owner) {
-            Main.displayCustReservation(Main.inputCustomer(customerList));
-        }
-        // check if current user is a customer
-        else if (currentUser instanceof Customer) {
-            Main.displayCustReservation(((Customer) currentUser));
-        }
-    }
 
+
+    /**
+     * Convert customer selection choice into session hour
+     *
+     * @param session Session choice selected by customer
+     * @return Integer value of session time
+     */
     public static int sessionToTime(int session) {
         switch (session) {
             case 1 -> {
@@ -204,6 +234,13 @@ public class Reservation implements Displayable, Identifiable {
         return 0;
     }
 
+    /**
+     * Overrides the {@code generateID()} method in {@code Identifiable} interface.
+     *
+     * @param count The current {@code Reservation} object total count
+     * @return A formatted ID with reservation in abbreviation at the front, current {@code Reservation} count at the back
+     */
+    @Override
     public String generateID(int count){
         String additionalZero = "";
         String idNum = String.valueOf(count);
@@ -220,5 +257,19 @@ public class Reservation implements Displayable, Identifiable {
             additionalZero = "0";
         }
         return "R" + additionalZero + idNum;
+    }
+
+    /**
+     * Overrides the {@code equals()} method in {@code Object}.
+     *
+     * @param o Object to be compared
+     * @return True if equals, else return false
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Reservation reservation) {
+            return reservation.equals(this);
+        }
+        return false;
     }
 }

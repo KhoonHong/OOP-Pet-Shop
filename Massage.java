@@ -1,5 +1,19 @@
 import java.util.HashMap;
 
+
+/**
+ * The massage class is a class for massage services.
+ * The massage class stores data and methods related to the basic information of the massage service (inherits from
+ * the service class) and the add-on requirement specifically for massage service. Users are allowed to customize
+ * the massage services precisely based on their demands. A list of total 3 add-on together with the price will be
+ * printed out accordingly for the users reference. The add-on selected by the users will show a 'O' , which by
+ * default, they are all in 'X'.
+ * The class also consists of basic information related to the massage service such as price and description that
+ * is retrievable and modifiable when necessary. The total price of all the services required will then be
+ * calculated accordingly after the selection.
+ *
+ * @author Ong Jia Hui
+ */
 public class Massage extends Service{
     private boolean afterMassageWash = false;
     private boolean premiumCalmingOil = false;
@@ -28,6 +42,14 @@ public class Massage extends Service{
         // no-args
     }
 
+    /**
+     * Creates a {@code Massage} class object when called
+     *
+     * @param afterMassageWash True if customer want after massage wash
+     * @param premiumCalmingOil True if customer want premium calming oil
+     * @param multiMasseur True if customer want multiple masseur
+     * @param addOnPrice A hashmap of add-ons selected with name as key and price as value
+     */
     Massage(boolean afterMassageWash,
             boolean premiumCalmingOil,
             boolean multiMasseur,
@@ -76,6 +98,10 @@ public class Massage extends Service{
     }
 
     // Methods
+
+    /**
+     These methods below when called will toggle the boolean "buttons" within the {@code Massage} class attributes
+     */
     public void toggleAfterMassageWash() {
         afterMassageWash = !afterMassageWash;
     }
@@ -88,6 +114,11 @@ public class Massage extends Service{
         multiMasseur = !multiMasseur;
     }
 
+    /**
+     * Overrides the {@code calculateAddOnPrice()} method in {@code Service}
+     *
+     * This method will add the add-on name and prices of {@code Massage} service to the addOnPrice hashmap
+     */
     @Override
     public void calculateAddOnPrice() {
         addOnPrice.clear(); // clear add on price hashmap
@@ -102,6 +133,11 @@ public class Massage extends Service{
         }
     }
 
+    /**
+     * Overrides the {@code toString()} method in {@code Object}.
+     *
+     * @return formatted {@code Massage} attributes
+     */
     @Override
     public String toString() {
         return String.format("""
@@ -113,5 +149,19 @@ public class Massage extends Service{
                 Main.booleanToSymbol(isAfterMassageWash()),
                 Main.booleanToSymbol(isPremiumCalmingOil()),
                 Main.booleanToSymbol(isMultiMasseur()));
+    }
+
+    /**
+     * Overrides the {@code equals()} method in {@code Object} and {@code Service}.
+     *
+     * @param o Object to be compared
+     * @return True if equals, else return false
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Massage massage) {
+            return massage.equals(this);
+        }
+        return false;
     }
 }

@@ -265,6 +265,7 @@ public class Reservation implements Displayable, Identifiable {
      * @param o Object to be compared
      * @return True if equals, else return false
      */
+    /*
     @Override
     public boolean equals(Object o) {
         if (o instanceof Reservation reservation) {
@@ -272,4 +273,5 @@ public class Reservation implements Displayable, Identifiable {
         }
         return false;
     }
+     */
 }

@@ -18,7 +18,7 @@ import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         Person currentUser = null;
         ArrayList<Customer> customerList = new ArrayList<>();
@@ -26,10 +26,16 @@ public class Main {
         ArrayList<Owner> ownerList = new ArrayList<>();
         ArrayList<Promotion> promotions = new ArrayList<>();
 
-        File custCredentials = new File("customer_credentials.txt");
-        FileWriter writer = new FileWriter(custCredentials);
-        File empCredentials = new File("employee_credentials.txt");
-        FileWriter writer1 = new FileWriter(empCredentials);
+        try {
+            // to generate data
+            File custCredentials = new File("customer_credentials.txt");
+            FileWriter writer = new FileWriter(custCredentials);
+            File empCredentials = new File("employee_credentials.txt");
+            FileWriter writer1 = new FileWriter(empCredentials);
+        }
+        catch (IOException e) {
+            System.out.println("FIle handling error occurred...");
+        }
 
 
         ownerList.add(new Owner("Khoon Hong",
@@ -1951,8 +1957,36 @@ public class Main {
     }
 
     public static void searchDateBillingHistory(ArrayList<Customer> customerList) {
-        LocalDateTime startDate = inputStartDate("\n\nEnter start date to search > ");
-        LocalDateTime endDate = inputEndDate("\nEnter end date to search > ", startDate);
+        LocalDateTime startDate;
+        do {
+            try {
+                System.out.println("\n\nEnter start date to search > ");
+                startDate = LocalDateTime.of(Main.promptInt("		Year  > "), Main.promptInt("		Month > "), Main.promptInt("		Day   > "), 0, 0);
+                if (startDate.isBefore(LocalDateTime.now().minusYears(21))) {
+                    System.out.println("Date entered must be after year 2000...");
+                    continue;
+                }
+                break;
+            } catch (DateTimeException e) {
+                System.out.println("Invalid date entered...");
+            }
+        }
+        while (true);
+        LocalDateTime endDate;
+        do {
+            try {
+                System.out.println("\nEnter end date to search > ");
+                endDate = LocalDateTime.of(Main.promptInt("		Year  > "), Main.promptInt("		Month > "), Main.promptInt("		Day   > "), 0, 0);
+                if (endDate.isBefore(startDate)) {
+                    System.out.println("End date should not earlier than start date...");
+                    continue;
+                }
+                break;
+            } catch (DateTimeException e) {
+                System.out.println("Invalid date entered...");
+            }
+        }
+        while (true);
 
         // searching
         ArrayList<ArrayList<Integer>> customerIndexer = new ArrayList<>();
@@ -2480,7 +2514,7 @@ public class Main {
     public static void createPromo(Promotion promo, ArrayList<Promotion> promotions) {
         boolean loopFlag;
         do {
-            loopFlag = true;
+            loopFlag = false;
             promo.setPromoCode(inputPromo(promotions));
             promo.setDescription(promptString("Enter promotion description > "));
             //promo start date
@@ -2491,8 +2525,8 @@ public class Main {
             for (Promotion promotion : promotions) {
                 // if match
                 if (promotion.equals(promo)) {
-                    if (promptYesNo("\n\nConfirm to add this promotion (detected repeated info entered) ? (Y/N) > ")) {
-                        loopFlag = false;
+                    if (!promptYesNo("\n\nConfirm to add this promotion (detected repeated info entered) ? (Y/N) > ")) {
+                        loopFlag = true;
                         break; // break out of for loop
                     }
                 }
@@ -2886,6 +2920,13 @@ public class Main {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return date.format(formatter);
     }
+
+    /*
+    public static String dateToString(LocalDate date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return date.format(formatter);
+    }
+     */
 
     // format date time to String
     public static String datetimeToString(LocalDateTime date) {

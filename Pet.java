@@ -39,6 +39,10 @@ abstract class Pet {
         currentPetCount++;
     }
 
+    protected Pet() {
+        // no-args
+    }
+
     // Getter & Setter
     public int getAge() {
         return age;

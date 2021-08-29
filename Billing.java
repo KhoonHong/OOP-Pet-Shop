@@ -1,4 +1,4 @@
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 
@@ -23,7 +23,7 @@ public class Billing implements Displayable, Identifiable{
     private String paymentMethod;
     private Promotion promoApplied;
     private String promoOrigin;
-    private LocalDateTime paymentDate;
+    private LocalDate paymentDate;
 
     // Constructor
     Billing() {
@@ -54,7 +54,7 @@ public class Billing implements Displayable, Identifiable{
      * @param promoOrigin The source which the customer obtained the promotion
      * @param paymentDate The checkout timestamp
      */
-    Billing(Reservation bill, double totalAmount, double grandTotal, String paymentMethod, Promotion promoApplied, String promoOrigin, LocalDateTime paymentDate) {
+    Billing(Reservation bill, double totalAmount, double grandTotal, String paymentMethod, Promotion promoApplied, String promoOrigin, LocalDate paymentDate) {
         currentTransactionCount++;
         totalTransactionCount++;
         this.transactionID = generateID(currentTransactionCount); //generate ID
@@ -73,10 +73,6 @@ public class Billing implements Displayable, Identifiable{
         return totalTransactionCount;
     }
 
-    public static void setTotalTransactionCount(int totalTransactionCount) {
-        Billing.totalTransactionCount = totalTransactionCount;
-    }
-
     public double getTotalAmount() {
         return totalAmount;
     }
@@ -87,10 +83,6 @@ public class Billing implements Displayable, Identifiable{
 
     public static int getCurrentTransactionCount() {
         return currentTransactionCount;
-    }
-
-    public static void setCurrentTransactionCount(int currentTransactionCount) {
-        Billing.currentTransactionCount = currentTransactionCount;
     }
 
     public String getTransactionID() {
@@ -133,15 +125,11 @@ public class Billing implements Displayable, Identifiable{
         this.promoOrigin = promoOrigin;
     }
 
-    public void addBill(Reservation reservation) {
-        this.getBillDetails().add(reservation);
-    }
-
-    public LocalDateTime getPaymentDate() {
+    public LocalDate getPaymentDate() {
         return paymentDate;
     }
 
-    public void setPaymentDate(LocalDateTime paymentDate) {
+    public void setPaymentDate(LocalDate paymentDate) {
         this.paymentDate = paymentDate;
     }
 
@@ -154,6 +142,10 @@ public class Billing implements Displayable, Identifiable{
     }
 
     // Methods
+
+    public void addBill(Reservation reservation) {
+        this.getBillDetails().add(reservation);
+    }
 
     /**
      * Overrides the {@code displayRow()} method in {@code Displayable} interface.
@@ -168,7 +160,7 @@ public class Billing implements Displayable, Identifiable{
                 getTransactionID(),
                 getPaymentMethod(),
                 displayPromoOrigin(),
-                Main.datetimeToString(getPaymentDate()),
+                Main.dateToString(getPaymentDate()),
                 displayPromo(getPromoApplied()),
                 getBillDetails().size());
     }

@@ -1,4 +1,4 @@
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 
 /**
@@ -19,8 +19,8 @@ public class Shelter extends Service {
     private boolean halalFood = false;
     private boolean aircond = false;
     private Size foodPortion = Size.XSMALL;
-    private LocalDateTime checkInDate;
-    private LocalDateTime checkOutDate;
+    private LocalDate checkInDate;
+    private LocalDate checkOutDate;
     private int totalNumOfDays = 1;
     private boolean playRoom = false;
     private boolean oneOnOneCare = false;
@@ -60,14 +60,14 @@ public class Shelter extends Service {
      * @param oneOnOneCare True if customer want one on one care
      */
     Shelter(boolean vegetarian,
-                   boolean halalFood,
-                   boolean aircond,
-                   Size foodPortion,
-            LocalDateTime checkInDate,
-            LocalDateTime checkOutDate,
-                   int totalNumOfDays,
-                   boolean playRoom,
-                   boolean oneOnOneCare) {
+            boolean halalFood,
+            boolean aircond,
+            Size foodPortion,
+            LocalDate checkInDate,
+            LocalDate checkOutDate,
+            int totalNumOfDays,
+            boolean playRoom,
+            boolean oneOnOneCare) {
         this.vegetarian = vegetarian;
         this.halalFood = halalFood;
         this.aircond = aircond;
@@ -136,19 +136,19 @@ public class Shelter extends Service {
         this.foodPortion = foodPortion;
     }
 
-    public LocalDateTime getCheckInDate() {
+    public LocalDate getCheckInDate() {
         return checkInDate;
     }
 
-    public void setCheckInDate(LocalDateTime checkInDate) {
+    public void setCheckInDate(LocalDate checkInDate) {
         this.checkInDate = checkInDate;
     }
 
-    public LocalDateTime getCheckOutDate() {
+    public LocalDate getCheckOutDate() {
         return checkOutDate;
     }
 
-    public void setCheckOutDate(LocalDateTime checkOutDate) {
+    public void setCheckOutDate(LocalDate checkOutDate) {
         this.checkOutDate = checkOutDate;
     }
 

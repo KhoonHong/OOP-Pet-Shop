@@ -1,4 +1,4 @@
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 
 /**
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class Employee extends Person implements Displayable, Identifiable {
 
     private double salary;
-    private LocalDateTime startWorkDate;
+    private LocalDate startWorkDate;
     private Schedule workSchedule = new Schedule();
     private static int totalEmpCount;
     private static int currentEmployeeCount;
@@ -24,10 +24,10 @@ public class Employee extends Person implements Displayable, Identifiable {
     // Constructor
     Employee() {
         // no-args
-        this.startWorkDate = LocalDateTime.now();
+        this.startWorkDate = LocalDate.now();
         totalEmpCount++;
         currentEmployeeCount++;
-        this.age = (LocalDateTime.now().getYear() - dob.getYear());
+        this.age = (LocalDate.now().getYear() - dob.getYear());
         this.id = generateID(currentEmployeeCount);
     }
 
@@ -45,11 +45,11 @@ public class Employee extends Person implements Displayable, Identifiable {
      * @param password Employee password
      * @param salary Employee salary
      */
-    Employee(String firstName, String lastName, String tel, char gender, LocalDateTime dob, Address address, String email, String username, String password, double salary) {
+    Employee(String firstName, String lastName, String tel, char gender, LocalDate dob, Address address, String email, String username, String password, double salary) {
         super(firstName, lastName, tel, gender, dob, address, email, username, password);
         this.salary = salary;
-        this.age = (LocalDateTime.now().getYear() - dob.getYear());
-        this.startWorkDate = LocalDateTime.now();
+        this.age = (LocalDate.now().getYear() - dob.getYear());
+        this.startWorkDate = LocalDate.now();
         totalEmpCount++;
         currentEmployeeCount++;
         this.id = generateID(currentEmployeeCount);
@@ -72,11 +72,11 @@ public class Employee extends Person implements Displayable, Identifiable {
         this.salary = salary;
     }
 
-    public LocalDateTime getStartWorkDate() {
+    public LocalDate getStartWorkDate() {
         return startWorkDate;
     }
 
-    public void setStartWorkDate(LocalDateTime startWorkDate) {
+    public void setStartWorkDate(LocalDate startWorkDate) {
         this.startWorkDate = startWorkDate;
     }
 

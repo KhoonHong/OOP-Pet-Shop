@@ -42,7 +42,7 @@ public class Main {
                 "Lee",
                 "0107762938",
                 'M',
-                LocalDateTime.of(2001, 12, 15, 0, 0, 0),
+                LocalDate.of(2001, 12, 15),
                 new Address("15, Lorong Jamban 3", "Bayan Lepas", "11900", "North", "Penang", "Malaysia"),
                 "leekhoonhong@hotmail.com",
                 "o",
@@ -52,7 +52,7 @@ public class Main {
                 "Chan",
                 "0123456789",
                 'M',
-                LocalDateTime.of(2001, 1, 12, 0, 0, 0),
+                LocalDate.of(2001, 1, 12),
                 new Address("1, Tingkat Kenari 5", "Bayan Baru", "11900", "South", "Penang", "Malaysia"),
                 "chanjiawei@gmail.com",
                 "e",
@@ -63,7 +63,7 @@ public class Main {
                 "Tan",
                 "0129876543",
                 'M',
-                LocalDateTime.of(2002, 3, 22, 0, 0, 0),
+                LocalDate.of(2002, 3, 22),
                 new Address("11, Lorong sepit 2", "Kulim", "12111", "East", "Kedah", "Malaysia"),
                 "tanshijing@gmail.com",
                 "c",
@@ -73,16 +73,16 @@ public class Main {
                 "Lee",
                 "0107762938",
                 'M',
-                LocalDateTime.of(2001, 12, 15, 0, 0, 0),
+                LocalDate.of(2001, 12, 15),
                 new Address("15, Lorong Jamban 3", "Bayan Lepas", "11900", "North", "Penang", "Malaysia"),
                 "leekhoonhong@hotmail.com",
                 "noob",
                 "noob"));
 
-        promotions.add(new Promotion("11Double11", LocalDateTime.of(2021, 11, 1, 0, 0), LocalDateTime.of(2021, 11, 11, 0, 0), 0.1111, "Special 11.11% discount for spending along 1.11 to 11.11"));
-        promotions.add(new Promotion("PetDay0411", LocalDateTime.of(2021, 4, 11, 0, 0), LocalDateTime.of(2021, 4, 11, 0, 0), 0.15, "15% caring to your pet on International Pet Day"));
-        promotions.add(new Promotion("10Of500", LocalDateTime.of(2021, 9, 18, 0, 0), LocalDateTime.of(2022, 1, 1, 0, 0), 0.1, "Get 10% discount when spend up to RM50 and above"));
-        promotions.add(new Promotion("Merdeka831", LocalDateTime.of(2021, 8, 31, 0, 0), LocalDateTime.of(2021, 9, 16, 0, 0), 0.11, "89% affordable price for all customers during 831 to 916"));
+        promotions.add(new Promotion("11Double11", LocalDate.of(2021, 11, 1), LocalDate.of(2021, 11, 11), 0.1111, "Special 11.11% discount for spending along 1.11 to 11.11"));
+        promotions.add(new Promotion("PetDay0411", LocalDate.of(2021, 4, 11), LocalDate.of(2021, 4, 12), 0.15, "15% caring to your pet on International Pet Day"));
+        promotions.add(new Promotion("10Of500", LocalDate.of(2021, 9, 18), LocalDate.of(2022, 1, 1), 0.1, "Get 10% discount when spend up to RM50 and above"));
+        promotions.add(new Promotion("Merdeka831", LocalDate.of(2021, 8, 31), LocalDate.of(2021, 9, 16), 0.11, "89% affordable price for all customers during 831 to 916"));
 
         //generateCustomerProfile(customerList, employeeList);
         //generateEmployeeProfile(employeeList);
@@ -133,19 +133,20 @@ public class Main {
             customerList.get(customerList.size() - 1).addPet(new Cat(true,
                     1, 'f', "White", Level.LOW, Size.LARGE));
             LocalDateTime date = generateLocalDateTime();
+            LocalDate date1 = generateLocalDate();
             // add reservation
             customerList.get(customerList.size() - 1).addReservation(new Reservation(generateLocalDateTime(),
                     new Shelter(new Random().nextBoolean(),
                             new Random().nextBoolean(),
                             new Random().nextBoolean(),
-                            Size.MEDIUM, date, date.plusDays(20), 20,
+                            Size.MEDIUM, date1, date1.plusDays(20), 20,
                             new Random().nextBoolean(),
                             new Random().nextBoolean()), customerList.get(customerList.size() - 1).getPets().get(0), "mehhhh", 1,
                     employeeList.get(0)));
             int total = (int) ((Math.random() * (500 - 100)) + 100);
             // add bill history
             customerList.get(customerList.size() - 1).getBillHistory().add(new Billing(customerList.get(customerList.size() - 1).getReservation().get(0),
-                    total, total + (total * 10 / 100), new Random().nextBoolean() ? "Cash" : "Card", null, null, generateLocalDateTime()));
+                    total, total + (total * 10 / 100), new Random().nextBoolean() ? "Cash" : "Card", null, null, generateLocalDate()));
         }
     }
 
@@ -182,6 +183,13 @@ public class Main {
         int hours = ThreadLocalRandom.current().nextInt(0, 23 + 1);
         int minutes = ThreadLocalRandom.current().nextInt(0, 59 + 1);
         return randomDate.atTime(hours, minutes);
+    }
+    public static LocalDate generateLocalDate() {
+        long minDay = LocalDate.of(2021, 7, 1).toEpochDay();
+        long maxDay = LocalDate.now().toEpochDay();
+        long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
+        LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
+        return randomDate;
     }
 
     public static String generateRandomCustomerUsername(ArrayList<Customer> customerList) {
@@ -236,11 +244,11 @@ public class Main {
         return String.format("%05d", number);
     }
 
-    public static LocalDateTime generateRandomDOB() {
+    public static LocalDate generateRandomDOB() {
         int day = ThreadLocalRandom.current().nextInt(1, 28 + 1);
         int month = ThreadLocalRandom.current().nextInt(1, 12 + 1);
         int year = ThreadLocalRandom.current().nextInt(1950, 2000 + 1);
-        return LocalDateTime.of(year, month, day, 0, 0, 0);
+        return LocalDate.of(year, month, day);
     }
 
     public static Address generateRandomAddress() {
@@ -777,7 +785,7 @@ public class Main {
             System.out.println("8. North West");
             System.out.println("9. Other states");
 
-            switch (Main.promptInt("Please select your region in Penang > ")) {
+            switch (Main.promptInt("Please select your region in state > ")) {
                 case 1 -> region = "North";
                 case 2 -> region = "North East";
                 case 3 -> region = "East";
@@ -935,7 +943,7 @@ public class Main {
     public static Pet selectPet(Person currentUser) {
         System.out.println("\n\n\t\tPets in record");
         System.out.println("------------------------------");
-        System.out.println("\t ID\t\tType\tGender\tColor");
+        System.out.println("\t ID\tType\tGender\tColor");
         for (int i = 0; i < ((Customer)currentUser).getPets().size(); i++) {
             System.out.printf("%d. %s\t%-6s\t   %c\t%s\n",i+1, ((Customer)currentUser).getPets().get(i).getId(),
                     ((Customer)currentUser).getPets().get(i).getClass().getSimpleName(),
@@ -1843,7 +1851,7 @@ public class Main {
         } else {
             // if service is shelter
 
-            dateBooked = ((Shelter) service).getCheckInDate();
+            dateBooked = ((Shelter) service).getCheckInDate().atTime(0,0,0);
 
             // remarks
             remarks = Main.promptString("\n\nEnter your remarks here > ");
@@ -1957,12 +1965,12 @@ public class Main {
     }
 
     public static void searchDateBillingHistory(ArrayList<Customer> customerList) {
-        LocalDateTime startDate;
+        LocalDate startDate;
         do {
             try {
                 System.out.println("\n\nEnter start date to search > ");
-                startDate = LocalDateTime.of(Main.promptInt("		Year  > "), Main.promptInt("		Month > "), Main.promptInt("		Day   > "), 0, 0);
-                if (startDate.isBefore(LocalDateTime.now().minusYears(21))) {
+                startDate = LocalDate.of(Main.promptInt("		Year  > "), Main.promptInt("		Month > "), Main.promptInt("		Day   > "));
+                if (startDate.isBefore(LocalDate.now().minusYears(21))) {
                     System.out.println("Date entered must be after year 2000...");
                     continue;
                 }
@@ -1972,11 +1980,11 @@ public class Main {
             }
         }
         while (true);
-        LocalDateTime endDate;
+        LocalDate endDate;
         do {
             try {
                 System.out.println("\nEnter end date to search > ");
-                endDate = LocalDateTime.of(Main.promptInt("		Year  > "), Main.promptInt("		Month > "), Main.promptInt("		Day   > "), 0, 0);
+                endDate = LocalDate.of(Main.promptInt("		Year  > "), Main.promptInt("		Month > "), Main.promptInt("		Day   > "));
                 if (endDate.isBefore(startDate)) {
                     System.out.println("End date should not earlier than start date...");
                     continue;
@@ -2078,9 +2086,9 @@ public class Main {
     }
 
     public static void searchDateBilling(ArrayList<Customer> customerList) {
-        LocalDateTime startDate = inputStartDate("\n\nEnter start date to search > ");
-        LocalDateTime endDate = inputEndDate("\nEnter end date to search > ", startDate);
-        LocalDateTime input;
+        LocalDate startDate = inputStartDate("\n\nEnter start date to search > ");
+        LocalDate endDate = inputEndDate("\nEnter end date to search > ", startDate);
+        LocalDate input;
         // searching
         ArrayList<Integer> indexer = new ArrayList<>();
         for (int index = 0; index < customerList.size(); index++) {
@@ -2225,15 +2233,15 @@ public class Main {
             System.out.println("No customers found in record...");
             return;
         }
-        LocalDateTime startDate = inputStartDate("\n\nEnter start date to search > ");
-        LocalDateTime endDate = inputEndDate("\nEnter end date to search > ", startDate);
+        LocalDate startDate = inputStartDate("\n\nEnter start date to search > ");
+        LocalDate endDate = inputEndDate("\nEnter end date to search > ", startDate);
         // searching
         ArrayList<Integer> indexer = new ArrayList<>();
         for (int index = 0; index < customerList.size(); index++) {
 
             for (Reservation reservation : customerList.get(index).getReservation()) {
-                if ((reservation.getReserveDateTime().isAfter(startDate) && reservation.getReserveDateTime().isBefore(endDate)) ||
-                        reservation.getReserveDateTime().isEqual(startDate) || reservation.getReserveDateTime().isEqual(endDate)) {
+                if ((reservation.getReserveDateTime().isAfter(startDate.atTime(0,0,0)) && reservation.getReserveDateTime().isBefore(endDate.atTime(0,0,0))) ||
+                        reservation.getReserveDateTime().isEqual(startDate.atTime(0,0,0)) || reservation.getReserveDateTime().isEqual(endDate.atTime(0,0,0))) {
                     indexer.add(index); // add index to array
                 }
             }
@@ -2458,15 +2466,15 @@ public class Main {
         return type;
     }
 
-    public static LocalDateTime inputCardExpireDate() {
-        LocalDateTime expireDate;
+    public static LocalDate inputCardExpireDate() {
+        LocalDate expireDate;
         do {
             System.out.println("\n\n  Expired Date of Card");
             System.out.println("-------------------------");
             try {
-                expireDate = LocalDateTime.of(promptInt("Year > "), promptInt("Month > "), 1, 0, 0, 0);
+                expireDate = LocalDate.of(promptInt("Year > "), promptInt("Month > "), 1);
                 //if year entered is before now
-                if (expireDate.isBefore(LocalDateTime.now()) || expireDate.isAfter(LocalDateTime.now().plusYears(10))) {
+                if (expireDate.isBefore(LocalDate.now()) || expireDate.isAfter(LocalDate.now().plusYears(10))) {
                     System.out.println("Invalid expired date...");
                     continue;
                 }
@@ -2667,7 +2675,7 @@ public class Main {
         do {
             shelter.setCheckInDate(Main.inputStartDate("\n\nEnter check-in date : "));
             shelter.setCheckOutDate(Main.inputEndDate("\n\nEnter check-out date : ", shelter.getCheckInDate()));
-            if (ChronoUnit.DAYS.between(shelter.getCheckInDate().toLocalDate(), shelter.getCheckOutDate().toLocalDate()) > 31) {
+            if (ChronoUnit.DAYS.between(shelter.getCheckInDate(), shelter.getCheckOutDate()) > 31) {
                 System.out.println("Maximum days of stay is 30 days only...");
                 continue;
             }
@@ -2679,7 +2687,7 @@ public class Main {
         shelter.setFoodPortion(Main.promptSize("\tFood Portion"));
 
         // calculate days of stay
-        shelter.setTotalNumOfDays(Period.between(shelter.getCheckInDate().toLocalDate(), shelter.getCheckOutDate().toLocalDate()).getDays());
+        shelter.setTotalNumOfDays(Period.between(shelter.getCheckInDate(), shelter.getCheckOutDate()).getDays());
         System.out.println(shelter.getTotalNumOfDays());
 
         boolean exitFlag;
@@ -2879,13 +2887,13 @@ public class Main {
         while (true);
     }
 
-    public static LocalDateTime inputStartDate(String text) {
-        LocalDateTime startDate;
+    public static LocalDate inputStartDate(String text) {
+        LocalDate startDate;
         do {
             try {
                 System.out.println(text);
-                startDate = LocalDateTime.of(Main.promptInt("		Year  > "), Main.promptInt("		Month > "), Main.promptInt("		Day   > "), 0, 0);
-                if (startDate.isBefore(LocalDateTime.now())) {
+                startDate = LocalDate.of(Main.promptInt("		Year  > "), Main.promptInt("		Month > "), Main.promptInt("		Day   > "));
+                if (startDate.isBefore(LocalDate.now())) {
                     System.out.println("Date entered must be in the future...");
                     continue;
                 }
@@ -2897,12 +2905,12 @@ public class Main {
         while (true);
     }
 
-    public static LocalDateTime inputEndDate(String text, LocalDateTime startDate) {
-        LocalDateTime endDate;
+    public static LocalDate inputEndDate(String text, LocalDate startDate) {
+        LocalDate endDate;
         do {
             try {
                 System.out.println(text);
-                endDate = LocalDateTime.of(Main.promptInt("		Year  > "), Main.promptInt("		Month > "), Main.promptInt("		Day   > "), 0, 0);
+                endDate = LocalDate.of(Main.promptInt("		Year  > "), Main.promptInt("		Month > "), Main.promptInt("		Day   > "));
                 if (endDate.isBefore(startDate)) {
                     System.out.println("End date should not earlier than start date...");
                     continue;
@@ -2921,12 +2929,12 @@ public class Main {
         return date.format(formatter);
     }
 
-    /*
+
     public static String dateToString(LocalDate date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return date.format(formatter);
     }
-     */
+
 
     // format date time to String
     public static String datetimeToString(LocalDateTime date) {
@@ -3064,14 +3072,14 @@ public class Main {
         return gender;
     }
 
-    public static LocalDateTime inputDOB() {
-        LocalDateTime dob;
+    public static LocalDate inputDOB() {
+        LocalDate dob;
         do {
             try {
                 System.out.println("\n\nEnter date of birth : ");
-                dob = LocalDateTime.of(promptInt("Year > "), promptInt("Month > "), promptInt("Day > "), 0, 0, 0);
+                dob = LocalDate.of(promptInt("Year > "), promptInt("Month > "), promptInt("Day > "));
                 // if date entered is in the future or is before year 1905
-                if (dob.isAfter(LocalDateTime.now()) || dob.isBefore(LocalDateTime.of(1905, 1, 1, 0, 0, 0))) {
+                if (dob.isAfter(LocalDate.now()) || dob.isBefore(LocalDate.of(1905, 1, 1))) {
                     System.out.println("Invalid date entered...");
                     continue;
                 }
@@ -3407,11 +3415,11 @@ public class Main {
         do {
             try {
                 System.out.println("Enter promotion start date : ");
-                promo.setPromoStartDate(LocalDateTime.of(Main.promptInt("		Year  > "), Main.promptInt("		Month > "), Main.promptInt("		Day   > "), 0, 0));
-                if (promo.getPromoStartDate().isBefore(LocalDateTime.now())) {
+                promo.setPromoStartDate(LocalDate.of(Main.promptInt("		Year  > "), Main.promptInt("		Month > "), Main.promptInt("		Day   > ")));
+                if (promo.getPromoStartDate().isBefore(LocalDate.now())) {
                     System.out.println("Date entered must be in the future...");
                     continue;
-                } else if (promo.getPromoStartDate().isAfter(LocalDateTime.now().plusYears(2))) {
+                } else if (promo.getPromoStartDate().isAfter(LocalDate.now().plusYears(2))) {
                     System.out.println("Date entered is invalid...");
                     continue;
                 }
@@ -3427,7 +3435,7 @@ public class Main {
         do {
             try {
                 System.out.println("Enter promotion end date : ");
-                promo.setPromoEndDate(LocalDateTime.of(Main.promptInt("		Year  > "), Main.promptInt("		Month > "), Main.promptInt("		Day   > "), 0, 0));
+                promo.setPromoEndDate(LocalDate.of(Main.promptInt("		Year  > "), Main.promptInt("		Month > "), Main.promptInt("		Day   > ")));
                 if (promo.getPromoEndDate().isBefore(promo.getPromoStartDate())) {
                     System.out.println("End date should not earlier than start date...");
                     continue;
@@ -3470,7 +3478,7 @@ public class Main {
             amt = cb.getEachSubtotal();
             totalAmt = cb.calcTotalAmount();
             cb.setTotalAmount(totalAmt);
-            dispBillSummary(cb, amt, totalAmt, LocalDateTime.now());
+            dispBillSummary(cb, amt, totalAmt, LocalDate.now());
 
             // get promo code and its origin
             promoYesNo = promptYesNo("\nDo you have any promo code to apply (Y/N) > ");
@@ -3547,10 +3555,10 @@ public class Main {
         }
     }
 
-    public static void dispBillSummary(Billing cb, ArrayList<Double> amt, double totalAmt, LocalDateTime dateTime) {
+    public static void dispBillSummary(Billing cb, ArrayList<Double> amt, double totalAmt, LocalDate dateTime) {
         System.out.println("\n");
         System.out.println("====================================================================================================================");
-        System.out.println("|\t\t                  Transaction ID: " + cb.getTransactionID() + "     Date: " + Main.datetimeToString(dateTime) + "                                        |");
+        System.out.println("|\t\t                  Transaction ID: " + cb.getTransactionID() + "     Date: " + Main.dateToString(dateTime) + "                                        |");
         System.out.println("====================================================================================================================");
         System.out.println("|  ResvID\t\t|  PetID\t\t|  Date\t\t\t|  Charges(RM)\t|  Service Details                                 |");
         System.out.println("====================================================================================================================");
@@ -3634,7 +3642,7 @@ public class Main {
 
     public static boolean payByCash(ArrayList<Double> amt, double totalAmt, boolean promoYesNo, double totalAmtAfterPromo, double promoRate, Person currentUser, ArrayList<Employee> employeeList) {
         Billing cb = ((Customer) currentUser).getBill();
-        dispBillSummary(cb, amt, totalAmt, LocalDateTime.now());
+        dispBillSummary(cb, amt, totalAmt, LocalDate.now());
         dispGrandTotal(cb, promoYesNo, totalAmt, totalAmtAfterPromo, promoRate);
 
         do {
@@ -3650,7 +3658,7 @@ public class Main {
                 // If correct username and password
                 if (obj.username.equals(username) && obj.password.equals(password)) {
                     // set paymentDate in Billing object, move bill to bill history
-                    ((Customer) currentUser).getBill().setPaymentDate(LocalDateTime.now());
+                    ((Customer) currentUser).getBill().setPaymentDate(LocalDate.now());
                     ((Customer) currentUser).getBillHistory().add(((Customer) currentUser).getBill());
                     ((Customer) currentUser).setBill(null);
                     System.out.println("Successful Payment");
@@ -3669,7 +3677,7 @@ public class Main {
         if (((Customer) currentUser).getCards().size() != 0) {
             selectCard(currentUser);
             Billing cb = ((Customer) currentUser).getBill();
-            dispBillSummary(cb, amt, totalAmt, LocalDateTime.now());
+            dispBillSummary(cb, amt, totalAmt, LocalDate.now());
             dispGrandTotal(cb, promoYesNo, totalAmt, totalAmtAfterPromo, promoRate);
             if (!Main.promptYesNo("\nFinal confirmation\n------------------\nConfirm to pay? > ")) {
                 System.out.println("Payment not processed");
@@ -3684,7 +3692,7 @@ public class Main {
             System.out.println(".  ");
             wait(1000);
             // set paymentDate in Billing object, move bill to bill history
-            ((Customer) currentUser).getBill().setPaymentDate(LocalDateTime.now());
+            ((Customer) currentUser).getBill().setPaymentDate(LocalDate.now());
             ((Customer) currentUser).getBillHistory().add(((Customer) currentUser).getBill());
             ((Customer) currentUser).setBill(null);
             System.out.println("Successful Payment");
@@ -3768,7 +3776,7 @@ public class Main {
         for (Promotion promotion : promotions) {
             p = promotion;
             if (p.getPromoCode().equals(promoCodeEntered)) {
-                return !LocalDateTime.now().isBefore(p.getPromoStartDate()) && !LocalDateTime.now().isAfter(p.getPromoEndDate());
+                return !LocalDate.now().isBefore(p.getPromoStartDate()) && !LocalDate.now().isAfter(p.getPromoEndDate());
             }
         }
         return false;
@@ -3848,7 +3856,7 @@ public class Main {
         }
         amt = c.getEachSubtotal();
         totalAmt = c.calcTotalAmount();
-        dispBillSummary(c, amt, totalAmt, LocalDateTime.now());
+        dispBillSummary(c, amt, totalAmt, LocalDate.now());
         pressAnyKeyToContinue();
     }
 
@@ -3856,8 +3864,8 @@ public class Main {
         //boolean searchFlag;
         double min = 0;
         double max = 0;
-        LocalDateTime minDate;
-        LocalDateTime maxDate;
+        LocalDate minDate;
+        LocalDate maxDate;
         boolean cont;
         if (((Customer) currentUser).getBillHistory().size() == 0) {
             System.out.println("\n\n\tSearch Billing History");
@@ -3897,20 +3905,20 @@ public class Main {
                         do {
                             //get min date
                             if (Main.promptYesNo("\nIs there a minimum date (Y/N) > ")) {
-                                minDate = LocalDateTime.of(Main.promptInt("Year  > "),
+                                minDate = LocalDate.of(Main.promptInt("Year  > "),
                                         Main.promptInt("Month > "),
-                                        1, 0, 0);
+                                        1);
                             } else {
-                                minDate = LocalDateTime.of(2000, 1, 1, 0, 0);
+                                minDate = LocalDate.of(2000, 1, 1);
                             }
 
                             //get max date
                             if (Main.promptYesNo("\nIs there a maximum date (Y/N) > ")) {
-                                maxDate = LocalDateTime.of(Main.promptInt("Year  > "),
+                                maxDate = LocalDate.of(Main.promptInt("Year  > "),
                                         (Main.promptInt("Month > ") + 1),
-                                        1, 0, 0);
+                                        1);
                             } else {
-                                maxDate = LocalDateTime.of(2200, 1, 1, 0, 0);
+                                maxDate = LocalDate.of(2200, 1, 1);
                             }
                             if (maxDate.isBefore(minDate)) {
                                 System.out.println("\nMaximum date must be later than minimum date!\n");
@@ -3994,7 +4002,7 @@ public class Main {
         System.out.println("Payment method           : " + cbh.get(choiceArr.get(choice)).getPaymentMethod());
     }
 
-    public static void searchCurrentCustBillingHistoryPaymentDate(LocalDateTime minDate, LocalDateTime maxDate, ArrayList<Billing> cbh) {
+    public static void searchCurrentCustBillingHistoryPaymentDate(LocalDate minDate, LocalDate maxDate, ArrayList<Billing> cbh) {
         int choice;
         double totalAmt;
         ArrayList<Double> amt = new ArrayList<>();

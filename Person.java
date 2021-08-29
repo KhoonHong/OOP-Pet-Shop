@@ -1,4 +1,4 @@
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 
 /**
@@ -17,7 +17,7 @@ abstract class Person {
     protected String tel;
     protected char gender;
     protected String id;
-    protected LocalDateTime dob;
+    protected LocalDate dob;
     protected Address address;
     protected String email;
     protected String username;
@@ -41,10 +41,10 @@ abstract class Person {
      * @param username Person username
      * @param password Person password
      */
-    protected Person(String firstName, String lastName, String tel, char gender, LocalDateTime dob, Address address, String email, String username, String password) {
+    protected Person(String firstName, String lastName, String tel, char gender, LocalDate dob, Address address, String email, String username, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.age = (LocalDateTime.now().getYear() - dob.getYear());
+        this.age = (LocalDate.now().getYear() - dob.getYear());
         this.tel = tel;
         this.gender = gender;
         this.dob = dob;
@@ -103,11 +103,11 @@ abstract class Person {
         this.id = id;
     }
 
-    public LocalDateTime getDob() {
+    public LocalDate getDob() {
         return dob;
     }
 
-    public void setDob(LocalDateTime dob) {
+    public void setDob(LocalDate dob) {
         this.dob = dob;
     }
 

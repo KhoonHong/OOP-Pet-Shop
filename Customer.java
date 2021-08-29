@@ -1,4 +1,4 @@
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 
@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class Customer extends Person implements Displayable, Identifiable {
 
-    private LocalDateTime regDate;
+    private LocalDate regDate;
     private ArrayList<Pet> pets = new ArrayList<>();
     private ArrayList<Reservation> reservation = new ArrayList<>();
     private Billing bill;
@@ -28,8 +28,8 @@ public class Customer extends Person implements Displayable, Identifiable {
     // Constructor
     Customer() {
         // no-args
-        this.regDate = LocalDateTime.now();
-        this.age = (LocalDateTime.now().getYear() - dob.getYear());
+        this.regDate = LocalDate.now();
+        this.age = (LocalDate.now().getYear() - dob.getYear());
         currentCustCount++;
         totalCustCount++;
         this.id = generateID(currentCustCount);;
@@ -48,21 +48,21 @@ public class Customer extends Person implements Displayable, Identifiable {
      * @param username Customer username
      * @param password Customer password
      */
-    Customer(String firstName, String lastName, String tel, char gender, LocalDateTime dob, Address address, String email, String username, String password) {
+    Customer(String firstName, String lastName, String tel, char gender, LocalDate dob, Address address, String email, String username, String password) {
         super(firstName, lastName, tel, gender, dob, address, email, username, password);
-        this.regDate = LocalDateTime.now();
-        this.age = (LocalDateTime.now().getYear() - dob.getYear());
+        this.regDate = LocalDate.now();
+        this.age = (LocalDate.now().getYear() - dob.getYear());
         currentCustCount++;
         totalCustCount++;
         this.id = generateID(currentCustCount);;
     }
 
     // Getter & Setter
-    public LocalDateTime getRegDate() {
+    public LocalDate getRegDate() {
         return regDate;
     }
 
-    public void setRegDate(LocalDateTime regDate) {
+    public void setRegDate(LocalDate regDate) {
         this.regDate = regDate;
     }
 

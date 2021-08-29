@@ -1,4 +1,4 @@
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 
 /**
@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 public class Promotion implements Identifiable {
     private String promoID;
     private String promoCode;
-    private LocalDateTime promoStartDate;
-    private LocalDateTime promoEndDate;
+    private LocalDate promoStartDate;
+    private LocalDate promoEndDate;
     private double promoRate;
     private String description;
     private static int currentPromoCount;
@@ -36,7 +36,7 @@ public class Promotion implements Identifiable {
      * @param promoRate The promotion rate
      * @param description The promotion description
      */
-    Promotion(String promoCode, LocalDateTime promoStartDate, LocalDateTime promoEndDate, double promoRate, String description) {
+    Promotion(String promoCode, LocalDate promoStartDate, LocalDate promoEndDate, double promoRate, String description) {
         currentPromoCount++;
         totalPromoCount++;
         this.promoCode = promoCode;
@@ -64,19 +64,19 @@ public class Promotion implements Identifiable {
         this.promoCode = promoCode;
     }
 
-    public LocalDateTime getPromoStartDate() {
+    public LocalDate getPromoStartDate() {
         return promoStartDate;
     }
 
-    public void setPromoStartDate(LocalDateTime promoStartDate) {
+    public void setPromoStartDate(LocalDate promoStartDate) {
         this.promoStartDate = promoStartDate;
     }
 
-    public LocalDateTime getPromoEndDate() {
+    public LocalDate getPromoEndDate() {
         return promoEndDate;
     }
 
-    public void setPromoEndDate(LocalDateTime promoEndDate) {
+    public void setPromoEndDate(LocalDate promoEndDate) {
         this.promoEndDate = promoEndDate;
     }
 

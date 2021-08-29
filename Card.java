@@ -1,4 +1,4 @@
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 
 /**
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class Card {
     private String number;
     private String type;
-    private LocalDateTime expireDate;
+    private LocalDate expireDate;
     private String nameOnCard;
     private String issuer;
     private Address billingAddress;
@@ -34,7 +34,7 @@ public class Card {
      * @param issuer Card issuer bank name
      * @param billingAddress Card billing address
      */
-    Card(String nameOnCard, String number, String CVV, LocalDateTime expireDate, String type, String issuer, Address billingAddress) {
+    Card(String nameOnCard, String number, String CVV, LocalDate expireDate, String type, String issuer, Address billingAddress) {
         this.number = number;
         this.type = type;
         this.expireDate = expireDate;
@@ -61,11 +61,11 @@ public class Card {
         this.type = type;
     }
 
-    public LocalDateTime getExpireDate() {
+    public LocalDate getExpireDate() {
         return expireDate;
     }
 
-    public void setExpireDate(LocalDateTime expireDate) {
+    public void setExpireDate(LocalDate expireDate) {
         this.expireDate = expireDate;
     }
 
@@ -129,7 +129,7 @@ public class Card {
                         """,
                 getIssuer(),getType(),
                 getNameOnCard(),
-                getNumber(),
+                censorCardNo(),
                 getCVV(),
                 getExpireDate().getMonthValue()+"/"+Integer.toString(getExpireDate().getYear()).substring(2,4),
                 getBillingAddress().displayRow());

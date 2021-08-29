@@ -1,4 +1,4 @@
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 
 /**
@@ -12,15 +12,15 @@ import java.time.LocalDateTime;
  * @author Chan Jia Wei
  */
 public class Owner extends Person implements Identifiable {
-    private LocalDateTime startWorkDate;
+    private LocalDate startWorkDate;
     private static int totalOwnerCount;
     private static int currentOwnerCount;
 
     // Constructor
     Owner() {
         // no-args
-        this.startWorkDate = LocalDateTime.now();
-        this.age = (LocalDateTime.now().getYear() - dob.getYear());
+        this.startWorkDate = LocalDate.now();
+        this.age = (LocalDate.now().getYear() - dob.getYear());
         currentOwnerCount++;
         totalOwnerCount++;
         this.id = generateID(currentOwnerCount);
@@ -43,25 +43,25 @@ public class Owner extends Person implements Identifiable {
           String lastName,
           String tel,
           char gender,
-          LocalDateTime dob,
+          LocalDate dob,
           Address address,
           String email,
           String username,
           String password) {
         super(firstName, lastName, tel, gender, dob, address, email, username, password);
-        this.startWorkDate = LocalDateTime.now();
-        this.age = (LocalDateTime.now().getYear() - dob.getYear());
+        this.startWorkDate = LocalDate.now();
+        this.age = (LocalDate.now().getYear() - dob.getYear());
         currentOwnerCount++;
         totalOwnerCount++;
         this.id = generateID(currentOwnerCount);
     }
 
     // Getter & Setter
-    public LocalDateTime getStartWorkDate() {
+    public LocalDate getStartWorkDate() {
         return startWorkDate;
     }
 
-    public void setStartWorkDate(LocalDateTime startWorkDate) {
+    public void setStartWorkDate(LocalDate startWorkDate) {
         this.startWorkDate = startWorkDate;
     }
 

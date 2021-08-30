@@ -89,7 +89,7 @@ public class Bird extends Pet implements Identifiable {
         		| Size  --> %-15s            |
         		| Aggressiveness --> %-10s         |
         		|                                       |
-        		+---------------------------------------+""", getId(),
+        		+---------------------------------------+""", getID(),
                 getClass().getSimpleName(),
                 getAge(),
                 getColor(),

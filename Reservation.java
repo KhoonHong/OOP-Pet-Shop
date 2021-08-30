@@ -1,5 +1,4 @@
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 
 /**
@@ -164,7 +163,7 @@ public class Reservation implements Displayable, Identifiable {
                 getReserveID(),
                 getServices().getClass().getSimpleName(),
                 Main.datetimeToString(getReserveDateTime()),
-                getPet().getId(),
+                getPet().getID(),
                 getPet().getClass().getSimpleName(),
                 getReserveSession(),
                 Main.datetimeToString(getReserveMadeDateTime()),
@@ -196,7 +195,7 @@ public class Reservation implements Displayable, Identifiable {
                 getReserveID(),
                 getServices().getClass().getSimpleName(),
                 Main.datetimeToString(getReserveDateTime()),
-                getPet().getId(),
+                getPet().getID(),
                 getPet().getClass().getSimpleName(),
                 getRemarks(),
                 getReserveSession(),

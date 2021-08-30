@@ -120,7 +120,7 @@ public class Dog extends Pet implements Identifiable {
                         	| Pregnant --> %c                        |
                         	| Aggressiveness --> %-10s         |
                         	|                                       |
-                        	+---------------------------------------+""", getId(),
+                        	+---------------------------------------+""", getID(),
                 getClass().getSimpleName(),
                 getAge(),
                 getColor(),

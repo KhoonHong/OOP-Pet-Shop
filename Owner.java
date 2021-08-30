@@ -106,7 +106,7 @@ public class Owner extends Person implements Identifiable {
         		|   Address  > %-20s    |
         		|                                                                          |
         		+--------------------------------------------------------------------------+""",
-                getId(),
+                getID(),
                 getFirstName(),
                 getAge(),
                 getLastName(),

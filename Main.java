@@ -25,7 +25,7 @@ public class Main {
         ArrayList<Employee> employeeList = new ArrayList<>();
         ArrayList<Owner> ownerList = new ArrayList<>();
         ArrayList<Promotion> promotions = new ArrayList<>();
-
+        /*
         try {
             // to generate data
             File custCredentials = new File("customer_credentials.txt");
@@ -36,7 +36,7 @@ public class Main {
         catch (IOException e) {
             System.out.println("FIle handling error occurred...");
         }
-
+        */
 
         ownerList.add(new Owner("Khoon Hong",
                 "Lee",
@@ -661,7 +661,7 @@ public class Main {
             for (Reservation obj1 : obj.getReservation()) {
                 // if matches
                 if (obj1.equals(reservation)) {
-                    return obj.getId();
+                    return obj.getID();
                 }
             }
         }
@@ -817,6 +817,25 @@ public class Main {
             pressAnyKeyToContinue();
             return;
         }
+        if(pet instanceof Bird){
+            Bird.setTotalBirdAge(Bird.getTotalBirdAge() - pet.getAge());
+            Bird.setTotalBirdCount(Bird.getTotalBirdCount() - 1);
+        }
+        else if(pet instanceof Cat){
+            Cat.setTotalCatAge(Cat.getTotalCatAge() - pet.getAge());
+            Cat.setTotalCatCount(Cat.getTotalCatCount() - 1);
+        }
+        else if(pet instanceof Dog){
+            Dog.setTotalDogAge(Dog.getTotalDogAge() - pet.getAge());
+            Dog.setTotalDogCount(Dog.getTotalDogCount() - 1);
+        }
+        else {
+            Rabbit.setTotalRabbitAge(Rabbit.getTotalRabbitAge() - pet.getAge());
+            Rabbit.setTotalRabbitCount(Rabbit.getTotalRabbitCount() - 1);
+        }
+        // remove from total pet count
+        ((Customer) currentUser).removePet(pet);
+        Pet.setTotalPetCount(Pet.getTotalPetCount() - 1);
         ((Customer) currentUser).removePet(pet);
 
         try {
@@ -899,7 +918,7 @@ public class Main {
             exitFlag = false;
             System.out.print("\n\t\t *** Edit Pet Menu ***");
             System.out.print("\n+---------------------------------------+");
-            System.out.printf("\n| Pet ID > %-6s                      |",pet.getId());
+            System.out.printf("\n| Pet ID > %-6s                      |",pet.getID());
             System.out.printf("\n| Type   > %-6s                       |",pet.getClass().getSimpleName());
             System.out.print("\n+---------------------------------------+");
             System.out.printf("\n| Age    > %-3d      Color  > %-8s   |",pet.getAge(),pet.getColor());
@@ -945,7 +964,7 @@ public class Main {
         System.out.println("------------------------------");
         System.out.println("\t ID\tType\tGender\tColor");
         for (int i = 0; i < ((Customer)currentUser).getPets().size(); i++) {
-            System.out.printf("%d. %s\t%-6s\t   %c\t%s\n",i+1, ((Customer)currentUser).getPets().get(i).getId(),
+            System.out.printf("%d. %s\t%-6s\t   %c\t%s\n",i+1, ((Customer)currentUser).getPets().get(i).getID(),
                     ((Customer)currentUser).getPets().get(i).getClass().getSimpleName(),
                     ((Customer)currentUser).getPets().get(i).getGender(),
                     ((Customer)currentUser).getPets().get(i).getColor());
@@ -1103,7 +1122,7 @@ public class Main {
                 +-----------+---------+---------+-----------------+--------+----------+---------------+----------------------+-----------------+""");
                         for (Customer customer : customerList) {
                             for (Reservation reservation : customer.getReservation()) {
-                                System.out.printf("|  %6s   ", customer.getId());
+                                System.out.printf("|  %6s   ", customer.getID());
                                 System.out.print(reservation.displayRow()+"\n");
                                 System.out.println("+------------------------------------------------------------------------------------------------------------------------------+");
                             }
@@ -1126,7 +1145,7 @@ public class Main {
                             if (customer.getBill() == null) {
                                 continue;
                             }
-                            System.out.printf("|  %6s   |  %6s  | %10s |    %2d    |\n", customer.getId(),
+                            System.out.printf("|  %6s   |  %6s  | %10s |    %2d    |\n", customer.getID(),
                                     customer.getBill().getTransactionID(),
                                     convertCurrency(customer.getBill().calcTotalAmount()),
                                     customer.getBill().getBillDetails().size());
@@ -1148,7 +1167,7 @@ public class Main {
                 +-----------+--------------+-------------+-----------+------------+--------------+-----------------+---------------+----------+""");
                         for (Customer customer : customerList) {
                             for (Billing billing : customer.getBillHistory()) {
-                                System.out.printf("|  %6s   ", customer.getId());
+                                System.out.printf("|  %6s   ", customer.getID());
                                 System.out.print(billing.displayRow()+"\n");
                                 System.out.println("+-----------------------------------------------------------------------------------------------------------------------------+");
                             }
@@ -1954,7 +1973,7 @@ public class Main {
             for (int billingIndex = 0; billingIndex < customer.getBillHistory().size(); billingIndex++) {
                 if (customer.getBillHistory().get(billingIndex).getGrandTotal() >= lower &&
                         customer.getBillHistory().get(billingIndex).getGrandTotal() <= upper) {
-                    System.out.printf("|  %6s   |%-15s", customer.getId(),customer.fullName());
+                    System.out.printf("|  %6s   |%-15s", customer.getID(),customer.fullName());
                     System.out.print(customer.getBillHistory().get(billingIndex).displayRow()+"\n"); // billing class
                     System.out.println("+--------------------------------------------------------------------------------------------------------------------------------------------+");
                 }
@@ -2024,7 +2043,7 @@ public class Main {
                 +-----------+---------------+-------------+-------------+-----------+------------+--------------+-----------------+---------------+----------+""");
         for (int index = 0; index < customerIndexer.size(); index++) {
             for (Billing billing : customerList.get(index).getBillHistory()) {
-                System.out.printf("|  %6s   |%-15s", customerList.get(index).getId(),(customerList.get(index)).fullName());
+                System.out.printf("|  %6s   |%-15s", customerList.get(index).getID(),(customerList.get(index)).fullName());
                 System.out.print(billing.displayRow()+"\n"); // billing class
                 System.out.println("+--------------------------------------------------------------------------------------------------------------------------------------------+");
             }
@@ -2079,7 +2098,7 @@ public class Main {
                 |  Cust.ID  | Total Amount | Grand Total | Services |
                 +-----------+--------------+-------------+----------+""");
         for (int index : indexer) {
-            System.out.printf("|  %6s   | %10s | %10s  |Count : %d |\n",customerList.get(index).getId(),convertCurrency(customerList.get(index).getBill().getTotalAmount()),convertCurrency(customerList.get(index).getBill().getGrandTotal()),customerList.get(index).getBill().getBillDetails().size());
+            System.out.printf("|  %6s   | %10s | %10s  |Count : %d |\n",customerList.get(index).getID(),convertCurrency(customerList.get(index).getBill().getTotalAmount()),convertCurrency(customerList.get(index).getBill().getGrandTotal()),customerList.get(index).getBill().getBillDetails().size());
             System.out.println("+----------------------------------------+----------+");
         }
         pressAnyKeyToContinue();
@@ -2112,7 +2131,7 @@ public class Main {
                 |  Cust.ID  | Total Amount | Grand Total | Trans. ID | Pay Method | Promo Origin |  Payment Date   | Promo Applied | Services |
                 +-----------+--------------+-------------+-----------+------------+--------------+-----------------+---------------+----------+""");
         for (int index : indexer) {
-            System.out.printf("|  %6s   ", customerList.get(index).getId());
+            System.out.printf("|  %6s   ", customerList.get(index).getID());
             System.out.print(customerList.get(index).getBill().displayRow()+"\n");
             System.out.println("+-----------------------------------------------------------------------------------------------------------------------------+");
         }
@@ -2257,7 +2276,7 @@ public class Main {
                 +-----------+---------+---------+-----------------+--------+----------+---------------+----------------------+-----------------+""");
         for (int index : indexer) {
             for (Reservation reserve : customerList.get(index).getReservation()) {
-                System.out.printf("|  %6s   ", customerList.get(index).getId());
+                System.out.printf("|  %6s   ", customerList.get(index).getID());
                 System.out.print(reserve.displayRow() + "\n");
                 System.out.println("+------------------------------------------------------------------------------------------------------------------------------+");
             }
@@ -2295,7 +2314,7 @@ public class Main {
                 +-----------+---------+---------+-----------------+--------+----------+---------------+----------------------+-----------------+""");
         for (int index : indexer) {
             for (Reservation reserve : customerList.get(index).getReservation()) {
-                System.out.printf("|  %6s   ", customerList.get(index).getId());
+                System.out.printf("|  %6s   ", customerList.get(index).getID());
                 System.out.print(reserve.displayRow()+"\n");
                 System.out.println("+------------------------------------------------------------------------------------------------------------------------------+");
             }
@@ -3293,7 +3312,7 @@ public class Main {
         // choose which employee to book with
         for (int i = 0; i < employeeList.size(); i++) {
             System.out.println((i + 1) + ". " +
-                    employeeList.get(i).getId() +
+                    employeeList.get(i).getID() +
                     " " +
                     employeeList.get(i).getFirstName() +
                     " " +
@@ -3568,7 +3587,7 @@ public class Main {
             }
             System.out.print("|  " + cb.getBillDetails().get(i).getReserveID() +
                     "\t\t" +
-                    "|  " + cb.getBillDetails().get(i).getPet().getId() +
+                    "|  " + cb.getBillDetails().get(i).getPet().getID() +
                     "\t\t" +
                     "|  " + Main.dateToString(cb.getBillDetails().get(i).getReserveDateTime()) +
                     "\t" +

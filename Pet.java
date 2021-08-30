@@ -60,11 +60,11 @@ abstract class Pet {
         this.gender = gender;
     }
 
-    public String getId() {
+    public String getID() {
         return ID;
     }
 
-    public void setId(String ID) {
+    public void setID(String ID) {
         this.ID = ID;
     }
 

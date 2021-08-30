@@ -152,12 +152,13 @@ public class Customer extends Person implements Displayable, Identifiable {
     }
 
     /**
-     * Add a {@code Pet} object into {@code pets} ArrayList
+     * Remove a {@code Pet} object from {@code pets} ArrayList
      *
      * @param pet {@code Pet} object created by customer
      */
     public void removePet(Pet pet) {
         this.getPets().remove(pet);
+        Pet.setTotalPetCount(Pet.getTotalPetCount()-1); // reduce by one
     }
 
     /**
@@ -201,7 +202,7 @@ public class Customer extends Person implements Displayable, Identifiable {
     public String displayRow() {
         return String.format("""
         	|  %6s   |%s %-5s| %3s   |     %c    |  %11s   | %s |%-20s | %-15s|   %s  |%-30s     |""",
-                getId(),
+                getID(),
                 getFirstName(),
                 getLastName(),
                 getAge(),
@@ -238,7 +239,7 @@ public class Customer extends Person implements Displayable, Identifiable {
         		|   Address  > %-20s            |
         		|                                                                          |
         		+--------------------------------------------------------------------------+""",
-                getId(),
+                getID(),
                 getFirstName(),
                 getAge(),
                 getLastName(),

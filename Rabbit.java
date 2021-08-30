@@ -118,7 +118,7 @@ public class Rabbit extends Pet implements Identifiable {
                         	| Pregnant --> %c                        |
                         	| Aggressiveness --> %-10s         |
                         	|                                       |
-                        	+---------------------------------------+""", getId(),
+                        	+---------------------------------------+""", getID(),
                 getClass().getSimpleName(),
                 getAge(),
                 getColor(),

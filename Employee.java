@@ -107,7 +107,7 @@ public class Employee extends Person implements Displayable, Identifiable {
     public String displayRow() {
         return String.format("""
         	| %6s |%s %-5s | %3s   |    %c   |  %11s   | %s |%-6s |%-20s | %-15s|   %s  |%-30s     |""",
-                getId(),
+                getID(),
                 getFirstName(),
                 getLastName(),
                 getAge(),
@@ -146,7 +146,7 @@ public class Employee extends Person implements Displayable, Identifiable {
         		|   Address  > %-20s     |
         		|                                                                          |
         		+--------------------------------------------------------------------------+""",
-                getId(),
+                getID(),
                 getFirstName(),
                 getAge(),
                 getLastName(),

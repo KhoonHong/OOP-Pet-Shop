@@ -79,6 +79,9 @@ public class Main {
                 "noob",
                 "noob"));
 
+        // add a cat into first customer
+        customerList.get(0).addPet(new Cat(true, 1, 'M', "Black", Level.MEDIUM, Size.MEDIUM, false));
+
         promotions.add(new Promotion("11Double11", LocalDate.of(2021, 11, 1), LocalDate.of(2021, 11, 11), 0.1111, "Special 11.11% discount for spending along 1.11 to 11.11"));
         promotions.add(new Promotion("PetDay0411", LocalDate.of(2021, 4, 11), LocalDate.of(2021, 4, 12), 0.15, "15% caring to your pet on International Pet Day"));
         promotions.add(new Promotion("10Of500", LocalDate.of(2021, 9, 18), LocalDate.of(2022, 1, 1), 0.1, "Get 10% discount when spend up to RM50 and above"));

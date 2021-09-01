@@ -29,7 +29,6 @@ public class Customer extends Person implements Displayable, Identifiable {
     Customer() {
         // no-args
         this.regDate = LocalDate.now();
-        this.age = (LocalDate.now().getYear() - dob.getYear());
         currentCustCount++;
         totalCustCount++;
         this.id = generateID(currentCustCount);;

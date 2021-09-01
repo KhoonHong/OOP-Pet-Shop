@@ -169,6 +169,7 @@ abstract class Person {
      * @param o Object to be compared
      * @return True if equals, else return false
      */
+    /*
     @Override
     public boolean equals(Object o) {
         if (o instanceof Person person) {
@@ -176,4 +177,5 @@ abstract class Person {
         }
         return false;
     }
+     */
 }

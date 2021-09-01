@@ -23,6 +23,7 @@ public class Reservation implements Displayable, Identifiable {
     private LocalDateTime editMadeDateTime;
     private static int currentReserveCount;
     private static int totalReserveCount;
+    private boolean paymentStatus = false;
 
     // Constructor
     Reservation() {
@@ -148,6 +149,14 @@ public class Reservation implements Displayable, Identifiable {
 
     public static void setTotalReserveCount(int totalReserveCount) {
         Reservation.totalReserveCount = totalReserveCount;
+    }
+
+    public boolean isPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(boolean paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 
     // Methods

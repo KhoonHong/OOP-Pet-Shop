@@ -15,7 +15,7 @@
 public class Cat extends Pet implements Identifiable {
 
     private boolean neutered;
-    private boolean pregnant;
+    private boolean pregnant = false;
     private static int totalCatAge;
     private static int totalCatCount;
     private static int currentCatCount;
@@ -40,6 +40,20 @@ public class Cat extends Pet implements Identifiable {
         totalCatCount++;
         currentCatCount++;
         totalCatAge+=age;
+        this.ID = generateID(currentCatCount);
+    }
+
+    Cat() {
+        // no-args
+    }
+
+    Cat(boolean neutered, int age, char gender, String color, Level aggressive, Size size, boolean pregnant) {
+        super(age, gender, color, aggressive, size);
+        this.neutered = neutered;
+        this.pregnant = pregnant;
+        totalCatAge += age;
+        totalCatCount++;
+        currentCatCount++;
         this.ID = generateID(currentCatCount);
     }
 
@@ -157,6 +171,7 @@ public class Cat extends Pet implements Identifiable {
      * @param o Object to be compared
      * @return True if equals, else return false
      */
+    /*
     @Override
     public boolean equals(Object o) {
         if (o instanceof Cat cat) {
@@ -164,4 +179,5 @@ public class Cat extends Pet implements Identifiable {
         }
         return false;
     }
+     */
 }

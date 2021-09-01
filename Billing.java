@@ -54,7 +54,13 @@ public class Billing implements Displayable, Identifiable{
      * @param promoOrigin The source which the customer obtained the promotion
      * @param paymentDate The checkout timestamp
      */
-    Billing(Reservation bill, double totalAmount, double grandTotal, String paymentMethod, Promotion promoApplied, String promoOrigin, LocalDate paymentDate) {
+    Billing(Reservation bill,
+            double totalAmount,
+            double grandTotal,
+            String paymentMethod,
+            Promotion promoApplied,
+            String promoOrigin,
+            LocalDate paymentDate) {
         currentTransactionCount++;
         totalTransactionCount++;
         this.transactionID = generateID(currentTransactionCount); //generate ID
@@ -204,7 +210,7 @@ public class Billing implements Displayable, Identifiable{
             return "No Promo";
         }
         else {
-            return promo.toString();
+            return promo.getPromoCode();
         }
     }
 

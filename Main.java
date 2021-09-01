@@ -84,8 +84,8 @@ public class Main {
         promotions.add(new Promotion("10Of500", LocalDate.of(2021, 9, 18), LocalDate.of(2022, 1, 1), 0.1, "Get 10% discount when spend up to RM50 and above"));
         promotions.add(new Promotion("Merdeka831", LocalDate.of(2021, 8, 31), LocalDate.of(2021, 9, 16), 0.11, "89% affordable price for all customers during 831 to 916"));
 
-        //generateCustomerProfile(customerList, employeeList);
         //generateEmployeeProfile(employeeList);
+        //generateCustomerProfile(customerList, employeeList);
 
         // start system
         mainMenu(currentUser, customerList, employeeList, ownerList, promotions);
@@ -94,7 +94,7 @@ public class Main {
 
     // Methods
     public static void generateEmployeeProfile(ArrayList<Employee> employeeList) {
-        int generateCount = promptInt("\nEnter the count of employee profile to generate > ");
+        int generateCount = 10;
         for (int count = 0; count < generateCount; count++) {
             String username = generateRandomEmployeeUsername(employeeList);
             String password = generateRandomName();
@@ -113,11 +113,15 @@ public class Main {
     }
 
     public static void generateCustomerProfile(ArrayList<Customer> customerList, ArrayList<Employee> employeeList) {
-        int generateCount = promptInt("\nEnter the count of customer profile to generate > ");
+        int generateCount = 100;
         for (int count = 0; count < generateCount; count++) {
             String username = generateRandomCustomerUsername(customerList);
             String password = generateRandomName();
+
+            // write username and password to txt file
             writeCredentials((count + 1) + ". " + username + " " + password, "customer_credentials.txt");
+
+            // generate customer account
             customerList.add(new Customer(generateRandomName(),
                     generateRandomName(),
                     generateRandomNo() + generateRandomNo(),
@@ -127,11 +131,14 @@ public class Main {
                     generateRandomName() + "@gmail.com",
                     username,
                     password));
+
             // add pet
-            customerList.get(customerList.size() - 1).addPet(new Dog(true,
-                    11, 'm', "Black", Level.MEDIUM, Size.MEDIUM));
-            customerList.get(customerList.size() - 1).addPet(new Cat(true,
-                    1, 'f', "White", Level.LOW, Size.LARGE));
+            // random pet count 1 - 5
+            int petCount = ThreadLocalRandom.current().nextInt(1, 5 + 1);
+            for (int i = 0; i < petCount; i++) {
+                customerList.get(customerList.size() - 1).addPet(generatePet());
+            }
+
             LocalDateTime date = generateLocalDateTime();
             LocalDate date1 = generateLocalDate();
             // add reservation
@@ -157,6 +164,69 @@ public class Main {
             System.out.println("An error occurred...");
             e.printStackTrace();
         }
+    }
+
+    public static void generateBill(Person person) {
+        Reservation reserve = new Reservation();
+    }
+
+    public static Pet generatePet() {
+        int age = ThreadLocalRandom.current().nextInt(1, 19 + 1);
+        switch(ThreadLocalRandom.current().nextInt(1, 4 + 1)) {
+            case 1 -> {
+                return new Dog(new Random().nextBoolean(),
+                        age, new Random().nextBoolean() ? 'M' : 'F', "Black", generateLevel(), generateSize(), false);
+            }
+            case 2 -> {
+                return new Cat(new Random().nextBoolean(),
+                        age, new Random().nextBoolean() ? 'M' : 'F', "White", generateLevel(), generateSize(), false);
+            }
+            case 3 -> {
+                return new Rabbit(new Random().nextBoolean(),
+                        age, new Random().nextBoolean() ? 'M' : 'F', "Black", generateLevel(), generateSize(), false);
+            }
+            case 4 -> {
+                return new Bird(age, new Random().nextBoolean() ? 'M' : 'F', "White", generateLevel(), generateSize());
+            }
+        }
+        return new Cat(new Random().nextBoolean(),
+                age, new Random().nextBoolean() ? 'M' : 'F', "White", generateLevel(), generateSize(), false);
+    }
+
+    public static Level generateLevel() {
+        switch (ThreadLocalRandom.current().nextInt(1, 3 + 1)) {
+            case 1 -> {
+                return Level.LOW;
+            }
+            case 2 -> {
+                return Level.MEDIUM;
+            }
+            case 3 -> {
+                return Level.HIGH;
+            }
+        }
+        return Level.MEDIUM;
+    }
+
+    public static Size generateSize() {
+        switch (ThreadLocalRandom.current().nextInt(1, 5 + 1)) {
+            case 1 -> {
+                return Size.XSMALL;
+            }
+            case 2 -> {
+                return Size.SMALL;
+            }
+            case 3 -> {
+                return Size.MEDIUM;
+            }
+            case 4 -> {
+                return Size.LARGE;
+            }
+            case 5 -> {
+                return Size.XLARGE;
+            }
+        }
+        return Size.MEDIUM;
     }
 
     public static String generateRegion() {
@@ -188,8 +258,7 @@ public class Main {
         long minDay = LocalDate.of(2021, 7, 1).toEpochDay();
         long maxDay = LocalDate.now().toEpochDay();
         long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
-        LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
-        return randomDate;
+        return LocalDate.ofEpochDay(randomDay);
     }
 
     public static String generateRandomCustomerUsername(ArrayList<Customer> customerList) {
@@ -259,6 +328,100 @@ public class Main {
 
     // start of program------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+    // report
+    public static void mostSpendingCustomer(ArrayList<Customer> customerList) {
+
+        // check if customer record is empty
+        if (!checkCustomerRecord(customerList)) {
+            System.out.println("No customer records found...");
+            pressAnyKeyToContinue();
+            return;
+        }
+
+        Customer target = new Customer();
+        double amount = 0, totalAmount = -1;
+        int[] serviceCount = {0,0,0,0};
+
+        System.out.println("\tMost spending customer");
+        System.out.println("  ---------------------------");
+        LocalDate startDate;
+        do {
+            try {
+                System.out.println("\n\nEnter start date > ");
+                startDate = LocalDate.of(Main.promptInt("		Year  > "), Main.promptInt("		Month > "), Main.promptInt("		Day   > "));
+                if (startDate.isBefore(LocalDate.now().minusYears(21))) {
+                    System.out.println("Date entered must be after year 2000...");
+                    continue;
+                }
+                break;
+            } catch (DateTimeException e) {
+                System.out.println("Invalid date entered...");
+            }
+        }
+        while (true);
+        LocalDate endDate;
+        do {
+            try {
+                System.out.println("\nEnter end date > ");
+                endDate = LocalDate.of(Main.promptInt("		Year  > "), Main.promptInt("		Month > "), Main.promptInt("		Day   > "));
+                if (endDate.isBefore(startDate)) {
+                    System.out.println("End date should not earlier than start date...");
+                    continue;
+                }
+                break;
+            } catch (DateTimeException e) {
+                System.out.println("Invalid date entered...");
+            }
+        }
+        while (true);
+
+        for (Customer customer : customerList) {
+            for (Billing bill : customer.getBillHistory()) {
+                if (bill.getPaymentDate().isAfter(startDate) && bill.getPaymentDate().isBefore(endDate)) {
+
+                    amount+=bill.calcTotalAmount();
+
+                    for (Reservation reserve: bill.getBillDetails()) {
+                        if (reserve.getServices() instanceof Bath) {
+                            serviceCount[0]++;
+                        }
+                        else if (reserve.getServices() instanceof Groom) {
+                            serviceCount[1]++;
+                        }
+                        else if (reserve.getServices() instanceof Massage) {
+                            serviceCount[2]++;
+                        }
+                        else if (reserve.getServices() instanceof Shelter) {
+                            serviceCount[3]++;
+                        }
+                    }
+                }
+            }
+            // if there is higher spending customer
+            if (amount > totalAmount) {
+                if (totalAmount != -1) {
+                    serviceCount = new int[]{0, 0, 0, 0}; // reset service count
+                }
+                totalAmount = amount;
+                target = customer;
+
+            }
+        }
+
+        int serviceTotalCount = serviceCount[0] + serviceCount[1] + serviceCount[2] +serviceCount[3];
+
+        System.out.printf("Most spending customer : %s\n", target.fullName());
+        System.out.printf("Total amount spent over date range : %s\n", convertCurrency(totalAmount));
+        System.out.println("Services");
+        System.out.println("------------");
+        System.out.printf("1. Bath > %.2f%% (%d)\n", ((double)serviceCount[0]/serviceTotalCount)*100, serviceCount[0]);
+        System.out.printf("2. Groom > %.2f%% (%d)\n", ((double)serviceCount[1]/serviceTotalCount)*100, serviceCount[1]);
+        System.out.printf("3. Massage > %.2f%% (%d)\n", ((double)serviceCount[2]/serviceTotalCount)*100, serviceCount[2]);
+        System.out.printf("4. Shelter > %.2f%% (%d)\n", ((double)serviceCount[3]/serviceTotalCount)*100, serviceCount[3]);
+        pressAnyKeyToContinue();
+
+    }
+
 
     // Main menu of the whole program
     public static void mainMenu(Person currentUser, ArrayList<Customer> customerList, ArrayList<Employee> employeeList, ArrayList<Owner> ownerList, ArrayList<Promotion> promotions) {
@@ -327,7 +490,6 @@ public class Main {
                 System.out.println("Invalid password...");
             }
             exitFlag = promptYesNo("\n\nDo you want to try again? (Y/N) > ");
-            ;
         }
         while (exitFlag);
     }
@@ -349,7 +511,7 @@ public class Main {
                 case 1 -> employeeMenu(employeeList);
                 case 2 -> promoMenu(promotions);
                 case 3 -> searchMenu(customerList, employeeList);
-                case 4 -> reportMenu();
+                case 4 -> reportMenu(customerList);
                 case 5 -> ownerDisplayMenu(employeeList, customerList);
                 case 6 -> ownerProfileMenu(currentUser, ownerList, customerList, employeeList, promotions);
                 case 7 -> {
@@ -1003,7 +1165,7 @@ public class Main {
         while (true);
     }
 
-    public static void reportMenu() {
+    public static void reportMenu(ArrayList<Customer> customerList) {
         do {
             System.out.println("\n\n\t\tReport Menu");
             System.out.println("-------------------------");
@@ -1023,7 +1185,7 @@ public class Main {
                 case 3 -> System.out.println("3. Promo Code Report");
                 case 4 -> System.out.println("4. Employee Contribution Report");
                 case 5 -> System.out.println("5. Popular Service Report");
-                case 6 -> System.out.println("6. Customer Spending Report");
+                case 6 -> mostSpendingCustomer(customerList);
                 case 7 -> System.out.println("7. Customer Demographic Report");
                 case 8 -> System.out.println("8. Pet Demographic Report");
                 case 9 -> {
@@ -1498,8 +1660,11 @@ public class Main {
             pressAnyKeyToContinue();
             return;
         }
-        System.out.println("Remove a reservation : ");
+        System.out.println("\n\nRemove a reservation : ");
         Reservation reserve = promptReservation(currentUser);
+        if (!promptYesNo("\n\nAre you sure to remove this reservation?\n** There will be no refunds issued if paid **\n\n (Y/N) >")) {
+            return;
+        }
         // remove from reservation array
         ((Customer) currentUser).removeReservation(reserve);
         // remove bath, groom, massage from schedule
@@ -1613,21 +1778,31 @@ public class Main {
 
     public static void editReservation(Person currentUser, ArrayList<Employee> employeeList) {
         Reservation reservation;
-        if (((Customer) currentUser).getReservation().isEmpty()) {
+        ArrayList<Reservation> reservations = new ArrayList<>(); // to store the unpaid reservations
+
+        // filter through paid and unpaid reservations
+        for (Reservation reserve :  ((Customer) currentUser).getReservation()) {
+            if (!reserve.isPaymentStatus()) {
+                reservations.add(reserve);
+            }
+        }
+
+        if (reservations.isEmpty()) {
             System.out.println("No reservation records found...");
             pressAnyKeyToContinue();
             return;
         }
+
         System.out.println("\n\n  Current Reservations");
         System.out.println("-------------------------");
-        for (int index = 0; index < ((Customer) currentUser).getReservation().size(); index++) {
-            System.out.println((index + 1) + ". " + ((Customer) currentUser).getReservation().get(index).getReserveID() + " " +
-                    ((Customer) currentUser).getReservation().get(index).getServices().getClass().getSimpleName() + " " +
-                    ((Customer) currentUser).getReservation().get(index).getPet().getClass().getSimpleName());
+        for (int index = 0; index < reservations.size(); index++) {
+            System.out.println((index + 1) + ". " + reservations.get(index).getReserveID() + " " +
+                    reservations.get(index).getServices().getClass().getSimpleName() + " " +
+                    reservations.get(index).getPet().getClass().getSimpleName());
         }
         do {
             try {
-                reservation = ((Customer) currentUser).getReservation().get(promptInt("Choose a reservation > ") - 1);
+                reservation = reservations.get(promptInt("Choose a reservation > ") - 1);
                 break;
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Invalid choice entered...");
@@ -1712,13 +1887,19 @@ public class Main {
                                 pressAnyKeyToContinue();
                                 continue;
                             }
+                            reservation.setReserveSession(sessionBooked);
+                            reservation.setReserveDateTime(reservation.getReserveDateTime().withHour(Reservation.sessionToTime(sessionBooked)));
+                            reservation.setReserveDateTime(reservation.getReserveDateTime().withMinute(0));
+
                             System.out.println("\n\n\tAvailable Employees");
                             System.out.println("----------------------------");
                             // get employee input and set
                             reservation.setEmployeeSelected(inputEmployee(availableEmployee));
+                            System.out.println(reservation);
                             System.out.println("\nChanges made successfully");
                             pressAnyKeyToContinue();
                             reservation.setEditMadeDateTime(LocalDateTime.now()); // set current datetime
+
                             return;
                         }
                         while (true);
@@ -1778,6 +1959,13 @@ public class Main {
         Service service;
         Reservation reserve;
         int dateChoice;
+
+        // check if there are no employees
+        if (!checkEmployeeRecord(employeeList)) {
+            System.out.println("There are no employee currently available...");
+            pressAnyKeyToContinue();
+            return;
+        }
 
         // check pet at least one
         if (((Customer) currentUser).getPets().size() == 0) {
@@ -3523,7 +3711,13 @@ public class Main {
                 if (promoYesNo) {
                     System.out.println("Please share the source of promo code with us");
                     System.out.println("1. Youtube\n2. Instagram\n3. Facebook\n4. Twitter\n5. Friends");
-                    Main.promptInt("Source > ");
+                    switch (Main.promptInt("Source > ")) {
+                        case 1 -> cb.setPromoOrigin("Youtube");
+                        case 2 -> cb.setPromoOrigin("Instagram");
+                        case 3 -> cb.setPromoOrigin("Facebook");
+                        case 4 -> cb.setPromoOrigin("Twitter");
+                        case 5 -> cb.setPromoOrigin("Friends");
+                    }
                     // add promotion to customer billing
                     ((Customer) currentUser).getBill().setPromoApplied(searchAssignPromo(promoCodeEntered, promotions));
                     promoRate = ((Customer) currentUser).getBill().getPromoApplied().getPromoRate();
@@ -3710,6 +3904,11 @@ public class Main {
             wait(1000);
             System.out.println(".  ");
             wait(1000);
+
+
+            for (Reservation reserve : cb.getBillDetails()) {
+                reserve.setPaymentStatus(true);
+            }
             // set paymentDate in Billing object, move bill to bill history
             ((Customer) currentUser).getBill().setPaymentDate(LocalDate.now());
             ((Customer) currentUser).getBillHistory().add(((Customer) currentUser).getBill());

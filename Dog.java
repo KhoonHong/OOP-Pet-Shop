@@ -15,7 +15,7 @@
 public class Dog extends Pet implements Identifiable {
 
     private boolean neutered;
-    private boolean pregnant;
+    private boolean pregnant = false;
     private static int totalDogAge;
     private static int totalDogCount;
     private static int currentDogCount;
@@ -38,6 +38,20 @@ public class Dog extends Pet implements Identifiable {
         if (gender == 'f'  && !neutered) {
             this.pregnant = Main.promptYesNo("Is your doggo pregnant? (Y/N) > ");
         }
+        totalDogAge+=age;
+        totalDogCount++;
+        currentDogCount++;
+        this.ID = generateID(currentDogCount);
+    }
+
+    Dog() {
+        // no-args
+    }
+
+    Dog(boolean neutered, int age, char gender, String color, Level aggressive, Size size, boolean pregnant) {
+        super(age, gender, color, aggressive, size);
+        this.neutered = neutered;
+        this.pregnant = pregnant;
         totalDogAge+=age;
         totalDogCount++;
         currentDogCount++;
@@ -162,6 +176,7 @@ public class Dog extends Pet implements Identifiable {
      * @param o Object to be compared
      * @return True if equals, else return false
      */
+    /*
     @Override
     public boolean equals(Object o) {
         if (o instanceof Dog dog) {
@@ -169,4 +184,5 @@ public class Dog extends Pet implements Identifiable {
         }
         return false;
     }
+     */
 }

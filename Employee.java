@@ -191,6 +191,7 @@ public class Employee extends Person implements Displayable, Identifiable {
      * @param o Object to be compared
      * @return True if equals, else return false
      */
+    /*
     @Override
     public boolean equals(Object o) {
         if (o instanceof Employee employee) {
@@ -198,4 +199,5 @@ public class Employee extends Person implements Displayable, Identifiable {
         }
         return false;
     }
+     */
 }

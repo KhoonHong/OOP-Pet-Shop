@@ -123,6 +123,7 @@ abstract class Pet {
      * @param o Object to be compared
      * @return True if equals, else return false
      */
+    /*
     @Override
     public boolean equals(Object o) {
         if (o instanceof Pet pet) {
@@ -130,4 +131,6 @@ abstract class Pet {
         }
         return false;
     }
+
+     */
 }

@@ -15,7 +15,7 @@
 public class Rabbit extends Pet implements Identifiable {
 
     private boolean neutered;
-    private boolean pregnant;
+    private boolean pregnant = false;
     private static int totalRabbitAge;
     private static int totalRabbitCount;
     private static int currentRabbitCount;
@@ -41,6 +41,17 @@ public class Rabbit extends Pet implements Identifiable {
         totalRabbitCount++;
         currentRabbitCount++;
         this.ID = generateID(currentRabbitCount);
+    }
+
+    Rabbit(boolean neutered, int age, char gender, String color, Level aggressive, Size size, boolean pregnant) {
+        super(age, gender, color, aggressive, size);
+        totalRabbitAge+=age;
+        totalRabbitCount++;
+        currentRabbitCount++;
+        this.neutered = neutered;
+        this.ID = generateID(currentRabbitCount);
+        this.pregnant = pregnant;
+        // no-args
     }
 
     // Getter & Setter
@@ -160,6 +171,7 @@ public class Rabbit extends Pet implements Identifiable {
      * @param o Object to be compared
      * @return True if equals, else return false
      */
+    /*
     @Override
     public boolean equals(Object o) {
         if (o instanceof Rabbit rabbit) {
@@ -167,4 +179,6 @@ public class Rabbit extends Pet implements Identifiable {
         }
         return false;
     }
+
+     */
 }

@@ -34,6 +34,10 @@ public class Bird extends Pet implements Identifiable {
         this.ID = generateID(currentBirdCount);;
     }
 
+    Bird() {
+        // no-args
+    }
+
     // Getter and Setter
     public static int getTotalBirdAge() {
         return totalBirdAge;
@@ -129,6 +133,7 @@ public class Bird extends Pet implements Identifiable {
      * @param o Object to be compared
      * @return True if equals, else return false
      */
+    /*
     @Override
     public boolean equals(Object o) {
         if (o instanceof Bird bird) {
@@ -136,4 +141,6 @@ public class Bird extends Pet implements Identifiable {
         }
         return false;
     }
+
+     */
 }

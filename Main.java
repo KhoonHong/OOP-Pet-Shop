@@ -2884,6 +2884,12 @@ public class Main {
             shelter.setCheckOutDate(Main.inputEndDate("\n\nEnter check-out date : ", shelter.getCheckInDate()));
             if (ChronoUnit.DAYS.between(shelter.getCheckInDate(), shelter.getCheckOutDate()) > 31) {
                 System.out.println("Maximum days of stay is 30 days only...");
+                pressAnyKeyToContinue();
+                continue;
+            }
+            else if (ChronoUnit.DAYS.between(shelter.getCheckInDate(), shelter.getCheckOutDate()) == 0) {
+                System.out.println("\nInvalid date entered... \nStart date and end date shouldn't be the same\n");
+                pressAnyKeyToContinue();
                 continue;
             }
             break;

@@ -169,7 +169,7 @@ public class Main {
         }
     }
 
-    public static void generateBill(Person person) {
+    public static void generateBillHistory(Person person) {
         Reservation reserve = new Reservation();
     }
 
@@ -331,6 +331,100 @@ public class Main {
 
     // start of program------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+    //payment method report
+    public static void paymentMethodReport(ArrayList<Customer> customerList){
+
+        // check if customer record is empty
+        if (!checkCustomerRecord(customerList)) {
+            System.out.println("No customer records found...");
+            pressAnyKeyToContinue();
+            return;
+        }
+
+        int [] paymentCount = {0,0};
+        int [] ageCash = {0,0,0,0};
+        int [] ageCard = {0,0,0,0};
+        int totalCust;
+
+        for (Customer customer : customerList){
+            for(Billing billing : customer.getBillHistory()){
+                if(billing.getPaymentMethod().equals("Cash")){
+                    if (customer.getAge() > 18 && customer.getAge() < 30){
+                        ageCash[0]++;
+                    }
+                    else if (customer.getAge() > 31 && customer.getAge() < 50){
+                        ageCash[1]++;
+                    }
+                    else if (customer.getAge() > 51 && customer.getAge() < 70){
+                        ageCash[2]++;
+                    }
+                    else if (customer.getAge() > 71 && customer.getAge() < 90){
+                        ageCash[3]++;
+                    }
+                    paymentCount[0]++;
+                }
+                else if(billing.getPaymentMethod().equals("Card")){
+                    if (customer.getAge() > 18 && customer.getAge() < 30){
+                        ageCard[0]++;
+                    }
+                    else if (customer.getAge() > 31 && customer.getAge() < 50){
+                        ageCard[1]++;
+                    }
+                    else if (customer.getAge() > 51 && customer.getAge() < 70){
+                        ageCard[2]++;
+                    }
+                    else if (customer.getAge() > 71 && customer.getAge() < 90){
+                        ageCard[3]++;
+                    }
+                    paymentCount[1]++;
+                }
+            }
+        }
+        //Calculation
+        totalCust = paymentCount[0] + paymentCount[1];
+        double percentageCash = (double)paymentCount[0]/ totalCust * 100;
+        double percentageCard = (double)paymentCount[1]/ totalCust * 100;
+        double percentageCashAge0 = paymentCount[0] == 0 ? 0 : (double)ageCash[0]/paymentCount[0] * 100;
+        double percentageCashAge1 = paymentCount[0] == 0 ? 0 : (double)ageCash[1]/paymentCount[0] * 100;
+        double percentageCashAge2 = paymentCount[0] == 0 ? 0 : (double)ageCash[2]/paymentCount[0] * 100;
+        double percentageCashAge3 = paymentCount[0] == 0 ? 0 : (double)ageCash[3]/paymentCount[0] * 100;
+
+        double percentageCardAge0 = paymentCount[1] == 0 ? 0 : (double)ageCard[0]/paymentCount[1] * 100;
+        double percentageCardAge1 = paymentCount[1] == 0 ? 0 : (double)ageCard[1]/paymentCount[1] * 100;
+        double percentageCardAge2 = paymentCount[1] == 0 ? 0 : (double)ageCard[2]/paymentCount[1] * 100;
+        double percentageCardAge3 = paymentCount[1] == 0 ? 0 : (double)ageCard[3]/paymentCount[1] * 100;
+
+        // check if there is output
+        if (totalCust == 0) {
+            System.out.println("No records found...");
+            pressAnyKeyToContinue();
+            return;
+        }
+
+        //Output
+        System.out.print("\n                      Payment Report                     ");
+        System.out.print("\n+---------------------------------------------------------+");
+        System.out.print("\n|          |         |                |                   |");
+        System.out.print("\n|  Method  |    %    |  Total Amount  |   Age Range (%)   |");
+        System.out.print("\n|----------|---------|----------------|-------------------|");
+        System.out.print("\n|          |         |                |                   |");
+        System.out.printf("\n|   Cash   |  %6.2f |      %-5d     | 18 - 30 > %6.2f%% |",percentageCash, paymentCount[0], percentageCashAge0);
+        System.out.printf("\n|          |         |                | 31 - 50 > %6.2f%% |", percentageCashAge1);
+        System.out.printf("\n|          |         |                | 51 - 70 > %6.2f%% |", percentageCashAge2);
+        System.out.printf("\n|          |         |                | 18 - 30 > %6.2f%% |", percentageCashAge3);
+        System.out.print("\n|          |         |                |                   |");
+        System.out.print("\n+----------|---------|----------------|-------------------+");
+        System.out.print("\n|          |         |                |                   |");
+        System.out.printf("\n|   Card   |  %6.2f |      %-5d     | 18 - 30 > %6.2f%% |",percentageCard, paymentCount[1], percentageCardAge0);
+        System.out.printf("\n|          |         |                | 31 - 50 > %6.2f%% |", percentageCardAge1);
+        System.out.printf("\n|          |         |                | 51 - 70 > %6.2f%% |", percentageCardAge2);
+        System.out.printf("\n|          |         |                | 18 - 30 > %6.2f%% |", percentageCardAge3);
+        System.out.print("\n|          |         |                |                   |");
+        System.out.print("\n+---------------------------------------------------------+\n\n\n");
+
+        pressAnyKeyToContinue();
+    }
+
     // report
     public static void mostSpendingCustomer(ArrayList<Customer> customerList) {
 
@@ -341,7 +435,7 @@ public class Main {
             return;
         }
 
-        Customer target = new Customer();
+        ArrayList<Customer> target = new ArrayList<>();
         double amount = 0, totalAmount = -1;
         int[] serviceCount = {0,0,0,0};
 
@@ -1018,6 +1112,17 @@ public class Main {
         System.out.println("Pet deleted successfully");
     }
 
+    public static String inputPetColor(String prompt) {
+        do {
+            String output = promptString(prompt);
+            if (nameValidation(output)) {
+                return output;
+            }
+            System.out.println("\nInvalid color...");
+        }
+        while (true);
+    }
+
     public static void createPet(Person currentUser) {
         boolean exitFlag = false;
         do {
@@ -1033,7 +1138,7 @@ public class Main {
                         promptYesNo("\nIs your dog neutered? (Y/N) > "),
                         inputPetAge("\nAge of your dog? (years)    > "),
                         inputGender(),
-                        promptString("\nThe color of your doggo?   > "),
+                        inputPetColor("\nThe color of your doggo?   > "),
                         promptLevel("Aggressiveness of doggo"),
                         promptSize("Size of doggo")));
 
@@ -1041,14 +1146,14 @@ public class Main {
                         promptYesNo("\nIs your cat neutered? (Y/N) > "),
                         inputPetAge("\nAge of your cat? (years)    > "),
                         inputGender(),
-                        promptString("\nThe color of your cat?     > "),
+                        inputPetColor("\nThe color of your cat?     > "),
                         promptLevel("Aggressiveness of cat"),
                         promptSize("Size of cat")));
 
                 case 3 -> ((Customer)currentUser).addPet(new Bird(
                         inputPetAge("\nAge of your bird? (years) > "),
                         inputGender(),
-                        promptString("\nThe color of your bird?  > "),
+                        inputPetColor("\nThe color of your bird?  > "),
                         promptLevel("Aggressiveness of bird"),
                         promptSize("Size of bird")));
 
@@ -1056,7 +1161,7 @@ public class Main {
                         promptYesNo("\nIs your rabbit neutered? (Y/N) > "),
                         inputPetAge("\nAge of your rabbit? (years)    > "),
                         inputGender(),
-                        promptString("\nThe color of your rabbit?     > "),
+                        inputPetColor("\nThe color of your rabbit?     > "),
                         promptLevel("Aggressiveness of rabbit"),
                         promptSize("Size of rabbit")));
                 default -> {
@@ -1183,7 +1288,7 @@ public class Main {
             System.out.println("9. Back");
 
             switch (promptInt("Please enter a selection > ")) {
-                case 1 -> System.out.println("1. Sales Report");
+                case 1 -> paymentMethodReport(customerList);
                 case 2 -> System.out.println("2. Shelter Report");
                 case 3 -> System.out.println("3. Promo Code Report");
                 case 4 -> System.out.println("4. Employee Contribution Report");

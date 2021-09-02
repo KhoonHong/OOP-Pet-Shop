@@ -46,7 +46,7 @@ public class Billing implements Displayable, Identifiable{
     /**
      * Creates a {@code Billing} class object when called
      *
-     * @param bill Customer reservation will be passed in for bill processing
+     * @param billDetails Customer reservation will be passed in for bill processing
      * @param totalAmount The total price of reservation
      * @param grandTotal The grand total price of billing
      * @param paymentMethod Customer preferred payment method
@@ -54,7 +54,7 @@ public class Billing implements Displayable, Identifiable{
      * @param promoOrigin The source which the customer obtained the promotion
      * @param paymentDate The checkout timestamp
      */
-    Billing(Reservation bill,
+    Billing(ArrayList<Reservation> billDetails,
             double totalAmount,
             double grandTotal,
             String paymentMethod,
@@ -64,8 +64,7 @@ public class Billing implements Displayable, Identifiable{
         currentTransactionCount++;
         totalTransactionCount++;
         this.transactionID = generateID(currentTransactionCount); //generate ID
-        // add bill into array
-        this.billDetails.add(bill);
+        this.billDetails = billDetails;
         this.paymentMethod = paymentMethod;
         this.promoApplied = promoApplied;
         this.promoOrigin = promoOrigin;

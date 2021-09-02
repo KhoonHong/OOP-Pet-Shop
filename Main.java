@@ -25,7 +25,6 @@ public class Main {
         ArrayList<Employee> employeeList = new ArrayList<>();
         ArrayList<Owner> ownerList = new ArrayList<>();
         ArrayList<Promotion> promotions = new ArrayList<>();
-        /*
         try {
             // to generate data
             File custCredentials = new File("customer_credentials.txt");
@@ -36,7 +35,7 @@ public class Main {
         catch (IOException e) {
             System.out.println("FIle handling error occurred...");
         }
-        */
+
 
         ownerList.add(new Owner("Khoon Hong",
                 "Lee",
@@ -87,12 +86,11 @@ public class Main {
         promotions.add(new Promotion("10Of500", LocalDate.of(2021, 9, 18), LocalDate.of(2022, 1, 1), 0.1, "Get 10% discount when spend up to RM50 and above"));
         promotions.add(new Promotion("Merdeka831", LocalDate.of(2021, 8, 31), LocalDate.of(2021, 9, 16), 0.11, "89% affordable price for all customers during 831 to 916"));
 
-        //generateEmployeeProfile(employeeList);
-        //generateCustomerProfile(customerList, employeeList);
+        generateEmployeeProfile(employeeList);
+        generateCustomerProfile(customerList, employeeList, promotions);
 
         // start system
         mainMenu(currentUser, customerList, employeeList, ownerList, promotions);
-
     }
 
     // Methods
@@ -115,7 +113,7 @@ public class Main {
         }
     }
 
-    public static void generateCustomerProfile(ArrayList<Customer> customerList, ArrayList<Employee> employeeList) {
+    public static void generateCustomerProfile(ArrayList<Customer> customerList, ArrayList<Employee> employeeList, ArrayList<Promotion> promotions) {
         int generateCount = 100;
         for (int count = 0; count < generateCount; count++) {
             String username = generateRandomCustomerUsername(customerList);
@@ -141,22 +139,11 @@ public class Main {
             for (int i = 0; i < petCount; i++) {
                 customerList.get(customerList.size() - 1).addPet(generatePet());
             }
-
-            LocalDateTime date = generateLocalDateTime();
-            LocalDate date1 = generateLocalDate();
-            // add reservation
-            customerList.get(customerList.size() - 1).addReservation(new Reservation(generateLocalDateTime(),
-                    new Shelter(new Random().nextBoolean(),
-                            new Random().nextBoolean(),
-                            new Random().nextBoolean(),
-                            Size.MEDIUM, date1, date1.plusDays(20), 20,
-                            new Random().nextBoolean(),
-                            new Random().nextBoolean()), customerList.get(customerList.size() - 1).getPets().get(0), "mehhhh", 1,
-                    employeeList.get(0)));
-            int total = (int) ((Math.random() * (500 - 100)) + 100);
-            // add bill history
-            customerList.get(customerList.size() - 1).getBillHistory().add(new Billing(customerList.get(customerList.size() - 1).getReservation().get(0),
-                    total, total + (total * 10 / 100), new Random().nextBoolean() ? "Cash" : "Card", null, null, generateLocalDate()));
+            // generate & add bill history records
+            int billHistoryCount = ThreadLocalRandom.current().nextInt(0,  10 + 1);
+            for (int i = 0; i < billHistoryCount ; i++) {
+                generateBillHistory(customerList.get(customerList.size()-1), employeeList, promotions);
+            }
         }
     }
 
@@ -169,8 +156,97 @@ public class Main {
         }
     }
 
-    public static void generateBillHistory(Person person) {
-        Reservation reserve = new Reservation();
+    public static String generateSource() {
+        switch (ThreadLocalRandom.current().nextInt(1,  5 + 1)) {
+            case 1 -> {
+                return "Youtube";
+            }
+            case 2 -> {
+                return "Instagram";
+            }
+            case 3 -> {
+                return "Facebook";
+            }
+            case 4 -> {
+                return "Twitter";
+            }
+            default -> {
+                return "Friends";
+            }
+        }
+    }
+
+    public static void generateBillHistory(Customer customer, ArrayList<Employee> employeeList, ArrayList<Promotion> promotions) {
+        int reserveAmount = ThreadLocalRandom.current().nextInt(0,  5 + 1);
+        ArrayList<Reservation> reserve = new ArrayList<>();
+        int price = ThreadLocalRandom.current().nextInt(100,  1000 + 1);
+        Promotion promo = promotions.get(ThreadLocalRandom.current().nextInt(0,  promotions.size()));
+
+        reserve.add(generateReservation(customer, employeeList));
+        for (int i = 0; i < reserveAmount; i++) {
+            reserve.add((generateReservation(customer, employeeList)));
+        }
+        customer.getBillHistory().add(new Billing(reserve,price, (double) price*10/100, new Random().nextBoolean() ? "Cash" : "Card",
+                promo, generateSource(), generateLocalDate()));
+    }
+
+    public static Reservation generateReservation(Customer customer, ArrayList<Employee> employeeList) {
+        int petIndex = ThreadLocalRandom.current().nextInt(0,  customer.getPets().size());
+        Pet pet = customer.getPets().get(petIndex);
+        Service service = null;
+        ArrayList<Integer> capableService = new ArrayList<>();
+
+        if (pet instanceof Bird) {
+            capableService.add(4);
+        }
+        else if (pet instanceof Cat) {
+            capableService.add(1);
+            capableService.add(2);
+            capableService.add(3);
+            capableService.add(4);
+        }
+        else if (pet instanceof Dog) {
+            capableService.add(1);
+            capableService.add(2);
+            capableService.add(3);
+            capableService.add(4);
+        }
+        else if (pet instanceof Rabbit) {
+            capableService.add(1);
+            capableService.add(2);
+            capableService.add(4);
+        }
+
+        LocalDate startDate = generateLocalDate();
+        LocalDate endDate = startDate.plusDays(ThreadLocalRandom.current().nextInt(1, 19 + 1));
+
+        switch (ThreadLocalRandom.current().nextInt(0, capableService.size())) {
+            case 1 -> service = new Bath(new Random().nextBoolean(),
+                        new Random().nextBoolean(), new Random().nextBoolean(),
+                        new Random().nextBoolean(), new Random().nextBoolean(),
+                        new Random().nextBoolean(), new Random().nextBoolean(),
+                        new Random().nextBoolean(), new HashMap<>());
+
+            case 2 -> service = new Groom(new Random().nextBoolean(),
+                        new Random().nextBoolean(), new Random().nextBoolean(),
+                        new Random().nextBoolean(), new Random().nextBoolean(),
+                        new Random().nextBoolean(), new Random().nextBoolean(), new HashMap<>());
+
+            case 3 -> service = new Massage(new Random().nextBoolean(),
+                    new Random().nextBoolean(),
+                    new Random().nextBoolean(), new HashMap<>());
+
+            case 4 -> service = new Shelter(new Random().nextBoolean(),
+                    new Random().nextBoolean(), new Random().nextBoolean(), generateSize(),
+                    startDate, endDate, (int)ChronoUnit.DAYS.between(startDate, endDate),
+                    new Random().nextBoolean(), new Random().nextBoolean());
+        }
+
+        Employee employee = employeeList.get(ThreadLocalRandom.current().nextInt(0, employeeList.size()));
+
+        return new Reservation(generateLocalDateTime(), service,
+                pet, "No remarks", ThreadLocalRandom.current().nextInt(1, 4 + 1),
+                employee);
     }
 
     public static Pet generatePet() {
@@ -319,7 +395,7 @@ public class Main {
     public static LocalDate generateRandomDOB() {
         int day = ThreadLocalRandom.current().nextInt(1, 28 + 1);
         int month = ThreadLocalRandom.current().nextInt(1, 12 + 1);
-        int year = ThreadLocalRandom.current().nextInt(1950, 2000 + 1);
+        int year = ThreadLocalRandom.current().nextInt(1930, 2000 + 1);
         return LocalDate.of(year, month, day);
     }
 
@@ -330,6 +406,104 @@ public class Main {
     }
 
     // start of program------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // reports
+    public static void sourcePromoReport(ArrayList<Customer> customer) {
+        ArrayList<Billing> billHistory= new ArrayList<Billing>();
+        boolean datechk=true;
+        LocalDate startdate = null;
+        LocalDate enddate = null;
+        do {
+            try {
+                datechk = true;
+                System.out.println("\nEnter report start date : ");
+                startdate = LocalDate.of(Main.promptInt("		Year  > "), Main.promptInt("		Month > "), Main.promptInt("		Day   > "));
+                System.out.println("Enter report end date : ");
+                enddate = LocalDate.of(Main.promptInt("		Year  > "), Main.promptInt("		Month > "), Main.promptInt("		Day   > "));
+                if(startdate.isAfter(enddate)) {
+                    System.out.println("The end date must after start date.");
+                    datechk=false;
+                }
+                if (startdate.isBefore(LocalDate.now().minusYears(5)) || enddate.isBefore(LocalDate.now().minusYears(5))) {
+                    System.out.println("Date entered must be after year 2018...");
+                    datechk = false;
+                }
+            }catch(DateTimeException ex) {
+                System.out.println("Invalid date input\n");
+                datechk=false;
+            }
+        }while(!datechk);
+
+        String[] promoSrc = {"Youtube","Instagram","Facebook","Twitter","Friends"};
+        int[] promoSrcCnt = {0,0,0,0,0};
+        int[][] promoSrcAge = {{0,0,0,0,0,0,0,0,0,0}, {0,0,0,0,0,0,0,0,0,0}
+                ,{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0}
+                ,{0,0,0,0,0,0,0,0,0,0}};
+
+        for(Customer cust: customer) {
+            billHistory = cust.getBillHistory();
+            for (Billing billing : billHistory) {
+                String origin = new String(billing.getPromoOrigin());
+                if (startdate.isBefore(billing.getPaymentDate()) && enddate.isAfter(billing.getPaymentDate())) {
+                    for (int j = 0; j < promoSrc.length; j++) {
+                        if (promoSrc[j].equals(origin)) {
+                            promoSrcCnt[j]++;
+                            promoSrcAge[j][(cust.age) / 10]++;
+                        }
+                    }
+                }
+            }
+        }
+
+        int j=0;
+        String[] sortPromoSrc = new String[promoSrc.length];
+        int[] sortSrcCnt= promoSrcCnt.clone();
+        Arrays.sort(sortSrcCnt);
+        for(int cnt:sortSrcCnt) {
+            for(int i=0 ; i < promoSrcCnt.length ; i++) {
+                if(promoSrcCnt[i]==cnt && promoSrcCnt[i]!=-1) {
+                    sortPromoSrc[j]=promoSrc[i];
+                    j++;
+                    promoSrcCnt[i]=-1;
+                }
+            }
+        }
+        int cnt=sortSrcCnt.length-1;
+        System.out.println("\n\t\tFrequency of promotion code source");
+        System.out.println("\t-------------------------------------------");
+        for(int c=sortPromoSrc.length-1 ; c >= 0 ; c--,cnt--) {
+            System.out.printf("\n%-10s \t\t\tTotal : %d\t\tWeight(%%)\n", sortPromoSrc[c] ,sortSrcCnt[cnt]);
+            System.out.println("---------------------------------------------");
+            int num=-1;
+            for(int i=0; i <promoSrc.length ;i++) {
+                if(sortPromoSrc[c].equals(promoSrc[i])) {
+                    num=i;
+                }
+            }
+            if(sortSrcCnt[cnt]==0) {
+                System.out.println("No record.");
+            }
+            else {
+                int count =0;
+                System.out.print("Age Range : ");
+                for(count=0 ; count < 3 ; count++) {
+                    int maxNum=0, max=0;
+                    for(int i=0 ; i < promoSrcAge[num].length ; i++) {
+                        if(promoSrcAge[num][i] > maxNum && promoSrcAge[num][i]!=-1) {
+                            max = i;
+                            maxNum=promoSrcAge[num][i];
+                        }
+                    }
+                    if(maxNum!=0) {
+                        System.out.print(max + "0 - "+ max +"9\t\t\t" + maxNum);
+                        System.out.printf("\t\t%.2f%%",( (double) maxNum/sortSrcCnt[cnt] * 100));
+                        System.out.printf("\n %-10s "," ");
+                        promoSrcAge[num][max]=-1;
+                    }
+                }
+            }
+        }
+        pressAnyKeyToContinue();
+    }
 
     //payment method report
     public static void paymentMethodReport(ArrayList<Customer> customerList){
@@ -411,14 +585,14 @@ public class Main {
         System.out.printf("\n|   Cash   |  %6.2f |      %-5d     | 18 - 30 > %6.2f%% |",percentageCash, paymentCount[0], percentageCashAge0);
         System.out.printf("\n|          |         |                | 31 - 50 > %6.2f%% |", percentageCashAge1);
         System.out.printf("\n|          |         |                | 51 - 70 > %6.2f%% |", percentageCashAge2);
-        System.out.printf("\n|          |         |                | 18 - 30 > %6.2f%% |", percentageCashAge3);
+        System.out.printf("\n|          |         |                | 71 - 90 > %6.2f%% |", percentageCashAge3);
         System.out.print("\n|          |         |                |                   |");
         System.out.print("\n+----------|---------|----------------|-------------------+");
         System.out.print("\n|          |         |                |                   |");
         System.out.printf("\n|   Card   |  %6.2f |      %-5d     | 18 - 30 > %6.2f%% |",percentageCard, paymentCount[1], percentageCardAge0);
         System.out.printf("\n|          |         |                | 31 - 50 > %6.2f%% |", percentageCardAge1);
         System.out.printf("\n|          |         |                | 51 - 70 > %6.2f%% |", percentageCardAge2);
-        System.out.printf("\n|          |         |                | 18 - 30 > %6.2f%% |", percentageCardAge3);
+        System.out.printf("\n|          |         |                | 71 - 90 > %6.2f%% |", percentageCardAge3);
         System.out.print("\n|          |         |                |                   |");
         System.out.print("\n+---------------------------------------------------------+\n\n\n");
 
@@ -500,14 +674,14 @@ public class Main {
                     serviceCount = new int[]{0, 0, 0, 0}; // reset service count
                 }
                 totalAmount = amount;
-                target = customer;
+
 
             }
         }
 
         int serviceTotalCount = serviceCount[0] + serviceCount[1] + serviceCount[2] +serviceCount[3];
 
-        System.out.printf("Most spending customer : %s\n", target.fullName());
+        System.out.printf("Most spending customer : %s\n");
         System.out.printf("Total amount spent over date range : %s\n", convertCurrency(totalAmount));
         System.out.println("Services");
         System.out.println("------------");
@@ -519,6 +693,7 @@ public class Main {
 
     }
 
+    //-------------------------------------------------------------------------------------------------------------------------------------
 
     // Main menu of the whole program
     public static void mainMenu(Person currentUser, ArrayList<Customer> customerList, ArrayList<Employee> employeeList, ArrayList<Owner> ownerList, ArrayList<Promotion> promotions) {
@@ -1290,7 +1465,7 @@ public class Main {
             switch (promptInt("Please enter a selection > ")) {
                 case 1 -> paymentMethodReport(customerList);
                 case 2 -> System.out.println("2. Shelter Report");
-                case 3 -> System.out.println("3. Promo Code Report");
+                case 3 -> sourcePromoReport(customerList);
                 case 4 -> System.out.println("4. Employee Contribution Report");
                 case 5 -> System.out.println("5. Popular Service Report");
                 case 6 -> mostSpendingCustomer(customerList);
@@ -3791,8 +3966,8 @@ public class Main {
         double totalAmt = 0;
         double totalAmtAfterPromo = 0;
         double promoRate = 0;
-        System.out.println("\n\n\t\tCheck Out");
-        System.out.println("------------------------------");
+        System.out.println("\n\n*** Check Out ***");//TanShiJing
+        //System.out.println("------------------------------");TanShiJing
         if (((Customer) currentUser).getBill() != null) {
             Billing cb = ((Customer) currentUser).getBill();
             /**/
@@ -3823,7 +3998,7 @@ public class Main {
                 } while (reenterPromoCode);
 
                 if (promoYesNo) {
-                    System.out.println("Please share the source of promo code with us");
+                    System.out.println("\nPlease share the source of promo code with us");//TanShiJing
                     System.out.println("1. Youtube\n2. Instagram\n3. Facebook\n4. Twitter\n5. Friends");
                     switch (Main.promptInt("Source > ")) {
                         case 1 -> cb.setPromoOrigin("Youtube");
@@ -3836,7 +4011,6 @@ public class Main {
                     ((Customer) currentUser).getBill().setPromoApplied(searchAssignPromo(promoCodeEntered, promotions));
                     promoRate = ((Customer) currentUser).getBill().getPromoApplied().getPromoRate();
                     totalAmtAfterPromo = totalAmt * (1 - promoRate);
-                    ((Customer) currentUser).getBill().setTotalAmount(totalAmtAfterPromo);
                 }
             }
             dispGrandTotal(cb, promoYesNo, totalAmt, totalAmtAfterPromo, promoRate);
@@ -3883,9 +4057,9 @@ public class Main {
     }
 
     public static void dispBillSummary(Billing cb, ArrayList<Double> amt, double totalAmt, LocalDate dateTime) {
-        System.out.println("\n");
+        System.out.println("\n");//TanShiJing
         System.out.println("====================================================================================================================");
-        System.out.println("|\t\t                  Transaction ID: " + cb.getTransactionID() + "     Date: " + Main.dateToString(dateTime) + "                                        |");
+        System.out.println("|\t\t                        Transaction ID: " + cb.getTransactionID() + "       Date: " + Main.dateToString(dateTime) + "                                      |");//TanShiJing
         System.out.println("====================================================================================================================");
         System.out.println("|  ResvID\t\t|  PetID\t\t|  Date\t\t\t|  Charges(RM)\t|  Service Details                                 |");
         System.out.println("====================================================================================================================");
@@ -4123,8 +4297,8 @@ public class Main {
         Customer c = ((Customer) currentUser);
         do {
             amt.clear();
-            System.out.println("\n\n\t *** Bill History ***");
-            System.out.println("------------------------------");
+            System.out.println("\n\n*** Bill History ***");//TanShiJing
+            //System.out.println("------------------------------");TanShiJing
             if (c.getBillHistory().size() == 0) {
                 System.out.println("No billing history yet.");
                 return;
@@ -4162,7 +4336,7 @@ public class Main {
 
             boolean p = (!Objects.isNull(cb.getPromoApplied()));
             if (p) {
-                dispGrandTotal(cb, p, totalAmt, cb.getTotalAmount(), cb.getPromoApplied().getPromoRate());
+                dispGrandTotal(cb, p, totalAmt, (cb.getTotalAmount() * (1 - cb.getPromoApplied().getPromoRate())), cb.getPromoApplied().getPromoRate());
             } else {
                 dispGrandTotal(cb, p, totalAmt, cb.getTotalAmount(), 0);
             }
@@ -4180,8 +4354,8 @@ public class Main {
         ArrayList<Double> amt;
         double totalAmt;
         Billing c = ((Customer) currentUser).getBill();
-        System.out.println("\n\n*** Bill Records ***");
-        System.out.println("------------------------------");
+        System.out.println("\n\n*** Bill Records ***");//TanShiJing
+        //System.out.println("------------------------------");TanShiJing
         if (((Customer) currentUser).getBill() == null) {
             System.out.println("There are no pending bills.");
             return;
@@ -4325,7 +4499,7 @@ public class Main {
         dispBillSummary(cbh.get(choiceArr.get(choice)), amt, totalAmt, cbh.get(choiceArr.get(choice)).getPaymentDate());
         boolean p = (!Objects.isNull(cbh.get(choiceArr.get(choice)).getPromoApplied()));
         if (p) {
-            dispGrandTotal(cbh.get(choiceArr.get(choice)), p, totalAmt, cbh.get(choiceArr.get(choice)).getTotalAmount(), cbh.get(choiceArr.get(choice)).getPromoApplied().getPromoRate());
+            dispGrandTotal(cbh.get(choiceArr.get(choice)), p, totalAmt, (cbh.get(choiceArr.get(choice)).getTotalAmount() * (1 - cbh.get(choiceArr.get(choice)).getPromoApplied().getPromoRate())), cbh.get(choiceArr.get(choice)).getPromoApplied().getPromoRate());
         } else {
             dispGrandTotal(cbh.get(choiceArr.get(choice)), p, totalAmt, cbh.get(choiceArr.get(choice)).getTotalAmount(), 0);
         }
@@ -4384,7 +4558,7 @@ public class Main {
         dispBillSummary(cbh.get(choiceArr.get(choice)), amt, totalAmt, cbh.get(choiceArr.get(choice)).getPaymentDate());
         boolean p = (!Objects.isNull(cbh.get(choiceArr.get(choice)).getPromoApplied()));
         if (p) {
-            dispGrandTotal(cbh.get(choiceArr.get(choice)), p, totalAmt, cbh.get(choiceArr.get(choice)).getTotalAmount(), cbh.get(choiceArr.get(choice)).getPromoApplied().getPromoRate());
+            dispGrandTotal(cbh.get(choiceArr.get(choice)), p, totalAmt, (cbh.get(choiceArr.get(choice)).getTotalAmount() * (cbh.get(choiceArr.get(choice)).getPromoApplied().getPromoRate())), cbh.get(choiceArr.get(choice)).getPromoApplied().getPromoRate());
         } else {
             dispGrandTotal(cbh.get(choiceArr.get(choice)), p, totalAmt, cbh.get(choiceArr.get(choice)).getTotalAmount(), 0);
         }

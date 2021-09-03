@@ -1969,7 +1969,10 @@ public class Main {
                 case 2 -> currentUser.setLastName(inputLastname());
                 case 3 -> currentUser.setGender(inputGender());
                 case 4 -> currentUser.setTel(inputTel());
-                case 5 -> currentUser.setDob(inputDOB());
+                case 5 -> {
+                    currentUser.setDob(inputDOB());
+                    currentUser.setAge((int) ChronoUnit.YEARS.between(currentUser.getDob(), LocalDate.now()));
+                }
                 case 6 -> {
                     if (currentUser instanceof Customer) {
                         currentUser.setUsername(inputCustomerUsername(customerList));
@@ -1980,7 +1983,6 @@ public class Main {
                     else if (currentUser instanceof Owner) {
                         currentUser.setUsername(inputOwnerUsername(ownerList));
                     }
-
                 }
                 case 7 -> currentUser.setPassword(editPassword(currentUser));
                 case 8 -> currentUser.setEmail(inputEmail());
@@ -3373,7 +3375,6 @@ public class Main {
 
         // calculate days of stay
         shelter.setTotalNumOfDays(Period.between(shelter.getCheckInDate(), shelter.getCheckOutDate()).getDays());
-        System.out.println(shelter.getTotalNumOfDays());
 
         boolean exitFlag;
         do {
@@ -3764,7 +3765,7 @@ public class Main {
                 System.out.println("\n\n  Enter date of birth : ");
                 dob = LocalDate.of(promptInt("  Year  > "), promptInt("  Month > "), promptInt("  Day   > "));//TanShiJing
                 // if date entered is in the future or is before year 1905
-                if (dob.isAfter(LocalDate.now()) || dob.isBefore(LocalDate.of(1905, 1, 1))) {
+                if (dob.isAfter(LocalDate.now().minusYears(16)) || dob.isBefore(LocalDate.of(1905, 1, 1))) {
                     System.out.println("  Invalid date entered...");
                     continue;
                 }

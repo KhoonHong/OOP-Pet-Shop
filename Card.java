@@ -111,22 +111,20 @@ public class Card {
     @Override
     public String toString(){
         return String.format("""
-                                		
-                        \t\t\t\t HERE IS YOUR CARD INFORMATION !
-                        +---------------------------------------------------------------+
-                        |   %-41s         %6s    |
-                        |---------------------------------------------------------------|
-                        |                                                               |
-                        |   Name On Card > %-15s                              |
-                        |                                                               |
-                        |   Card Number  > %-16s                             |
-                        |   CVV Number   > %-3s                Expire Date > %-4s        |
-                        |                                                               |
-                        |   Billing Address >                                           |
-                        |   %-60s|
-                        |                                                               |
-                        +---------------------------------------------------------------+
-                        """,
+        		\n\n\t\t\t\t   HERE IS YOUR CARD INFORMATION !
+        		  +---------------------------------------------------------------+
+        		  |   %-41s         %6s    |
+        		  |---------------------------------------------------------------|
+        		  |                                                               |
+        		  |   Name On Card > %-30s               |
+        		  |                                                               |
+        		  |   Card Number  > %-16s                             |
+        		  |   CVV Number   > %-3s                  Expire Date > %-5s     |
+        		  |                                                               |
+        		  |   Billing Address >                                           |
+        		  |   %-60s|
+        		  |                                                               |
+        		  +---------------------------------------------------------------+\n""",
                 getIssuer(),getType(),
                 getNameOnCard(),
                 censorCardNo(),

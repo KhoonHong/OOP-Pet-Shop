@@ -168,7 +168,7 @@ public class Reservation implements Displayable, Identifiable {
      */
     public String displayRow() {
         return String.format("""
-                        | %8s | %-8s | %s | %-8s   |  %-6s   |  %-2d   | %s |%-10s |""",
+                        |%8s | %-8s|%s |%-8s|  %-6s  |      %-2d       |   %s   | %-16s |""",
                 getReserveID(),
                 getServices().getClass().getSimpleName(),
                 Main.datetimeToString(getReserveDateTime()),
@@ -187,20 +187,24 @@ public class Reservation implements Displayable, Identifiable {
     @Override
     public String toString() {
         return String.format("""
-        	+------------------------------------------+
-        	|                                          |
-        	|                  %s                  |
-        	|                  %-8s                |
-        	|             %s             |
-        	|                                          |
-        	|------------------------------------------|
-        	|  Pet ID   : %-8s                     |
-        	|  Pet      : %-6s                       |
-        	|  Remarks  : %-20s         |
-        	|  Reserved Session  : %-2d                  |
-        	|  R.Made TimeStamp  : %s    |
-        	|  Employee Selected : %-10s        |
-        	+------------------------------------------+""",
+        	\n\n        HERE IS YOUR RESERVATION DETAILS!
+        	  +------------------------------------------+
+        	  |                                          |
+        	  |                  %s                  |
+        	  |                  %-8s                |
+        	  |             %s             |
+        	  |                                          |
+        	  |------------------------------------------|
+        	  |                                          |
+        	  |  Pet ID   : %-8s                     |
+        	  |  Pet      : %-6s                       |
+        	  |  Remarks  : %-29s|
+        	  |                                          |
+        	  |  Reserved Session  : %-2d                  |
+        	  |  R.Made TimeStamp  : %s    |
+        	  |  Employee Selected : %-16s    |
+        	  |                                          |
+        	  +------------------------------------------+""",
                 getReserveID(),
                 getServices().getClass().getSimpleName(),
                 Main.datetimeToString(getReserveDateTime()),

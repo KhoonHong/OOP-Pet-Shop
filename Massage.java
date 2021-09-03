@@ -20,21 +20,21 @@ public class Massage extends Service{
     private boolean multiMasseur = false;
     private static double price = 50;
     private static final String desc = """
-					+----------------------------------------------------------------+
-					|                                                                |
-					|                        M A S S A G E                           |
-					|                                                                |
-					|          Massage, a technique of joints and muscles            |
-					|     rubbing for pain relieving, is not limited to humans.      |
-					|     We have explored a little knowledge and are willing to     |
-					|     provide massaging services to pets. Massaging oil with     |
-					|      a calming effect can be included in the service, and      |
-					|         an after-massage bath service will be provided         |
-					|                        if necessary.                           |
-					|                                                                |
-					|  Pay an affordable price of RM50, and your pet can enjoy it.   |
-					|                                                                |
-					+----------------------------------------------------------------+
+					  +----------------------------------------------------------------+
+					  |                                                                |
+					  |                    *** M A S S A G E ***                       |
+					  |                                                                |
+					  |          Massage, a technique of joints and muscles            |
+					  |     rubbing for pain relieving, is not limited to humans.      |
+					  |     We have explored a little knowledge and are willing to     |
+					  |     provide massaging services to pets. Massaging oil with     |
+					  |      a calming effect can be included in the service, and      |
+					  |         an after-massage bath service will be provided         |
+					  |                        if necessary.                           |
+					  |                                                                |
+					  |  Pay an affordable price of RM50, and your pet can enjoy it.   |
+					  |                                                                |
+					  +----------------------------------------------------------------+
 						""";
 
     // Constructor
@@ -141,10 +141,10 @@ public class Massage extends Service{
     @Override
     public String toString() {
         return String.format("""
-                Basic Price          (RM50.00) : %s
-                After Massage Wash   (RM15.00) : %c
-                Premium Calming Oil  (RM20.00) : %c
-                Multi Masseur        (RM30.00) : %c
+                  Basic Price          (RM50.00) : %s
+                  After Massage Wash   (RM15.00) : %c
+                  Premium Calming Oil  (RM20.00) : %c
+                  Multi Masseur        (RM30.00) : %c
                 """, Main.convertCurrency(getPrice()),
                 Main.booleanToSymbol(isAfterMassageWash()),
                 Main.booleanToSymbol(isPremiumCalmingOil()),

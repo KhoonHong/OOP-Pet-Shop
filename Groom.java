@@ -24,24 +24,24 @@ public class Groom extends Service{
     private boolean coatStyling = false;
     private static double price = 80;
     private static final String desc = """
-					+----------------------------------------------------------------+
-					|                                                                |
-					|                          G R O O M                             |
-					|                                                                |
-					|        If you are finding a solution to fix the untidy         |
-					|           appearance of your pet, just come to us.             |
-					|                                                                |
-					|      We provide grooming services to pets with the basic       |
-					|     hair cutting. We do design fancy cut and coat styling      |
-					|    for pets, making them outstanding. Sensitive tasks like     |
-					|     dealing with their feet, pads or nails, are able to be     |
-					|       tackled professionally by our well-trained workers.      |
-					|                                                                |
-					|      Try our grooming package at a minimum price of RM80,      |
-					|                and we won't disappoint you.                    |
-					|                                                                |
-					+----------------------------------------------------------------+
-												""";
+					  +----------------------------------------------------------------+
+					  |                                                                |
+					  |                      *** G R O O M ***                         |
+					  |                                                                |
+					  |        If you are finding a solution to fix the untidy         |
+					  |           appearance of your pet, just come to us.             |
+					  |                                                                |
+					  |      We provide grooming services to pets with the basic       |
+					  |     hair cutting. We do design fancy cut and coat styling      |
+					  |    for pets, making them outstanding. Sensitive tasks like     |
+					  |     dealing with their feet, pads or nails, are able to be     |
+					  |       tackled professionally by our well-trained workers.      |
+					  |                                                                |
+					  |      Try our grooming package at a minimum price of RM80,      |
+					  |                and we won't disappoint you.                    |
+					  |                                                                |
+					  +----------------------------------------------------------------+
+						""";
 
     // Constructor
     Groom() {
@@ -219,14 +219,14 @@ public class Groom extends Service{
     @Override
     public String toString() {
         return String.format("""
-                Basic Price      (RM80.00)
-                Fancy Cut        (RM10.00) : %c
-                Sanitary Trim    (RM15.00) : %c
-                Nail Clip        (RM10.00) : %c
-                Nail Grind       (RM15.00) : %c
-                Scissoring Feet  (RM10.00) : %c
-                Pad Shaving      (RM15.00) : %c
-                Coat Styling     (RM10.00) : %c
+                  Basic Price      (RM80.00)
+                  Fancy Cut        (RM10.00) : %c
+                  Sanitary Trim    (RM15.00) : %c
+                  Nail Clip        (RM10.00) : %c
+                  Nail Grind       (RM15.00) : %c
+                  Scissoring Feet  (RM10.00) : %c
+                  Pad Shaving      (RM15.00) : %c
+                  Coat Styling     (RM10.00) : %c
                 """, Main.booleanToSymbol(isFancyCut()),
                 Main.booleanToSymbol(isSanitaryTrim()),
                 Main.booleanToSymbol(isNailClip()),

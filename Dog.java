@@ -101,12 +101,12 @@ public class Dog extends Pet implements Identifiable {
 
     // Methods
     public static void displayServices() {
-        System.out.println("\n\n\tServices available");
-        System.out.println("------------------------");
-        System.out.printf("1. Groom (%s)\n", Main.convertCurrency(80));
-        System.out.printf("2. Bath (%s)\n", Main.convertCurrency(40));
-        System.out.printf("3. Massage (%s)\n", Main.convertCurrency(50));
-        System.out.printf("4. Shelter (%s per night)\n", Main.convertCurrency(120));
+        System.out.println("\n\n\t  Services available");
+        System.out.println("  ------------------------");
+        System.out.printf("  1. Groom   (%s)\n", Main.convertCurrency(80));
+        System.out.printf("  2. Bath    (%s)\n", Main.convertCurrency(40));
+        System.out.printf("  3. Massage (%s)\n", Main.convertCurrency(50));
+        System.out.printf("  4. Shelter (%s per night)\n", Main.convertCurrency(120));
     }
 
     /**
@@ -117,24 +117,23 @@ public class Dog extends Pet implements Identifiable {
     @Override
     public String toString() {
         return String.format("""
-                        									
-                        \t\t  HERE IS YOUR PET INFORMATION !
-                        	+---------------------------------------+
-                        	| Pet ID > %-6s                      |
-                        	| Type   > %-6s                       |
-                        	|---------------------------------------|
-                        	| Age    > %-3d        Color  > %-8s |
-                        	| Gender > %c                            |
-                        	|                                       |
-                        	|---------------------------------------|
-                        	|            Characteristic             |
-                        	|---------------------------------------|
-                        	| Size     --> %-15s          |
-                        	| Neutered --> %c                        |
-                        	| Pregnant --> %c                        |
-                        	| Aggressiveness --> %-10s         |
-                        	|                                       |
-                        	+---------------------------------------+""", getID(),
+        	\n        HERE IS YOUR PET INFORMATION !
+        	  +---------------------------------------+
+        	  | Pet ID > %-6s                      |
+        	  | Type   > %-6s                       |
+        	  |---------------------------------------|
+        	  | Age    > %-3d        Color  > %-8s |
+        	  | Gender > %c                            |
+        	  |                                       |
+        	  |---------------------------------------|
+        	  |            Characteristic             |
+        	  |---------------------------------------|
+        	  | Size     --> %-15s          |
+        	  | Neutered --> %c                        |
+        	  | Pregnant --> %c                        |
+        	  | Aggressiveness --> %-10s         |
+        	  |                                       |
+        	  +---------------------------------------+""", getID(),
                 getClass().getSimpleName(),
                 getAge(),
                 getColor(),

@@ -46,7 +46,7 @@ public class Billing implements Displayable, Identifiable{
     /**
      * Creates a {@code Billing} class object when called
      *
-     * @param billDetails Customer reservation will be passed in for bill processing
+     * @param bill Customer reservation will be passed in for bill processing
      * @param totalAmount The total price of reservation
      * @param grandTotal The grand total price of billing
      * @param paymentMethod Customer preferred payment method
@@ -54,7 +54,7 @@ public class Billing implements Displayable, Identifiable{
      * @param promoOrigin The source which the customer obtained the promotion
      * @param paymentDate The checkout timestamp
      */
-    Billing(ArrayList<Reservation> billDetails,
+    Billing(ArrayList<Reservation> billDetails ,
             double totalAmount,
             double grandTotal,
             String paymentMethod,
@@ -64,6 +64,7 @@ public class Billing implements Displayable, Identifiable{
         currentTransactionCount++;
         totalTransactionCount++;
         this.transactionID = generateID(currentTransactionCount); //generate ID
+        // add bill into array
         this.billDetails = billDetails;
         this.paymentMethod = paymentMethod;
         this.promoApplied = promoApplied;
@@ -159,7 +160,7 @@ public class Billing implements Displayable, Identifiable{
      */
     @Override
     public String displayRow(){
-        return String.format("|%10s |%10s | %6s |%8s |%10s |%11s |%s |Count : %d |",
+        return String.format("|  %10s  | %10s  |  %6s   | %-8s   |  %10s  |   %10s    |%14s |Count : %d |",//TanShiJing
                 Main.convertCurrency(getTotalAmount()),
                 Main.convertCurrency(getGrandTotal()),
                 getTransactionID(),
@@ -236,20 +237,20 @@ public class Billing implements Displayable, Identifiable{
     @Override
     public String toString() {
         return String.format("""
-                Total Amount   : %s
-                Grand Total    : %s
-                Transaction ID : %s
-                Payment Method : %s
-                Promo Origin   : %s
-                Payment Date   : %s
-                Bill Details
-                ------------------
-                %s
-                ------------------
-                Promo Applied
-                ------------------
-                %s
-                ------------------
+                  Total Amount   : %s
+                  Grand Total    : %s
+                  Transaction ID : %s
+                  Payment Method : %s
+                  Promo Origin   : %s
+                  Payment Date   : %s
+                  Bill Details
+                  ------------------
+                  %s
+                  ------------------
+                  Promo Applied
+                  ------------------
+                  %s
+                  ------------------
                 """, Main.convertCurrency(getTotalAmount()),
                 Main.convertCurrency(getGrandTotal()),
                 getTransactionID(),

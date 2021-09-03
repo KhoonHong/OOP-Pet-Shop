@@ -25,22 +25,22 @@ public class Bath extends Service{
     private boolean teethCleanse = false;
     private static double price = 40;
     private static final String desc = """
-					+----------------------------------------------------------------+
-					|                                                                |
-					|                           B A T H                              |
-					|                                                                |
-					|         Having a big fuss with pets' sanitary issues?          |
-					|            Fading up to bath your own little pet?              |
-					|            Send them here, and we will solve it.               |
-					|                                                                |
-					|     We provide choices of shampoo to be selected based on      |
-					|     different circumstances or requirements. Troublesome       |
-					|     partial cleaning such as the ear, teeth and anal gland     |
-					|     can be handed over to us with no worries. Book a bath      |
-					|      service for your pet if you wish to get rid of the        |
-					|       pet's cleaning issue at a price lowest to RM40.          |
-					|                                                                |
-					+----------------------------------------------------------------+
+					  +----------------------------------------------------------------+
+					  |                                                                |
+					  |                       *** B A T H ***                          |
+					  |                                                                |
+					  |         Having a big fuss with pets' sanitary issues?          |
+					  |            Fading up to bath your own little pet?              |
+					  |            Send them here, and we will solve it.               |
+					  |                                                                |
+					  |     We provide choices of shampoo to be selected based on      |
+					  |     different circumstances or requirements. Troublesome       |
+					  |     partial cleaning such as the ear, teeth and anal gland     |
+					  |     can be handed over to us with no worries. Book a bath      |
+					  |      service for your pet if you wish to get rid of the        |
+					  |       pet's cleaning issue at a price lowest to RM40.          |
+					  |                                                                |
+					  +----------------------------------------------------------------+
 						""";
 
     // Constructor
@@ -238,15 +238,15 @@ public class Bath extends Service{
     @Override
     public String toString() {
         return String.format("""
-                Basic Price               (RM40.00)
-                Scented Shampoo           (RM10.00) : %c
-                Low Shed Shampoo          (RM10.00) : %c
-                Anti Tick & Flea Shampoo  (RM10.00) : %c
-                Ear Cleaning              (RM15.00) : %c
-                Anal Gland Cleaning       (RM15.00) : %c
-                Hair Removal & Flushing   (RM15.00) : %c
-                Breath Freshener          (RM15.00) : %c
-                Teeth Cleanse             (RM15.00) : %c
+                  Basic Price               (RM40.00)
+                  Scented Shampoo           (RM10.00) : %c
+                  Low Shed Shampoo          (RM10.00) : %c
+                  Anti Tick & Flea Shampoo  (RM10.00) : %c
+                  Ear Cleaning              (RM15.00) : %c
+                  Anal Gland Cleaning       (RM15.00) : %c
+                  Hair Removal & Flushing   (RM15.00) : %c
+                  Breath Freshener          (RM15.00) : %c
+                  Teeth Cleanse             (RM15.00) : %c
                 """, Main.booleanToSymbol(isScentedShampoo()),
                 Main.booleanToSymbol(isLowShedShampoo()),
                 Main.booleanToSymbol(isAntiTickFleaShampoo()),

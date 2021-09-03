@@ -138,7 +138,7 @@ public class Promotion implements Identifiable {
      */
     @Override
     public String toString() {
-        return String.format("|%-10s|%-20s|%-20s| %-6.2f|%-60s|\n", promoID,
+        return String.format("  |%-10s|%-20s|%-20s| %-6.2f|%-60s|\n", promoID,
                 Main.dateToString(promoStartDate),
                 Main.dateToString(promoEndDate) ,
                 promoRate,

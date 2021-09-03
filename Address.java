@@ -29,9 +29,9 @@ public class Address implements Displayable{
      * @param state State name
      * @param country Country name
      */
-    Address(String street, String city, String zipcode, String region, String state, String country) {
-        this.city = city;
+    Address(String street, String zipcode, String city, String region, String state, String country) {
         this.zipcode = zipcode;
+        this.city = city;
         this.state = state;
         this.region = region;
         this.country = country;
@@ -111,12 +111,12 @@ public class Address implements Displayable{
     @Override
     public String toString() {
         return String.format("""
-                 Street   > %s
-                 Zip Code > %s
-                 City     > %s
-                 Region   > %s
-                 State    > %s
-                 Country  > %s""", getStreet(), getZipcode(), getCity(), getRegion(), getState(), getCountry());
+                   Street   > %s
+                   Zip Code > %s
+                   City     > %s
+                   Region   > %s
+                   State    > %s
+                   Country  > %s""", getStreet(), getZipcode(), getCity(), getRegion(), getState(), getCountry());
     }
 
     /**

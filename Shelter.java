@@ -27,22 +27,22 @@ public class Shelter extends Service {
     private static double perNightPrice = 120;
     private double totalPerNightPrice;
     private static final String desc = """
-					+----------------------------------------------------------------+
-					|                                                                |
-					|                        S H E L T E R                           |
-					|                                                                |
-					|          One-on-one care of your pet is not impossible         |
-					|      when you are not around. We provide shelter for pets      |
-					|       which have "parents" temporarily gone far for work.      |
-					|       Such luxurious demands as air-conditioning, special      |
-					|    requirements on meals or a period to spend in a playroom    |
-					|                     can be fulfilled here.                     |
-					|                                                                |
-					|      Grab the service at RM120 per night with no concern       |
-					|                to leave the little cutie alone.                |
-					|                                                                |
-					+----------------------------------------------------------------+
-												""";
+					  +----------------------------------------------------------------+
+					  |                                                                |
+					  |                    *** S H E L T E R ***                       |
+					  |                                                                |
+					  |         One-on-one care of your pet is not impossible          |
+					  |     when you are not around. We provide shelter for pets       |
+					  |      which have "parents" temporarily gone far for work.       |
+					  |      Such luxurious demands as air-conditioning, special       |
+					  |    requirements on meals or a period to spend in a playroom    |
+					  |                    can be fulfilled here.                      |
+					  |                                                                |
+					  |       Grab the service at RM120 per night with no concern      |
+					  |                 to leave the little cutie alone.               |
+					  |                                                                |
+					  +----------------------------------------------------------------+
+						""";
 
     // Constructor
 
@@ -235,7 +235,7 @@ public class Shelter extends Service {
 
         // calculate day of stay
         totalPerNightPrice = perNightPrice * totalNumOfDays;
-        addOnPrice.put("Day of Stay ( " + Main.convertCurrency(120) + " Per night) -> " + totalNumOfDays + " days", totalPerNightPrice);
+        addOnPrice.put("  Day of Stay ( " + Main.convertCurrency(120) + " Per night) -> " + totalNumOfDays + " days", totalPerNightPrice);
 
         switch (foodPortion) {
             case XSMALL -> addOnPrice.put("Food Portion (XS)", 15.00);
@@ -254,16 +254,16 @@ public class Shelter extends Service {
     @Override
     public String toString() {
         return String.format("""
-                Check-In Date     : %s
-                Check-Out Date    : %s
-                Day of Stay       : %d
-                Total Basic Price : %s
-                Food Portion      : %s
-                Vegetarian         (RM  0.00) : %c
-                Halal Food         (RM  0.00) : %c
-                Air Conditioning   (RM 50.00) : %c
-                Play Room          (RM 10.00) : %c
-                One on One Care    (RM100.00) : %c
+                  Check-In Date     : %s
+                  Check-Out Date    : %s
+                  Day of Stay       : %d
+                  Total Basic Price : %s
+                  Food Portion      : %s
+                  Vegetarian         (RM  0.00) : %c
+                  Halal Food         (RM  0.00) : %c
+                  Air Conditioning   (RM 50.00) : %c
+                  Play Room          (RM 10.00) : %c
+                  One on One Care    (RM100.00) : %c
                 """, Main.dateToString(getCheckInDate()),
                 Main.dateToString(getCheckOutDate()),
                 getTotalNumOfDays(),

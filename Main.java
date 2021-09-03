@@ -107,7 +107,7 @@ public class Main {
     }
 
     public static void generateCustomerProfile(ArrayList<Customer> customerList, ArrayList<Employee> employeeList, ArrayList<Promotion> promotions) {
-        int generateCount = 100;
+        int generateCount = 1000;
         for (int count = 0; count < generateCount; count++) {
             String username = generateRandomCustomerUsername(customerList);
             String password = generateRandomName();
@@ -174,13 +174,22 @@ public class Main {
         ArrayList<Reservation> reserve = new ArrayList<>();
         int price = ThreadLocalRandom.current().nextInt(100,  1000 + 1);
         Promotion promo = promotions.get(ThreadLocalRandom.current().nextInt(0,  promotions.size()));
+        boolean applyPromo = ThreadLocalRandom.current().nextBoolean();
 
         reserve.add(generateReservation(customer, employeeList));
         for (int i = 0; i < reserveAmount; i++) {
             reserve.add((generateReservation(customer, employeeList)));
         }
-        customer.getBillHistory().add(new Billing(reserve,price, (double) price*10/100, new Random().nextBoolean() ? "Cash" : "Card",
-                promo, generateSource(), generateLocalDate()));
+        // have promo applied
+        if (applyPromo) {
+            customer.getBillHistory().add(new Billing(reserve, price, (double) price*10/100, new Random().nextBoolean() ? "Cash" : "Card",
+                    promo, generateSource(), generateLocalDate()));
+        }
+        // doesn't have promo applied
+        else {
+            customer.getBillHistory().add(new Billing(reserve, price, (double) price*10/100, new Random().nextBoolean() ? "Cash" : "Card",
+                    null, null, generateLocalDate()));
+        }
     }
 
     public static Reservation generateReservation(Customer customer, ArrayList<Employee> employeeList) {
@@ -243,7 +252,7 @@ public class Main {
     }
 
     public static Pet generatePet() {
-        int age = ThreadLocalRandom.current().nextInt(1, 19 + 1);
+        int age = ThreadLocalRandom.current().nextInt(1, 20 + 1);
         switch(ThreadLocalRandom.current().nextInt(1, 4 + 1)) {
             case 1 -> {
                 return new Dog(new Random().nextBoolean(),
@@ -411,7 +420,7 @@ public class Main {
 
         do {
             //get min date
-            System.out.println("Enter start date");
+            System.out.println("\n\nEnter start date");
             startDate = LocalDate.of(Main.promptInt("Year  > "),
                     Main.promptInt("Month > "),
                     Main.promptInt("Day > "));
@@ -428,7 +437,7 @@ public class Main {
         } while (endDate.isBefore(startDate));
 
         for (Customer customer : customerList) {
-            switch (((Person)customer).getAddress().getRegion()) {
+            switch (customer.getAddress().getRegion()) {
                 case "North" -> {
                     regionCount[0]++;
                     regionTotalAmount[0] += calcRegionTotalAmount(customer, startDate, endDate);
@@ -493,10 +502,12 @@ public class Main {
             }
         }
 
-        System.out.println("Region        Customers   Amount");
+        System.out.println("Region        Customers   Amount(RM)");
+        System.out.println("------      ------------  -----------");
         for(int i = 0; i < 9; i++){
             System.out.printf("%-14s%-12d%.2f\n", regionName[i], regionCount[i], regionTotalAmount[i]);
         }
+        pressAnyKeyToContinue();
     }
 
     public static double calcRegionTotalAmount(Customer c, LocalDate start, LocalDate end){
@@ -540,11 +551,17 @@ public class Main {
         int[][] promoSrcAge = {{0,0,0,0,0,0,0,0,0,0}, {0,0,0,0,0,0,0,0,0,0}
                 ,{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0}
                 ,{0,0,0,0,0,0,0,0,0,0}};
+        String origin;
 
         for(Customer cust: customer) {
             billHistory = cust.getBillHistory();
             for (Billing billing : billHistory) {
-                String origin = new String(billing.getPromoOrigin());
+                try {
+                    origin = billing.getPromoOrigin();
+                }
+                catch (NullPointerException e) {
+                    origin = "";
+                }
                 if (startdate.isBefore(billing.getPaymentDate()) && enddate.isAfter(billing.getPaymentDate())) {
                     for (int j = 0; j < promoSrc.length; j++) {
                         if (promoSrc[j].equals(origin)) {
@@ -605,6 +622,251 @@ public class Main {
             }
         }
         pressAnyKeyToContinue();
+    }
+
+    // pet demographic report
+    public static void petDemoReport(ArrayList<Customer> customerList) {
+        double birdAverageAge = (double)Bird.getTotalBirdAge() / (double)Bird.getTotalBirdCount();
+        double catAverageAge = (double)Cat.getTotalCatAge() / (double)Cat.getTotalCatCount();
+        double dogAverageAge = (double)Dog.getTotalDogAge() / (double)Dog.getTotalDogCount();
+        double rabbitAverageAge = (double)Rabbit.getTotalRabbitAge() / (double)Rabbit.getTotalRabbitCount();
+        int[] birdAggr = new int[3];
+        String[] birdAggrName = {"Low", "Medium", "High"};
+        int[] catAggr = new int[3];
+        String[] catAggrName = {"Low", "Medium", "High"};
+        int[] dogAggr = new int[3];
+        String[] dogAggrName = {"Low", "Medium", "High"};
+        int[] rabbitAggr = new int[3];
+        String[] rabbitAggrName = {"Low", "Medium", "High"};
+
+        int[] birdSize = new int[5];
+        String[] birdSizeName = {"Extra Small", "Small", "Medium", "Large", "Extra Large"};
+        int[] catSize = new int[5];
+        String[] catSizeName = {"Extra Small", "Small", "Medium", "Large", "Extra Large"};
+        int[] dogSize = new int[5];
+        String[] dogSizeName = {"Extra Small", "Small", "Medium", "Large", "Extra Large"};
+        int[] rabbitSize = new int[5];
+        String[] rabbitSizeName = {"Extra Small", "Small", "Medium", "Large", "Extra Large"};
+
+        LocalDate startDate;
+        LocalDate endDate;
+
+        do {
+            //get min date
+            startDate = reportInputStartDate("Enter start date");
+
+            //get max date
+            endDate = reportInputEndDate("Enter end date", startDate);
+
+        } while (endDate.isBefore(startDate));
+
+        for (Customer customer : customerList) {
+            ArrayList<Billing> cbh = (ArrayList<Billing>) customer.getBillHistory().clone();
+            for(int i = 0; i < cbh.size(); i++){
+                for(int j = 0; j < cbh.get(i).getBillDetails().size(); j++){
+                    if((cbh.get(i).getPaymentDate().isAfter(startDate) || cbh.get(i).getPaymentDate().equals(startDate)) && (cbh.get(i).getPaymentDate().equals(endDate) || cbh.get(i).getPaymentDate().isBefore(endDate))){
+                        if(cbh.get(i).getBillDetails().get(j).getPet() instanceof Bird ){
+                            switch (cbh.get(i).getBillDetails().get(j).getPet().getAggressive()){
+                                case LOW -> birdAggr[0]++;
+                                case MEDIUM -> birdAggr[1]++;
+                                case HIGH -> birdAggr[2]++;
+                            }
+                            switch (cbh.get(i).getBillDetails().get(j).getPet().getSize()){
+                                case XSMALL-> birdSize[0]++;
+                                case SMALL -> birdSize[1]++;
+                                case MEDIUM-> birdSize[2]++;
+                                case LARGE -> birdSize[3]++;
+                                case XLARGE -> birdSize[4]++;
+                            }
+                        }
+                        else if(cbh.get(i).getBillDetails().get(j).getPet() instanceof Cat ){
+                            switch (cbh.get(i).getBillDetails().get(j).getPet().getAggressive()){
+                                case LOW -> catAggr[0]++;
+                                case MEDIUM -> catAggr[1]++;
+                                case HIGH -> catAggr[2]++;
+                            }
+                            switch (cbh.get(i).getBillDetails().get(j).getPet().getSize()){
+                                case XSMALL-> catSize[0]++;
+                                case SMALL -> catSize[1]++;
+                                case MEDIUM-> catSize[2]++;
+                                case LARGE -> catSize[3]++;
+                                case XLARGE -> catSize[4]++;
+                            }
+                        }
+                        else if(cbh.get(i).getBillDetails().get(j).getPet() instanceof Dog ){
+                            switch (cbh.get(i).getBillDetails().get(j).getPet().getAggressive()){
+                                case LOW -> dogAggr[0]++;
+                                case MEDIUM -> dogAggr[1]++;
+                                case HIGH -> dogAggr[2]++;
+                            }
+                            switch (cbh.get(i).getBillDetails().get(j).getPet().getSize()){
+                                case XSMALL-> dogSize[0]++;
+                                case SMALL -> dogSize[1]++;
+                                case MEDIUM-> dogSize[2]++;
+                                case LARGE -> dogSize[3]++;
+                                case XLARGE -> dogSize[4]++;
+                            }
+                        }
+                        else if(cbh.get(i).getBillDetails().get(j).getPet() instanceof Rabbit ){
+                            switch (cbh.get(i).getBillDetails().get(j).getPet().getAggressive()){
+                                case LOW -> rabbitAggr[0]++;
+                                case MEDIUM -> rabbitAggr[1]++;
+                                case HIGH -> rabbitAggr[2]++;
+                            }
+                            switch (cbh.get(i).getBillDetails().get(j).getPet().getSize()){
+                                case XSMALL-> rabbitSize[0]++;
+                                case SMALL -> rabbitSize[1]++;
+                                case MEDIUM-> rabbitSize[2]++;
+                                case LARGE -> rabbitSize[3]++;
+                                case XLARGE -> rabbitSize[4]++;
+                            }
+                        }
+                        else{
+                            System.out.println("Error when sorting type of pet.");
+                            break;
+                        }
+                    }
+
+                }
+
+            }
+            cbh.clear();
+        }
+
+        petDemoSortFigures(birdAggrName, birdAggr);
+        petDemoSortFigures(catAggrName, catAggr);
+        petDemoSortFigures(dogAggrName, dogAggr);
+        petDemoSortFigures(rabbitAggrName, rabbitAggr);
+
+        petDemoSortFigures(birdSizeName, birdSize);
+        petDemoSortFigures(catSizeName, catSize);
+        petDemoSortFigures(dogSizeName, dogSize);
+        petDemoSortFigures(rabbitSizeName, rabbitSize);
+
+        System.out.println("\n      *** Pet Demographic report ***\n");
+        System.out.println(" Pet    Average age   Aggressiveness  Size");
+        System.out.printf(" %-6s", "Bird");
+        if(Double.isNaN(birdAverageAge)){
+            System.out.printf(" %11.2f   ", 0.0);
+        }
+        else{
+            System.out.printf(" %11.2f   ", birdAverageAge);
+        }
+        for(int i = 0; i < 3; i++){
+            if(i > 0){ System.out.print("                      ");  }
+            System.out.printf("%-8s%-8d", birdAggrName[i], birdAggr[i]);
+            System.out.printf("%-16s%-4d\n", birdSizeName[i], birdSize[i]);
+        }
+        for(int i = 3; i < 5; i++){
+            System.out.print("                                      ");
+            System.out.printf("%-16s%-8d\n", birdSizeName[i], birdSize[i]);
+        }
+
+        System.out.printf("\n %-6s", "Cat");
+        if(Double.isNaN(catAverageAge)){
+            System.out.printf(" %11.2f   ", 0.0);
+        }
+        else{
+            System.out.printf(" %11.2f   ", catAverageAge);
+        }
+        for(int i = 0; i < 3; i++){
+            if(i > 0){ System.out.print("                      ");  }
+            System.out.printf("%-8s%-8d", catAggrName[i], catAggr[i]);
+            System.out.printf("%-16s%-4d\n", catSizeName[i], catSize[i]);
+        }
+        for(int i = 3; i < 5; i++){
+            System.out.print("                                      ");
+            System.out.printf("%-16s%-4d\n", catSizeName[i], catSize[i]);
+        }
+
+        System.out.printf("\n %-6s", "Dog");
+        if(Double.isNaN(dogAverageAge)){
+            System.out.printf(" %11.2f   ", 0.0);
+        }
+        else{
+            System.out.printf(" %11.2f   ", dogAverageAge);
+        }
+        for(int i = 0; i < 3; i++){
+            if(i > 0){ System.out.print("                      ");  }
+            System.out.printf("%-8s%-8d", dogAggrName[i], dogAggr[i]);
+            System.out.printf("%-16s%-4d\n", dogSizeName[i], dogSize[i]);
+        }
+        for(int i = 3; i < 5; i++){
+            System.out.print("                                      ");
+            System.out.printf("%-16s%-4d\n", dogSizeName[i], dogSize[i]);
+        }
+
+        System.out.printf("\n %-6s", "Rabbit");
+        if(Double.isNaN(rabbitAverageAge)){
+            System.out.printf(" %11.2f   ", 0.00);
+        }
+        else{
+            System.out.printf(" %11.2f   ", rabbitAverageAge);
+        }
+        for(int i = 0; i < 3; i++){
+            if(i > 0){ System.out.print("                      ");  }
+            System.out.printf("%-8s%-8d", rabbitAggrName[i], rabbitAggr[i]);
+            System.out.printf("%-16s%-4d\n", rabbitSizeName[i], rabbitSize[i]);
+        }
+        for(int i = 3; i < 5; i++){
+            System.out.print("                                      ");
+            System.out.printf("%-16s%-4d\n", rabbitSizeName[i], rabbitSize[i]);
+        }
+        pressAnyKeyToContinue();
+    }
+
+    // pet demographic sorting
+    public static void petDemoSortFigures(String[] naming, int[] figures){
+        int temp1;
+        String temp2;
+        for (int i = 0; i < figures.length; i++)
+        {
+            for (int j = i + 1; j < figures.length; j++)
+            {
+                if (figures[i] < figures[j])
+                {
+                    temp1 = figures[i];
+                    figures[i] = figures[j];
+                    figures[j] = temp1;
+
+                    temp2 = naming[i];
+                    naming[i] = naming[j];
+                    naming[j] = temp2;
+                }
+            }
+        }
+    }
+
+    public static LocalDate reportInputStartDate(String text){
+        LocalDate startDate;
+        do {
+            try {
+                System.out.println(text);
+                startDate = LocalDate.of(Main.promptInt("Year  > "), Main.promptInt("Month > "), Main.promptInt("Day   > "));//TanShiJing
+                return startDate;
+            } catch (DateTimeException e) {
+                System.out.println("Invalid date entered...");
+            }
+        }
+        while (true);
+    }
+
+    public static LocalDate reportInputEndDate(String text, LocalDate startDate) {
+        LocalDate endDate;
+        do {
+            try {
+                System.out.println(text);
+                endDate = LocalDate.of(Main.promptInt("Year  > "), Main.promptInt("Month > "), Main.promptInt("Day   > "));//TanShiJing
+                if (endDate.isBefore(startDate)) {
+                    System.out.println("End date should not be earlier than start date...");
+                    continue;
+                }
+                return endDate;
+            } catch (DateTimeException e) {
+                System.out.println("Invalid date entered...");
+            }
+        }
+        while (true);
     }
 
 
@@ -690,7 +952,7 @@ public class Main {
 
         int serviceTotalCount = serviceCount[0] + serviceCount[1] + serviceCount[2] +serviceCount[3];
 
-        System.out.printf("Most spending customer : %s\n");
+        System.out.print("Most spending customer : %s\n");
         System.out.printf("Total amount spent over date range : %s\n", convertCurrency(totalAmount));
         System.out.println("Services");
         System.out.println("------------");
@@ -1630,7 +1892,7 @@ public class Main {
                 case 5 -> System.out.println("  5. Popular Service Report");
                 case 6 -> mostSpendingCustomer(customerList);
                 case 7 -> custDemoReport(customerList);
-                case 8 -> System.out.println("  8. Pet Demographic Report");
+                case 8 -> petDemoReport(customerList);
                 case 9 -> {
                     return;
                 }
@@ -1658,7 +1920,7 @@ public class Main {
                 case 1 -> searchEmployee(employeeList);
                 case 2 -> searchCustomer(customerList);
                 case 3 -> searchReservation(customerList);
-                case 4 -> searchBilling(customerList);
+                case 4 -> searchTotalBilling(customerList);
                 case 5 -> searchBillingHistory(customerList);
                 case 6 -> {
                     return;
@@ -1670,7 +1932,9 @@ public class Main {
     }
 
     public static void ownerDisplayMenu(ArrayList<Employee> employeeList, ArrayList<Customer> customerList) {
+        boolean backFlag;
         do {
+            backFlag = false;
             System.out.println("\n\n   ________________________________________ ");
             System.out.println("  |                                        |");
             System.out.println("  |          *** Display Menu ***          |");
@@ -1695,9 +1959,25 @@ public class Main {
                   \n  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
                     | Emp.ID |      Name       |  Age  | Gender | Contact Number | Birth Date |   Salary   |             Email            |    Username    | Register Date |                           Address                          |
                     +--------+-----------------+-------+--------+----------------+------------+------------+------------------------------+----------------+---------------+------------------------------------------------------------+""");
-                        for (Employee employee : employeeList) {
-                            System.out.println("  "+employee.displayRow());
+                        for (int index = 0; index < employeeList.size() ; index++) {
+                            System.out.println("  "+employeeList.get(index).displayRow());
                             System.out.println("  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+                            if ((index+1) % 10 == 0 && (index+1)!=employeeList.size()) {
+                                switch (promptInt("\n\nDisplaying results (" + (index-8) + "-" + (index+1) + ") out of " + employeeList.size() + " records\n1. Continue displaying records\n2. Back\n\nPlease enter a selection > ")) {
+                                    case 1 -> {
+                                        System.out.println("""                                                                       
+                                                                  
+                                                \n  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+                                                  | Emp.ID |      Name       |  Age  | Gender | Contact Number | Birth Date |   Salary   |             Email            |    Username    | Register Date |                           Address                          |
+                                                  +--------+-----------------+-------+--------+----------------+------------+------------+------------------------------+----------------+---------------+------------------------------------------------------------+""");
+                                    }
+                                    case 2 -> backFlag = true;
+                                    default -> System.out.println("Invalid selection entered...");
+                                }
+                                if (backFlag) {
+                                    break;
+                                }
+                            }
                         }
                         pressAnyKeyToContinue();
                     }
@@ -1713,9 +1993,25 @@ public class Main {
 				  \n  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 				    | Cust.ID |      Name       |  Age  | Gender | Contact Number | Birth Date |             Email            |    Username    | Register Date |                           Address                          |
 				    +---------+-----------------+-------+--------+----------------+------------+------------------------------+----------------+---------------+------------------------------------------------------------+""");
-                        for (Customer customer : customerList) {
-                            System.out.println("  " +customer.displayRow());
+                        for (int index = 0; index < customerList.size(); index++) {
+                            System.out.println("  " +customerList.get(index).displayRow());
                             System.out.println("  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+                            if ((index+1) % 10 == 0 && (index+1)!=customerList.size()) {
+                                switch (promptInt("\n\nDisplaying results (" + (index-8) + "-" + (index+1) + ") out of " + customerList.size() + " records\n1. Continue displaying records\n2. Back\n\nPlease enter a selection > ")) {
+                                    case 1 -> {
+                                        System.out.println("""
+                                                                                                 	  
+                                                \n  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+                                                  | Cust.ID |      Name       |  Age  | Gender | Contact Number | Birth Date |             Email            |    Username    | Register Date |                           Address                          |
+                                                  +---------+-----------------+-------+--------+----------------+------------+------------------------------+----------------+---------------+------------------------------------------------------------+""");
+                                    }
+                                    case 2 -> backFlag = true;
+                                    default -> System.out.println("Invalid selection entered...");
+                                }
+                                if (backFlag) {
+                                    break;
+                                }
+                            }
                         }
                         pressAnyKeyToContinue();
                     }
@@ -1731,11 +2027,27 @@ public class Main {
                   \n  +-------------------------------------------------------------------------------------------------------------------------------+
                     |  Cust.ID  | Resv.ID | Service | Resv. Timestamp | Pet ID | Pet Type | Resv. Session | Resv. Made TimeStamp |  Employee Name   |
                     +-----------+---------+---------+-----------------+--------+----------+---------------+----------------------+------------------+""");
-                        for (Customer customer : customerList) {
-                            for (Reservation reservation : customer.getReservation()) {
-                                System.out.printf("  |  %6s   ", customer.getID());
-                                System.out.print(reservation.displayRow()+"\n");
+                        for (int outer  = 0; outer < customerList.size(); outer++) {
+                            for (int inner = 0; outer < customerList.get(outer).getReservation().size(); inner++) {
+                                System.out.printf("  |  %6s   ", customerList.get(outer).getID());
+                                System.out.print(customerList.get(outer).getReservation().get(inner).displayRow()+"\n");
                                 System.out.println("  +-------------------------------------------------------------------------------------------------------------------------------+");
+                                if (((inner+1)+(outer*10)) % 10 == 0 && ((inner+1)+(outer*10))!=((customerList.size()*10)+customerList.get(outer).getReservation().size())) {
+                                    switch (promptInt("\n\nDisplaying results (" + ((inner+1)*(outer*10)-8) + "-" + ((inner+1)*(outer*10)) + ") out of " + customerList.size() + " records\n1. Continue displaying records\n2. Back\n\nPlease enter a selection > ")) {
+                                        case 1 -> {
+                                            System.out.println("""
+                                                                                                 	  
+                                                \n  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+                                                  | Cust.ID |      Name       |  Age  | Gender | Contact Number | Birth Date |             Email            |    Username    | Register Date |                           Address                          |
+                                                  +---------+-----------------+-------+--------+----------------+------------+------------------------------+----------------+---------------+------------------------------------------------------------+""");
+                                        }
+                                        case 2 -> backFlag = true;
+                                        default -> System.out.println("Invalid selection entered...");
+                                    }
+                                    if (backFlag) {
+                                        break;
+                                    }
+                                }
                             }
                         }
                         pressAnyKeyToContinue();
@@ -2154,7 +2466,7 @@ public class Main {
             Dog.displayServices();
             do {
                 petFlag = false;
-                switch (Main.promptInt("Select a service type > ")) {
+                switch (Main.promptInt("  Select a service type > ")) {
                     case 1 -> service = promptGroomService(new Groom());
                     case 2 -> service = promptBathService(new Bath());
                     case 3 -> service = promptMassageService(new Massage());
@@ -2680,58 +2992,29 @@ public class Main {
 
         // searching
         ArrayList<ArrayList<Integer>> customerIndexer = new ArrayList<>();
-        boolean initializer;
+        int count = 0;
         // loop customer
-        for (int customerIndex = 0; customerIndex < customerList.size(); customerIndex++) {
-            // loop billing history
-            initializer = false;
-            for (int billingIndex = 0; billingIndex < customerList.get(customerIndex).getBillHistory().size(); billingIndex++) {
-                System.out.println(customerList.get(customerIndex).getBillHistory().get(billingIndex).getGrandTotal());
-                if ((customerList.get(customerIndex).getBillHistory().get(billingIndex).getPaymentDate().isAfter(startDate) &&
-                        customerList.get(customerIndex).getBillHistory().get(billingIndex).getPaymentDate().isBefore(endDate)) ||
-                        customerList.get(customerIndex).getBillHistory().get(billingIndex).getPaymentDate().isEqual(startDate) ||
-                        customerList.get(customerIndex).getBillHistory().get(billingIndex).getPaymentDate().isEqual(endDate)) {
-                    if (!initializer) {
-                        customerIndexer.add(customerIndex, new ArrayList<>());
-                        initializer = true;
-                    }
-                    customerIndexer.get(customerIndex).add(billingIndex);
-                }
-            }
-        }
-        // display results
         System.out.println("""
                 \n  +----------------------------------------------------------------------------------------------------------------------------------------------+
                   |  Cust.ID  |   Cust. Name   | Total Amount | Grand Total | Trans. ID | Pay Method | Promo Origin |  Payment Date   | Promo Applied | Services |
                   +-----------+----------------+--------------+-------------+-----------+------------+--------------+-----------------+---------------+----------+""");
-        for (int index = 0; index < customerIndexer.size(); index++) {
-            for (Billing billing : customerList.get(index).getBillHistory()) {
-                System.out.printf("  |  %6s   |%-16s", customerList.get(index).getID(),(customerList.get(index)).fullName());
-                System.out.print(billing.displayRow()+"\n"); // billing class
-                System.out.println("  +----------------------------------------------------------------------------------------------------------------------------------------------+");
-            }//TanShiJing zhengge output
-        }
-        pressAnyKeyToContinue();
-    }
+        for (Customer customer : customerList) {
+            // loop billing history
+            for (int billingIndex = 0; billingIndex < customer.getBillHistory().size(); billingIndex++) {
+                if ((customer.getBillHistory().get(billingIndex).getPaymentDate().isAfter(startDate) &&
+                        customer.getBillHistory().get(billingIndex).getPaymentDate().isBefore(endDate)) ||
+                        customer.getBillHistory().get(billingIndex).getPaymentDate().isEqual(startDate) ||
+                        customer.getBillHistory().get(billingIndex).getPaymentDate().isEqual(endDate)) {
+                    // display results
+                    System.out.printf("  |  %6s   |%-16s", customer.getID(), customer.fullName());
+                    System.out.print(customer.getBillHistory().get(billingIndex).displayRow() + "\n"); // billing class
+                    System.out.println("  +----------------------------------------------------------------------------------------------------------------------------------------------+");
+                    count++;
 
-    public static void searchBilling(ArrayList<Customer> customerList) {
-        boolean searchFlag;
-        do {
-            searchFlag = false;
-            System.out.println("\n\t\t  Search Billing");
-            System.out.println("  -----------------------------");
-            System.out.println("  1. Search by Total Price");
-            System.out.println("  2. Search by Payment Date");
-
-            switch (promptInt("  Please enter a selection > ")) {
-                case 1 -> searchTotalBilling(customerList);
-                case 2 -> searchDateBilling(customerList);
-                default -> {
-                    System.out.println("Invalid choice entered...");
-                    searchFlag = true; // loop
                 }
             }
-        } while (searchFlag);
+        }
+        pressAnyKeyToContinue();
     }
 
     public static void searchTotalBilling(ArrayList<Customer> customerList) {
@@ -2752,9 +3035,10 @@ public class Main {
             if (customerList.get(index).getBill() == null) {
                 continue;
             }
-            if (customerList.get(index).getBill().getTotalAmount() >= lower && customerList.get(index).getBill().getTotalAmount() <= upper) {
+            if (customerList.get(index).getBill().calcTotalAmount() >= lower && customerList.get(index).getBill().calcTotalAmount() <= upper) {
                 indexer.add(index);
             }
+            System.out.println(customerList.get(index).getBill().getTotalAmount());
         }
         System.out.println("""
                     \n  +----------------------------------------+----------+
@@ -2767,39 +3051,6 @@ public class Main {
         pressAnyKeyToContinue();
     }
 
-    public static void searchDateBilling(ArrayList<Customer> customerList) {
-        LocalDate startDate = inputStartDate("\n\n  Enter start date to search > ");
-        LocalDate endDate = inputEndDate("\n  Enter end date to search > ", startDate);
-        LocalDate input;
-        // searching
-        ArrayList<Integer> indexer = new ArrayList<>();
-        for (int index = 0; index < customerList.size(); index++) {
-            // check if bill is empty
-            if (customerList.get(index).getBill() == null) {
-                continue;
-            }
-            input = customerList.get(index).getBill().getPaymentDate();
-            if ((input.isAfter(startDate) && input.isBefore(endDate)) || input.isEqual(startDate) || input.isEqual(endDate)) {
-                indexer.add(index);
-            }
-        }
-        // if search result does not match any records
-        if (indexer.isEmpty()) {
-            System.out.println("  No search results found...");
-            pressAnyKeyToContinue();
-            return;
-        }
-        System.out.println("""
-                \n  +-----------------------------------------------------------------------------------------------------------------------------+
-                  |  Cust.ID  | Total Amount | Grand Total | Trans. ID | Pay Method | Promo Origin |  Payment Date   | Promo Applied | Services |
-                  +-----------+--------------+-------------+-----------+------------+--------------+-----------------+---------------+----------+""");
-        for (int index : indexer) {
-            System.out.printf("  |  %6s   ", customerList.get(index).getID());
-            System.out.print(customerList.get(index).getBill().displayRow()+"\n");
-            System.out.println("  +-----------------------------------------------------------------------------------------------------------------------------+");
-        }
-        pressAnyKeyToContinue();
-    }
 
     public static void searchEmployee(ArrayList<Employee> employeeList) {
         boolean searchFlag;
@@ -2917,18 +3168,18 @@ public class Main {
         }
         LocalDate startDate = inputStartDate("\n\n  Enter start date to search > ");
         LocalDate endDate = inputEndDate("\n  Enter end date to search > ", startDate);
+        ArrayList<Reservation> reservations = new ArrayList<>();
         // searching
-        ArrayList<Integer> indexer = new ArrayList<>();
-        for (int index = 0; index < customerList.size(); index++) {
+        for (Customer customer : customerList) {
 
-            for (Reservation reservation : customerList.get(index).getReservation()) {
-                if ((reservation.getReserveDateTime().isAfter(startDate.atTime(0,0,0)) && reservation.getReserveDateTime().isBefore(endDate.atTime(0,0,0))) ||
-                        reservation.getReserveDateTime().isEqual(startDate.atTime(0,0,0)) || reservation.getReserveDateTime().isEqual(endDate.atTime(0,0,0))) {
-                    indexer.add(index); // add index to array
+            for (Reservation reservation : customer.getReservation()) {
+                if ((reservation.getReserveDateTime().isAfter(startDate.atTime(0, 0, 0)) && reservation.getReserveDateTime().isBefore(endDate.atTime(0, 0, 0))) ||
+                        reservation.getReserveDateTime().isEqual(startDate.atTime(0, 0, 0)) || reservation.getReserveDateTime().isEqual(endDate.atTime(0, 0, 0))) {
+                    reservations.add(reservation); // add reservation to array
                 }
             }
         }
-        if (indexer.isEmpty()) {
+        if (reservations.isEmpty()) {
             System.out.println("  No search results found...");
             pressAnyKeyToContinue();
             return;
@@ -2937,12 +3188,15 @@ public class Main {
                 \n  +-------------------------------------------------------------------------------------------------------------------------------+
                   |  Cust.ID  | Resv.ID | Service | Resv. Timestamp | Pet ID | Pet Type | Resv. Session | Resv. Made TimeStamp |  Employee Name   |
                   +-----------+---------+---------+-----------------+--------+----------+---------------+----------------------+------------------+""");
-        for (int index : indexer) {
-            for (Reservation reserve : customerList.get(index).getReservation()) {
-                System.out.printf("  |  %6s   ", customerList.get(index).getID());
-                System.out.print(reserve.displayRow() + "\n");
-                System.out.println("  +-------------------------------------------------------------------------------------------------------------------------------+");
+        for (Reservation reservation : reservations) {
+            for (Customer cust : customerList) {
+                if (cust.getReservation().contains(reservation)) {
+                    System.out.printf("  |  %6s   ", cust.getID());
+                    break;
+                }
             }
+            System.out.print(reservation.displayRow() + "\n");
+            System.out.println("  +-------------------------------------------------------------------------------------------------------------------------------+");
         }
         pressAnyKeyToContinue();
     }
@@ -2957,32 +3211,34 @@ public class Main {
         String lastname = promptString("  Enter last name  > ").trim().toLowerCase();//TanShiJing
 
         // searching
-        ArrayList<Integer> indexer = new ArrayList<>();
+        ArrayList<Reservation> reservations = new ArrayList<>();
         for (int index = 0; index < customerList.size(); index++) {
             // check first name and last name and customer reservation not empty
             if ((customerList.get(index).getFirstName().toLowerCase().contains(firstname) &&
                     customerList.get(index).getLastName().toLowerCase().contains(lastname)) &&
                     !(customerList.get(index).getReservation().isEmpty())) {
-                indexer.add(index); // add index to array
+                reservations.addAll(customerList.get(index).getReservation()); // add reservation to array
             }
         }
-        if (indexer.isEmpty()) {
+        if (reservations.isEmpty()) {
             System.out.println("  No search results found...");
             pressAnyKeyToContinue();
             return;
         }
         System.out.println("""
-                \n  +------------------------------------------------------------------------------------------------------------------------------------------------+
-                  |  Cust.ID  |   Cust. Name   | Resv.ID | Service | Resv. Timestamp | Pet ID | Pet Type | Resv. Session | Resv. Made TimeStamp |  Employee Name   |
-                  +-----------+----------------+---------+---------+-----------------+--------+----------+---------------+----------------------+------------------+""");
-        for (int index : indexer) {
-            for (Reservation reserve : customerList.get(index).getReservation()) {
-                System.out.printf("  |  %6s   |%-16s", customerList.get(index).getID(),(customerList.get(index)).fullName());//TanShiJing
-                System.out.print(reserve.displayRow()+"\n");
-                System.out.println("  +------------------------------------------------------------------------------------------------------------------------------------------------+");//TanShiJing
+                \n  +-------------------------------------------------------------------------------------------------------------------------------+
+                  |  Cust.ID  | Resv.ID | Service | Resv. Timestamp | Pet ID | Pet Type | Resv. Session | Resv. Made TimeStamp |  Employee Name   |
+                  +-----------+---------+---------+-----------------+--------+----------+---------------+----------------------+------------------+""");
+        for (Reservation reservation : reservations) {
+            for (Customer cust : customerList) {
+                if (cust.getReservation().contains(reservation)) {
+                    System.out.printf("  |  %6s   ", cust.getID());
+                    break;
+                }
             }
+            System.out.print(reservation.displayRow() + "\n");
+            System.out.println("  +-------------------------------------------------------------------------------------------------------------------------------+");
         }
-        pressAnyKeyToContinue();
     }
 
     public static void addCard(Person currentUser) {
@@ -3371,7 +3627,7 @@ public class Main {
         } while (true);
 
         // choose food portion (default is extra-small)
-        shelter.setFoodPortion(Main.promptSize("\tFood Portion"));
+        shelter.setFoodPortion(Main.promptSize("Food Portion"));
 
         // calculate days of stay
         shelter.setTotalNumOfDays(Period.between(shelter.getCheckInDate(), shelter.getCheckOutDate()).getDays());

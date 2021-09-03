@@ -96,13 +96,13 @@ public class Owner extends Person implements Identifiable {
         	      |   First Name > %-20s|   Age        > %-4s                 |
         	      |   Last Name  > %-20s|   Gender     > %c                    |
         	      |	                                   |   Phone No.  > %-12s         |
-        	      |                                    |   Birth Date > %-8s           |
+        	      |                                    |   Birth Date > %-10s             |
         	      |--------------------------------------------------------------------------|
         	      |                                                                          |
         	      |                                        Register Date > %-10s        |
         	      |                                                                          |
-        	      |   Username > %-20s                                        |
-        	      |   Email    > %-30s                              |
+        	      |   Username > %-60s|
+        	      |   Email    > %-60s|
         	      |   Address  > %-60s|
         	      |                                                                          |
         	      +--------------------------------------------------------------------------+

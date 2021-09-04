@@ -1050,6 +1050,11 @@ public class Main {
                         for (Customer cust : customerList) {
                             reservations.addAll(cust.getReservation());
                         }
+                        if (reservations.isEmpty()) {
+                            System.out.println("  No customer reservation records found...");
+                            pressAnyKeyToContinue();
+                            return;
+                        }
 
                         System.out.println("""
                   \n  +-------------------------------------------------------------------------------------------------------------------------------+
@@ -1111,6 +1116,12 @@ public class Main {
                             custs.add(customer);
                         }
 
+                        if (custs.isEmpty()) {
+                            System.out.println("  No customer billing records found...");
+                            pressAnyKeyToContinue();
+                            return;
+                        }
+
                         for (int index = 0; index < custs.size(); index++) {
                             System.out.printf("  |  %6s   |  %6s  | %10s |    %2d    |\n", custs.get(index).getID(),
                                     custs.get(index).getBill().getTransactionID(),
@@ -1145,16 +1156,22 @@ public class Main {
                         return;
                     }
                     else {
-                        System.out.println("""
-                  \n  +-----------------------------------------------------------------------------------------------------------------------------+
-                    |  Cust.ID  | Total Amount | Grand Total | Trans. ID | Pay Method | Promo Origin |  Payment Date   | Promo Applied | Services |
-                    +-----------+--------------+-------------+-----------+------------+--------------+-----------------+---------------+----------+""");
                         for (Customer customer : customerList) {
                             for (Billing billing : customer.getBillHistory()) {
                                 custID.add(customer.getID());
                                 billHistory.add(billing);
                             }
                         }
+
+                        if (billHistory.isEmpty()) {
+                            System.out.println("  No customer billing history records found...");
+                            pressAnyKeyToContinue();
+                            return;
+                        }
+                        System.out.println("""
+                  \n  +-----------------------------------------------------------------------------------------------------------------------------+
+                    |  Cust.ID  | Total Amount | Grand Total | Trans. ID | Pay Method | Promo Origin |  Payment Date   | Promo Applied | Services |
+                    +-----------+--------------+-------------+-----------+------------+--------------+-----------------+---------------+----------+""");
 
                         for (int index = 0; index < billHistory.size(); index++) {
                             System.out.printf("  |  %6s   ", custID.get(index));
@@ -1982,6 +1999,13 @@ public class Main {
             }
         }
 
+        // if no search results found
+        if (customers.isEmpty()) {
+            System.out.println("  No search results found...");
+            pressAnyKeyToContinue();
+            return;
+        }
+
         // sorting
         boolean exitFlag;
         do {
@@ -1997,21 +2021,35 @@ public class Main {
         }
         while (exitFlag);
 
+        boolean backFlag = false;
         System.out.println("""
 				\n  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 				  | Cust.ID |      Name       |  Age  | Gender | Contact Number | Birth Date |             Email            |    Username    | Register Date |                           Address                          |
 				  +---------+-----------------+-------+--------+----------------+------------+------------------------------+----------------+---------------+------------------------------------------------------------+""");
-        for (Customer cust : customers) {
-            System.out.println("  "+cust.displayRow());
+        for (int index = 0; index < customers.size(); index++) {
+            System.out.println("  "+customers.get(index).displayRow());
             System.out.println("  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+            if ((index+1) % 10 == 0 && (index+1)!=customers.size()) {
+                switch (promptInt("\n\nDisplaying results (" + (index - 8) + "-" + (index + 1) + ") out of " + customers.size() + " records\n1. Continue displaying records\n2. Back\n\nPlease enter a selection > ")) {
+                    case 1 -> {
+                        System.out.println("""
+				\n  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+				  | Cust.ID |      Name       |  Age  | Gender | Contact Number | Birth Date |             Email            |    Username    | Register Date |                           Address                          |
+				  +---------+-----------------+-------+--------+----------------+------------+------------------------------+----------------+---------------+------------------------------------------------------------+""");
+                    }
+                    case 2 -> backFlag = true;
+                    default -> System.out.println("Invalid selection entered...");
+                }
+                if (backFlag) {
+                    break;
+                }
+            }
         }
         pressAnyKeyToContinue();
     }
 
     public static void searchBillingHistory(ArrayList<Customer> customerList) {
-        boolean searchFlag;
         do {
-            searchFlag = false;
             System.out.println("\n   Search Billing History");
             System.out.println("  -----------------------------");
             System.out.println("  1. Search by Total Price");
@@ -2026,10 +2064,9 @@ public class Main {
                 }
                 default -> {
                     System.out.println("  Invalid choice entered...");
-                    searchFlag = true; // loop
                 }
             }
-        } while (searchFlag);
+        } while (true);
     }
 
     public static void searchTotalBillingHistory(ArrayList<Customer> customerList) {
@@ -2080,16 +2117,16 @@ public class Main {
         while (exitFlag);
 
         // display results
-        boolean breakLoop;
+        boolean breakLoop, backFlag = false;
         System.out.println("""
                 \n  +----------------------------------------------------------------------------------------------------------------------------------------------+
                   |  Cust.ID  |   Cust. Name   | Total Amount | Grand Total | Trans. ID | Pay Method | Promo Origin |  Payment Date   | Promo Applied | Services |
                   +-----------+----------------+--------------+-------------+-----------+------------+--------------+-----------------+---------------+----------+""");
-        for (Billing bills : billHistories) {
+        for (int index = 0; index < billHistories.size(); index++) {
             breakLoop = false;
             for (Customer cust : customerList) {
                 for (Billing bill : cust.getBillHistory()) {
-                    if (bill.equals(bills)) {
+                    if (bill.equals(billHistories.get(index))) {
                         System.out.printf("  |  %6s   |%-16s", cust.getID(),cust.fullName());
                         breakLoop = true;
                         break;
@@ -2099,8 +2136,23 @@ public class Main {
                     break;
                 }
             }
-            System.out.print(bills.displayRow()+"\n"); // billing class
+            System.out.print(billHistories.get(index).displayRow()+"\n"); // billing class
             System.out.println("  +----------------------------------------------------------------------------------------------------------------------------------------------+");
+            if ((index+1) % 10 == 0 && (index+1)!=billHistories.size()) {
+                switch (promptInt("\n\nDisplaying results (" + (index - 8) + "-" + (index + 1) + ") out of " + billHistories.size() + " records\n1. Continue displaying records\n2. Back\n\nPlease enter a selection > ")) {
+                    case 1 -> {
+                        System.out.println("""
+                \n  +----------------------------------------------------------------------------------------------------------------------------------------------+
+                  |  Cust.ID  |   Cust. Name   | Total Amount | Grand Total | Trans. ID | Pay Method | Promo Origin |  Payment Date   | Promo Applied | Services |
+                  +-----------+----------------+--------------+-------------+-----------+------------+--------------+-----------------+---------------+----------+""");
+                    }
+                    case 2 -> backFlag = true;
+                    default -> System.out.println("Invalid selection entered...");
+                }
+                if (backFlag) {
+                    break;
+                }
+            }
         }
 
         pressAnyKeyToContinue();
@@ -2134,7 +2186,7 @@ public class Main {
         }
 
         // sorting
-        boolean exitFlag;
+        boolean exitFlag, backFlag = false;
         do {
             exitFlag = false;
             switch (promptInt("\n\n  1. Ascending\n  2. Descending\n  Enter a selection > ")) {
@@ -2154,11 +2206,11 @@ public class Main {
                 \n  +----------------------------------------------------------------------------------------------------------------------------------------------+
                   |  Cust.ID  |   Cust. Name   | Total Amount | Grand Total | Trans. ID | Pay Method | Promo Origin |  Payment Date   | Promo Applied | Services |
                   +-----------+----------------+--------------+-------------+-----------+------------+--------------+-----------------+---------------+----------+""");
-        for (Billing bills : billHistories) {
+        for (int index = 0; index < billHistories.size(); index++) {
             breakLoop = false;
             for (Customer cust : customerList) {
                 for (Billing bill : cust.getBillHistory()) {
-                    if (bill.equals(bills)) {
+                    if (bill.equals(billHistories.get(index))) {
                         System.out.printf("  |  %6s   |%-16s", cust.getID(),cust.fullName());
                         breakLoop = true;
                         break;
@@ -2168,8 +2220,23 @@ public class Main {
                     break;
                 }
             }
-            System.out.print(bills.displayRow() + "\n"); // billing class
+            System.out.print(billHistories.get(index).displayRow() + "\n"); // billing class
             System.out.println("  +----------------------------------------------------------------------------------------------------------------------------------------------+");
+            if ((index+1) % 10 == 0 && (index+1)!=billHistories.size()) {
+                switch (promptInt("\n\nDisplaying results (" + (index - 8) + "-" + (index + 1) + ") out of " + billHistories.size() + " records\n1. Continue displaying records\n2. Back\n\nPlease enter a selection > ")) {
+                    case 1 -> {
+                        System.out.println("""
+                \n  +----------------------------------------------------------------------------------------------------------------------------------------------+
+                  |  Cust.ID  |   Cust. Name   | Total Amount | Grand Total | Trans. ID | Pay Method | Promo Origin |  Payment Date   | Promo Applied | Services |
+                  +-----------+----------------+--------------+-------------+-----------+------------+--------------+-----------------+---------------+----------+""");
+                    }
+                    case 2 -> backFlag = true;
+                    default -> System.out.println("Invalid selection entered...");
+                }
+                if (backFlag) {
+                    break;
+                }
+            }
         }
         pressAnyKeyToContinue();
     }
@@ -2220,22 +2287,36 @@ public class Main {
         }
         while (exitFlag);
 
+        boolean backFlag = false;
         System.out.println("""
                     \n  +----------------------------------------+----------+
                       |  Cust.ID  | Total Amount | Grand Total | Services |
                       +-----------+--------------+-------------+----------+""");
-        for (Customer cust : customers) {
-            System.out.printf("  |  %6s   |  %10s  | %10s  |Count : %d |\n",cust.getID(),convertCurrency(cust.getBill().getTotalAmount()),convertCurrency(cust.getBill().getGrandTotal()),cust.getBill().getBillDetails().size());//TanShiJing
+        for (int index = 0; index < customers.size(); index++) {
+            System.out.printf("  |  %6s   |  %10s  | %10s  |Count : %d |\n",customers.get(index).getID(),convertCurrency(customers.get(index).getBill().getTotalAmount()),convertCurrency(customers.get(index).getBill().getGrandTotal()),customers.get(index).getBill().getBillDetails().size());//TanShiJing
             System.out.println("  +----------------------------------------+----------+");
+            if ((index+1) % 10 == 0 && (index+1)!=customers.size()) {
+                switch (promptInt("\n\nDisplaying results (" + (index - 8) + "-" + (index + 1) + ") out of " + customers.size() + " records\n1. Continue displaying records\n2. Back\n\nPlease enter a selection > ")) {
+                    case 1 -> {
+                        System.out.println("""
+                    \n  +----------------------------------------+----------+
+                      |  Cust.ID  | Total Amount | Grand Total | Services |
+                      +-----------+--------------+-------------+----------+""");
+                    }
+                    case 2 -> backFlag = true;
+                    default -> System.out.println("Invalid selection entered...");
+                }
+                if (backFlag) {
+                    break;
+                }
+            }
         }
         pressAnyKeyToContinue();
     }
 
 
     public static void searchEmployee(ArrayList<Employee> employeeList) {
-        boolean searchFlag;
         do {
-            searchFlag = false;
             System.out.println("\n      Search Employee");
             System.out.println("  -----------------------------");
             System.out.println("  1. Search by Salary");
@@ -2250,10 +2331,9 @@ public class Main {
                 }
                 default -> {
                     System.out.println("  Invalid choice entered...");
-                    searchFlag = true; // loop
                 }
             }
-        } while (searchFlag);
+        } while (true);
     }
 
     public static void searchSalaryEmployee(ArrayList<Employee> employeeList) {
@@ -2279,6 +2359,13 @@ public class Main {
             }
         }
 
+        // if no search results found
+        if (employees.isEmpty()) {
+            System.out.println("  No search results found...");
+            pressAnyKeyToContinue();
+            return;
+        }
+
         // sorting
         boolean exitFlag;
         do {
@@ -2294,13 +2381,30 @@ public class Main {
         }
         while (exitFlag);
 
+        boolean backFlag = false;
+
         System.out.println("""
                 \n  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
                   | Emp.ID |      Name       |  Age  | Gender | Contact Number | Birth Date |   Salary   |            Email             |    Username    | Register Date |                           Address                          |
                   +--------+-----------------+-------+--------+----------------+------------+------------+------------------------------+----------------+---------------+------------------------------------------------------------+""");
-        for (Employee emp : employees) {
-            System.out.println("  "+emp.displayRow());
+        for (int index = 0; index < employees.size(); index++) {
+            System.out.println("  "+employees.get(index).displayRow());
             System.out.println("  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+            if ((index+1) % 10 == 0 && (index+1)!=employees.size()) {
+                switch (promptInt("\n\nDisplaying results (" + (index - 8) + "-" + (index + 1) + ") out of " + employees.size() + " records\n1. Continue displaying records\n2. Back\n\nPlease enter a selection > ")) {
+                    case 1 -> {
+                        System.out.println("""
+                \n  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+                  | Emp.ID |      Name       |  Age  | Gender | Contact Number | Birth Date |   Salary   |            Email             |    Username    | Register Date |                           Address                          |
+                  +--------+-----------------+-------+--------+----------------+------------+------------+------------------------------+----------------+---------------+------------------------------------------------------------+""");
+                    }
+                    case 2 -> backFlag = true;
+                    default -> System.out.println("Invalid selection entered...");
+                }
+                if (backFlag) {
+                    break;
+                }
+            }
         }
         pressAnyKeyToContinue();
     }
@@ -2324,6 +2428,13 @@ public class Main {
             }
         }
 
+        // if no search results found
+        if (employees.isEmpty()) {
+            System.out.println("  No search results found...");
+            pressAnyKeyToContinue();
+            return;
+        }
+
         // sorting
         boolean exitFlag;
         do {
@@ -2339,21 +2450,36 @@ public class Main {
         }
         while (exitFlag);
 
+        boolean backFlag = false;
+
         System.out.println("""
                 \n  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-                  | Emp.ID |      Name       |  Age  | Gender | Contact Number | Birth Date |   Salary   |             Email            |    Username    | Register Date |                           Address                          |
+                  | Emp.ID |      Name       |  Age  | Gender | Contact Number | Birth Date |   Salary   |            Email             |    Username    | Register Date |                           Address                          |
                   +--------+-----------------+-------+--------+----------------+------------+------------+------------------------------+----------------+---------------+------------------------------------------------------------+""");
-        for (Employee emp : employees) {
-            System.out.println("  "+emp.displayRow());
+        for (int index = 0; index < employees.size(); index++) {
+            System.out.println("  "+employees.get(index).displayRow());
             System.out.println("  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+            if ((index+1) % 10 == 0 && (index+1)!=employees.size()) {
+                switch (promptInt("\n\nDisplaying results (" + (index - 8) + "-" + (index + 1) + ") out of " + employees.size() + " records\n1. Continue displaying records\n2. Back\n\nPlease enter a selection > ")) {
+                    case 1 -> {
+                        System.out.println("""
+                \n  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+                  | Emp.ID |      Name       |  Age  | Gender | Contact Number | Birth Date |   Salary   |            Email             |    Username    | Register Date |                           Address                          |
+                  +--------+-----------------+-------+--------+----------------+------------+------------+------------------------------+----------------+---------------+------------------------------------------------------------+""");
+                    }
+                    case 2 -> backFlag = true;
+                    default -> System.out.println("Invalid selection entered...");
+                }
+                if (backFlag) {
+                    break;
+                }
+            }
         }
         pressAnyKeyToContinue();
     }
 
     public static void searchReservation(ArrayList<Customer> customerList) {
-        boolean searchFlag;
         do {
-            searchFlag = false;
             System.out.println("\n\n\t  Search Reservation");
             System.out.println("  -----------------------------");
             System.out.println("  1. Search by Date");
@@ -2368,10 +2494,9 @@ public class Main {
                 }
                 default -> {
                     System.out.println("  Invalid choice entered...");
-                    searchFlag = true; // loop
                 }
             }
-        } while (searchFlag);
+        } while (true);
     }
 
     public static void searchDateReservation(ArrayList<Customer> customerList) {
@@ -2416,19 +2541,36 @@ public class Main {
         }
         while (exitFlag);
 
+        boolean backFlag = false;
+
         System.out.println("""
                 \n  +-------------------------------------------------------------------------------------------------------------------------------+
                   |  Cust.ID  | Resv.ID | Service | Resv. Timestamp | Pet ID | Pet Type | Resv. Session | Resv. Made TimeStamp |  Employee Name   |
                   +-----------+---------+---------+-----------------+--------+----------+---------------+----------------------+------------------+""");
-        for (Reservation reservation : reservations) {
+        for (int index = 0; index < reservations.size(); index++) {
             for (Customer cust : customerList) {
-                if (cust.getReservation().contains(reservation)) {
+                if (cust.getReservation().contains(reservations.get(index))) {
                     System.out.printf("  |  %6s   ", cust.getID());
                     break;
                 }
             }
-            System.out.print(reservation.displayRow() + "\n");
+            System.out.print(reservations.get(index).displayRow() + "\n");
             System.out.println("  +-------------------------------------------------------------------------------------------------------------------------------+");
+            if ((index+1) % 10 == 0 && (index+1)!=reservations.size()) {
+                switch (promptInt("\n\nDisplaying results (" + (index - 8) + "-" + (index + 1) + ") out of " + reservations.size() + " records\n1. Continue displaying records\n2. Back\n\nPlease enter a selection > ")) {
+                    case 1 -> {
+                        System.out.println("""
+                \n  +-------------------------------------------------------------------------------------------------------------------------------+
+                  |  Cust.ID  | Resv.ID | Service | Resv. Timestamp | Pet ID | Pet Type | Resv. Session | Resv. Made TimeStamp |  Employee Name   |
+                  +-----------+---------+---------+-----------------+--------+----------+---------------+----------------------+------------------+""");
+                    }
+                    case 2 -> backFlag = true;
+                    default -> System.out.println("Invalid selection entered...");
+                }
+                if (backFlag) {
+                    break;
+                }
+            }
         }
         pressAnyKeyToContinue();
     }
@@ -2480,12 +2622,12 @@ public class Main {
 
         // searching
         ArrayList<Reservation> reservations = new ArrayList<>();
-        for (int index = 0; index < customerList.size(); index++) {
+        for (Customer customer : customerList) {
             // check first name and last name and customer reservation not empty
-            if ((customerList.get(index).getFirstName().toLowerCase().contains(firstname) &&
-                    customerList.get(index).getLastName().toLowerCase().contains(lastname)) &&
-                    !(customerList.get(index).getReservation().isEmpty())) {
-                reservations.addAll(customerList.get(index).getReservation()); // add reservation to array
+            if ((customer.getFirstName().toLowerCase().contains(firstname) &&
+                    customer.getLastName().toLowerCase().contains(lastname)) &&
+                    !(customer.getReservation().isEmpty())) {
+                reservations.addAll(customer.getReservation()); // add reservation to array
             }
         }
         if (reservations.isEmpty()) {
@@ -2493,19 +2635,37 @@ public class Main {
             pressAnyKeyToContinue();
             return;
         }
+
+        boolean backFlag = false;
+
         System.out.println("""
                 \n  +-------------------------------------------------------------------------------------------------------------------------------+
                   |  Cust.ID  | Resv.ID | Service | Resv. Timestamp | Pet ID | Pet Type | Resv. Session | Resv. Made TimeStamp |  Employee Name   |
                   +-----------+---------+---------+-----------------+--------+----------+---------------+----------------------+------------------+""");
-        for (Reservation reservation : reservations) {
+        for (int index = 0; index < reservations.size(); index++) {
             for (Customer cust : customerList) {
-                if (cust.getReservation().contains(reservation)) {
+                if (cust.getReservation().contains(reservations.get(index))) {
                     System.out.printf("  |  %6s   ", cust.getID());
                     break;
                 }
             }
-            System.out.print(reservation.displayRow() + "\n");
+            System.out.print(reservations.get(index).displayRow() + "\n");
             System.out.println("  +-------------------------------------------------------------------------------------------------------------------------------+");
+            if ((index+1) % 10 == 0 && (index+1)!=reservations.size()) {
+                switch (promptInt("\n\nDisplaying results (" + (index - 8) + "-" + (index + 1) + ") out of " + reservations.size() + " records\n1. Continue displaying records\n2. Back\n\nPlease enter a selection > ")) {
+                    case 1 -> {
+                        System.out.println("""
+                \n  +-------------------------------------------------------------------------------------------------------------------------------+
+                  |  Cust.ID  | Resv.ID | Service | Resv. Timestamp | Pet ID | Pet Type | Resv. Session | Resv. Made TimeStamp |  Employee Name   |
+                  +-----------+---------+---------+-----------------+--------+----------+---------------+----------------------+------------------+""");
+                    }
+                    case 2 -> backFlag = true;
+                    default -> System.out.println("Invalid selection entered...");
+                }
+                if (backFlag) {
+                    break;
+                }
+            }
         }
     }
 

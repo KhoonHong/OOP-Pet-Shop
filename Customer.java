@@ -56,6 +56,15 @@ public class Customer extends Person implements Displayable, Identifiable {
         this.id = generateID(currentCustCount);;
     }
 
+    Customer(String firstName, String lastName, String tel, char gender, LocalDate dob, Address address, String email, String username, String password, LocalDate regDate) {
+        super(firstName, lastName, tel, gender, dob, address, email, username, password);
+        this.regDate = regDate;
+        this.age = (LocalDate.now().getYear() - dob.getYear());
+        currentCustCount++;
+        totalCustCount++;
+        this.id = generateID(currentCustCount);;
+    }
+
     // Getter & Setter
     public LocalDate getRegDate() {
         return regDate;
@@ -161,7 +170,7 @@ public class Customer extends Person implements Displayable, Identifiable {
     }
 
     /**
-     * Add a {@code Reservation} object into {@code reservation} ArrayList
+     * Remove a {@code Reservation} object from {@code reservation} ArrayList
      *
      * @param reservation {@code Reservation} object created by customer
      */
@@ -170,7 +179,7 @@ public class Customer extends Person implements Displayable, Identifiable {
     }
 
     /**
-     * Add a {@code Card} object into {@code cards} ArrayList
+     * Remove a {@code Card} object from {@code cards} ArrayList
      *
      * @param card {@code Card} object created by customer
      */

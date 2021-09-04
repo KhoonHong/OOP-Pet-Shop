@@ -34,7 +34,7 @@ public class Main2 {
                     generateRandomName() + "@gmail.com",
                     username,
                     password,
-                    ThreadLocalRandom.current().nextInt(1000, 9000 + 1)));
+                    ThreadLocalRandom.current().nextInt(1000, 9000 + 1), generateLocalDate()));
         }
     }
 
@@ -56,7 +56,7 @@ public class Main2 {
                     generateRandomAddress(),
                     generateRandomName() + "@gmail.com",
                     username,
-                    password));
+                    password, generateLocalDate()));
 
             // add pet
             // random pet count 1 - 5
@@ -116,12 +116,12 @@ public class Main2 {
         }
         // have promo applied
         if (applyPromo) {
-            customer.getBillHistory().add(new Billing(reserve, price, (double) price*10/100, new Random().nextBoolean() ? "Cash" : "Card",
+            customer.getBillHistory().add(new Billing(reserve, price, (double) price*110/100, new Random().nextBoolean() ? "Cash" : "Card",
                     promo, generateSource(), generateLocalDate()));
         }
         // doesn't have promo applied
         else {
-            customer.getBillHistory().add(new Billing(reserve, price, (double) price*10/100, new Random().nextBoolean() ? "Cash" : "Card",
+            customer.getBillHistory().add(new Billing(reserve, price, (double) price*110/100, new Random().nextBoolean() ? "Cash" : "Card",
                     null, null, generateLocalDate()));
         }
     }

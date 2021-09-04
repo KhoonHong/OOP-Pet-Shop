@@ -55,6 +55,16 @@ public class Employee extends Person implements Displayable, Identifiable {
         this.id = generateID(currentEmployeeCount);
     }
 
+    Employee(String firstName, String lastName, String tel, char gender, LocalDate dob, Address address, String email, String username, String password, double salary, LocalDate startWorkDate) {
+        super(firstName, lastName, tel, gender, dob, address, email, username, password);
+        this.salary = salary;
+        this.age = (LocalDate.now().getYear() - dob.getYear());
+        this.startWorkDate = startWorkDate;
+        totalEmpCount++;
+        currentEmployeeCount++;
+        this.id = generateID(currentEmployeeCount);
+    }
+
     // Getter & Setter
     public static int getCurrentEmployeeCount() {
         return currentEmployeeCount;

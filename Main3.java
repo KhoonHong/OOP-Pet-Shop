@@ -3,6 +3,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * This class is for storing report methods
+ */
+
 public class Main3 {
     // reports
     // customer demographic report

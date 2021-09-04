@@ -106,10 +106,9 @@ public class Employee extends Person implements Displayable, Identifiable {
     @Override
     public String displayRow() {
         return String.format("""
-        	  | %6s |%-6s %-10s| %3s   |   %c    |  %11s   | %s |%-12s|%-30s| %-15s|   %s  |%-60s|""",
+        	  | %6s |%-17s| %3s   |   %c    |  %11s   | %s |%-12s|%-30s| %-15s|   %s  |%-60s|""",
                 getID(),
-                getLastName(),
-                getFirstName(),
+                fullName(),
                 getAge(),
                 getGender(),
                 getTel(),
@@ -118,7 +117,7 @@ public class Employee extends Person implements Displayable, Identifiable {
                 getEmail(),
                 getUsername(),
                 Main.dateToString(getStartWorkDate()),
-                getAddress().displayRow());
+                getAddress().limitAddress());
     }
 
     /**
@@ -135,7 +134,7 @@ public class Employee extends Person implements Displayable, Identifiable {
         	      |   First Name > %-20s|   Age        > %-4s                 |
         	      |   Last Name  > %-20s|   Gender     > %c                    |
         	      |	                                   |   Phone No.  > %-12s         |
-        	      |                                    |   Birth Date > %-10s             |
+        	      |                                    |   Birth Date > %-10s           |
         	      |--------------------------------------------------------------------------|
         	      |                                                                          |
         	      |                                        Register Date > %-10s        |
@@ -158,7 +157,7 @@ public class Employee extends Person implements Displayable, Identifiable {
                 Main.convertCurrency(getSalary()),
                 getUsername(),
                 getEmail(),
-                getAddress().displayRow());
+                getAddress().limitAddress());
     }
 
     /**

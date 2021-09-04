@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -55,6 +56,25 @@ public class Reservation implements Displayable, Identifiable {
         this.pet = pet;
         this.remarks = remarks;
         this.reserveMadeDateTime = LocalDateTime.now();
+        this.reserveSession = reserveSession;
+        this.employeeSelected = employeeSelected;
+        currentReserveCount++;
+        totalReserveCount++;
+        this.reserveID = generateID(currentReserveCount);
+    }
+
+    Reservation(LocalDateTime reserveDateTime,
+                Service services,
+                Pet pet,
+                String remarks,
+                int reserveSession,
+                Employee employeeSelected,
+                LocalDateTime reserveMadeDateTime) {
+        this.reserveDateTime = reserveDateTime;
+        this.services = services;
+        this.pet = pet;
+        this.remarks = remarks;
+        this.reserveMadeDateTime = reserveMadeDateTime;
         this.reserveSession = reserveSession;
         this.employeeSelected = employeeSelected;
         currentReserveCount++;
@@ -270,6 +290,7 @@ public class Reservation implements Displayable, Identifiable {
         }
         return "R" + additionalZero + idNum;
     }
+
 
     /**
      * Overrides the {@code equals()} method in {@code Object}.

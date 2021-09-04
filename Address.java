@@ -5,7 +5,7 @@
  * regarding the address when requested. Every single detail of an address such as city, state, country etc.
  * are all included in this class. Every single address that key in will be stored as an object in this class, and
  * methods are provided to display the address. Every single component of the particular address will be shown out
- * in a single row accordingly to the proper address format.
+ * in a single row accordingly to the proper address format. 
  *
  * @author Lee Khoon Hong
  */
@@ -131,5 +131,12 @@ public class Address implements Displayable{
             return address.equals(this);
         }
         return false;
+    }
+
+    public String limitAddress() {
+        if (displayRow().length() > 59) {
+            return displayRow().substring(0, 56) + "...";
+        }
+        return displayRow();
     }
 }

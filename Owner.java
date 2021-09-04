@@ -96,7 +96,7 @@ public class Owner extends Person implements Identifiable {
         	      |   First Name > %-20s|   Age        > %-4s                 |
         	      |   Last Name  > %-20s|   Gender     > %c                    |
         	      |	                                   |   Phone No.  > %-12s         |
-        	      |                                    |   Birth Date > %-10s             |
+        	      |                                    |   Birth Date > %-10s           |
         	      |--------------------------------------------------------------------------|
         	      |                                                                          |
         	      |                                        Register Date > %-10s        |
@@ -117,7 +117,7 @@ public class Owner extends Person implements Identifiable {
                 Main.dateToString(getStartWorkDate()),
                 getUsername(),
                 getEmail(),
-                getAddress().displayRow());
+                getAddress().limitAddress());
     }
 
     /**

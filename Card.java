@@ -130,7 +130,7 @@ public class Card {
                 censorCardNo(),
                 getCVV(),
                 getExpireDate().getMonthValue()+"/"+Integer.toString(getExpireDate().getYear()).substring(2,4),
-                getBillingAddress().displayRow());
+                getBillingAddress().limitAddress());
     }
 
     /**

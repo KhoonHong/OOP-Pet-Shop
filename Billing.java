@@ -46,7 +46,7 @@ public class Billing implements Displayable, Identifiable{
     /**
      * Creates a {@code Billing} class object when called
      *
-     * @param bill Customer reservation will be passed in for bill processing
+     * @param billDetails An array of reservations will be passed in for bill processing
      * @param totalAmount The total price of reservation
      * @param grandTotal The grand total price of billing
      * @param paymentMethod Customer preferred payment method
@@ -267,6 +267,7 @@ public class Billing implements Displayable, Identifiable{
      * @param o Object to be compared
      * @return True if equals, else return false
      */
+    /*
     @Override
     public boolean equals(Object o) {
         if (o instanceof Billing billing) {
@@ -274,6 +275,8 @@ public class Billing implements Displayable, Identifiable{
         }
         return false;
     }
+
+     */
 
     /**
      * Calculate the total amount of each reservation in {@code billDetails} ArrayList and store it into an ArrayList.

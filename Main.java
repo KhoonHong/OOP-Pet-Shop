@@ -1638,7 +1638,7 @@ public class Main {
     public static String inputRemarks() {
         String remark;
         do {
-            remark = promptString("  Enter new remarks > ");
+            remark = promptString("  Enter remarks > ");
             if (remark.length() > 28) {
                 System.out.println("\nRemark entered is too long (limit to 28 characters)...");
                 pressAnyKeyToContinue();
@@ -2057,6 +2057,13 @@ public class Main {
             }
         }
 
+        // check if there are no results found
+        if (billHistories.isEmpty()) {
+            System.out.println("No search results found...");
+            pressAnyKeyToContinue();
+            return;
+        }
+
         // sorting
         boolean exitFlag;
         do {
@@ -2073,12 +2080,13 @@ public class Main {
         while (exitFlag);
 
         // display results
-        boolean breakLoop = false;
+        boolean breakLoop;
         System.out.println("""
                 \n  +----------------------------------------------------------------------------------------------------------------------------------------------+
                   |  Cust.ID  |   Cust. Name   | Total Amount | Grand Total | Trans. ID | Pay Method | Promo Origin |  Payment Date   | Promo Applied | Services |
                   +-----------+----------------+--------------+-------------+-----------+------------+--------------+-----------------+---------------+----------+""");
         for (Billing bills : billHistories) {
+            breakLoop = false;
             for (Customer cust : customerList) {
                 for (Billing bill : cust.getBillHistory()) {
                     if (bill.equals(bills)) {
@@ -2118,6 +2126,13 @@ public class Main {
             }
         }
 
+        // check if there are no results found
+        if (billHistories.isEmpty()) {
+            System.out.println("No search results found...");
+            pressAnyKeyToContinue();
+            return;
+        }
+
         // sorting
         boolean exitFlag;
         do {
@@ -2134,12 +2149,13 @@ public class Main {
         while (exitFlag);
 
         // display results
-        boolean breakLoop = false;
+        boolean breakLoop;
         System.out.println("""
                 \n  +----------------------------------------------------------------------------------------------------------------------------------------------+
                   |  Cust.ID  |   Cust. Name   | Total Amount | Grand Total | Trans. ID | Pay Method | Promo Origin |  Payment Date   | Promo Applied | Services |
                   +-----------+----------------+--------------+-------------+-----------+------------+--------------+-----------------+---------------+----------+""");
         for (Billing bills : billHistories) {
+            breakLoop = false;
             for (Customer cust : customerList) {
                 for (Billing bill : cust.getBillHistory()) {
                     if (bill.equals(bills)) {
@@ -2180,6 +2196,13 @@ public class Main {
                 customers.add(customer);
             }
             System.out.println(customer.getBill().getTotalAmount());
+        }
+
+        // check if there are no results found
+        if (customers.isEmpty()) {
+            System.out.println("No search results found...");
+            pressAnyKeyToContinue();
+            return;
         }
 
         // sorting

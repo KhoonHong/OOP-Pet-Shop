@@ -450,6 +450,10 @@ public class Main3 {
                     System.out.println("Date entered must be after year 2018...");
                     continue;
                 }
+                else if (endDate.isAfter(LocalDate.now())) {
+                    System.out.println("Date entered must be before current date...");
+                    continue;
+                }
                 return endDate;
             } catch (DateTimeException e) {
                 System.out.println("Invalid date entered...");
@@ -471,12 +475,11 @@ public class Main3 {
 
         ArrayList<Customer> custFiltered = new ArrayList<>();
 
-
         LocalDate startDate = reportInputStartDate("Enter start date");
         LocalDate endDate = reportInputEndDate("Enter end date", startDate);
 
         for (Customer customer : customerList){
-            if(!customer.getBillHistory().isEmpty()){
+            if (!customer.getBillHistory().isEmpty()){
                 filterCustomerInDateRange(customer, custFiltered, startDate, endDate);
             }
         }
@@ -512,7 +515,6 @@ public class Main3 {
             petType.clear();
             System.out.println();
         }
-
         System.out.println();
         Main.pressAnyKeyToContinue();
 

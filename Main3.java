@@ -100,8 +100,8 @@ public class Main3 {
         System.out.print("\n        Region         Customer        Weight(%%)        Total Amount(RM) ");
         System.out.print("\n  ------------------------------------------------------------------------\n");
         for(int i = 0; i < 9; i++){
-
-            System.out.printf("    %-14s |   %4d      |      %5.2f%%       |    %10.2f\n", regionName[i], regionCount[i], 100.0*(double)regionCount[i]/(double)totalCustCount, regionTotalAmount[i]);
+            double weight =  100.0*(double)regionCount[i]/(double)totalCustCount;
+            System.out.printf("    %-14s |   %4d      |      %5.2f%%       |    %10.2f\n", regionName[i], regionCount[i],Double.isNaN(weight) ? 0 : weight, regionTotalAmount[i]);
         }
         System.out.print("  ------------------------------------------------------------------------\n");
         Main.pressAnyKeyToContinue();
@@ -197,8 +197,8 @@ public class Main3 {
                         }
                     }
                     if(maxNum!=0) {
-                        System.out.print(" " + max + "0 - "+ max +"9    |             " + maxNum);
-                        System.out.printf("      |      %.2f%%",( (double) maxNum/sortSrcCnt[cnt] * 100));
+                        System.out.printf(" %d0 - %d9    |            %2d",max, max, maxNum);
+                        System.out.printf("       |      %.2f%%",( (double) maxNum/sortSrcCnt[cnt] * 100));
                         System.out.printf("\n  %-10s "," ");
                         promoSrcAge[num][max]=-1;
                     }
@@ -211,10 +211,16 @@ public class Main3 {
 
     // pet demographic report
     public static void petDemoReport(ArrayList<Customer> customerList) {
-        double birdAverageAge = (double)Bird.getTotalBirdAge() / (double)Bird.getTotalBirdCount();
-        double catAverageAge = (double)Cat.getTotalCatAge() / (double)Cat.getTotalCatCount();
-        double dogAverageAge = (double)Dog.getTotalDogAge() / (double)Dog.getTotalDogCount();
-        double rabbitAverageAge = (double)Rabbit.getTotalRabbitAge() / (double)Rabbit.getTotalRabbitCount();
+        int totalBirdAge = 0;
+        int totalCatAge = 0;
+        int totalDogAge = 0;
+        int totalRabbitAge = 0;
+
+        int totalBirdCount = 0;
+        int totalCatCount = 0;
+        int totalDogCount = 0;
+        int totalRabbitCount = 0;
+
         int[] birdAggr = new int[3];
         String[] birdAggrName = {"Low", "Medium", "High"};
         int[] catAggr = new int[3];
@@ -242,13 +248,14 @@ public class Main3 {
         //get max date
         endDate = reportInputEndDate("\n  Enter end date", startDate);
 
-
         for (Customer customer : customerList) {
             @SuppressWarnings("unchecked") ArrayList<Billing> cbh = (ArrayList<Billing>) customer.getBillHistory().clone();
             for (Billing billing : cbh) {
                 for (int j = 0; j < billing.getBillDetails().size(); j++) {
                     if ((billing.getPaymentDate().isAfter(startDate) || billing.getPaymentDate().equals(startDate)) && (billing.getPaymentDate().equals(endDate) || billing.getPaymentDate().isBefore(endDate))) {
                         if (billing.getBillDetails().get(j).getPet() instanceof Bird) {
+                            totalBirdCount++;
+                            totalBirdAge += billing.getBillDetails().get(j).getPet().getAge();
                             switch (billing.getBillDetails().get(j).getPet().getAggressive()) {
                                 case LOW -> birdAggr[0]++;
                                 case MEDIUM -> birdAggr[1]++;
@@ -262,6 +269,8 @@ public class Main3 {
                                 case XLARGE -> birdSize[4]++;
                             }
                         } else if (billing.getBillDetails().get(j).getPet() instanceof Cat) {
+                            totalCatCount++;
+                            totalCatAge += billing.getBillDetails().get(j).getPet().getAge();
                             switch (billing.getBillDetails().get(j).getPet().getAggressive()) {
                                 case LOW -> catAggr[0]++;
                                 case MEDIUM -> catAggr[1]++;
@@ -275,6 +284,8 @@ public class Main3 {
                                 case XLARGE -> catSize[4]++;
                             }
                         } else if (billing.getBillDetails().get(j).getPet() instanceof Dog) {
+                            totalDogCount++;
+                            totalDogAge += billing.getBillDetails().get(j).getPet().getAge();
                             switch (billing.getBillDetails().get(j).getPet().getAggressive()) {
                                 case LOW -> dogAggr[0]++;
                                 case MEDIUM -> dogAggr[1]++;
@@ -288,6 +299,8 @@ public class Main3 {
                                 case XLARGE -> dogSize[4]++;
                             }
                         } else if (billing.getBillDetails().get(j).getPet() instanceof Rabbit) {
+                            totalRabbitCount++;
+                            totalRabbitAge += billing.getBillDetails().get(j).getPet().getAge();
                             switch (billing.getBillDetails().get(j).getPet().getAggressive()) {
                                 case LOW -> rabbitAggr[0]++;
                                 case MEDIUM -> rabbitAggr[1]++;
@@ -311,6 +324,11 @@ public class Main3 {
             }
             cbh.clear();
         }
+
+        double birdAverageAge = (double)totalBirdAge / (double)totalBirdCount;
+        double catAverageAge = (double)totalCatAge / (double)totalCatCount;
+        double dogAverageAge = (double)totalDogAge / (double)totalDogCount;
+        double rabbitAverageAge = (double)totalRabbitAge / (double)totalRabbitCount;
 
         petDemoSortFigures(birdAggrName, birdAggr);
         petDemoSortFigures(catAggrName, catAggr);
@@ -337,12 +355,15 @@ public class Main3 {
         }
         for(int i = 0; i < 3; i++){
             if(i > 0){ System.out.print("             |                     |");  }
-            System.out.printf("      %-8s > %6.2f%%", birdAggrName[i], 100.00 * (double)birdAggr[i] / (double)(birdAggr[0] + birdAggr[1] + birdAggr[2]));
-            System.out.printf("     |    %-12s > %6.2f%%\n", birdSizeName[i], 100.00 * (double)birdSize[i] / (double)(birdSize[0] + birdSize[1] + birdSize[2] + birdSize[3] + birdSize[4]));
+            double birdA1 = 100.00 * (double)birdAggr[i] / (double)(birdAggr[0] + birdAggr[1] + birdAggr[2]);
+            System.out.printf("     %-8s > %6.2f%%", birdAggrName[i], Double.isNaN(birdA1) ? 0 : birdA1);
+            double birdS1 = 100.00 * (double)birdSize[i] / (double)(birdSize[0] + birdSize[1] + birdSize[2] + birdSize[3] + birdSize[4]);
+            System.out.printf("    |    %-12s > %6.2f%%\n", birdSizeName[i], Double.isNaN(birdS1) ? 0 : birdS1);
         }
         for(int i = 3; i < 5; i++){
             System.out.print("             |                     |");
-            System.out.printf("                           |    %-12s > %6.2f%%\n", birdSizeName[i], 100.00 * (double)birdSize[i] / (double)(birdSize[0] + birdSize[1] + birdSize[2] + birdSize[3] + birdSize[4]));
+            double birdS2 = 100.00 * (double)birdSize[i] / (double)(birdSize[0] + birdSize[1] + birdSize[2] + birdSize[3] + birdSize[4]);
+            System.out.printf("                           |    %-12s > %6.2f%%\n", birdSizeName[i], Double.isNaN(birdS2) ? 0 : birdS2);
         }
 
         System.out.println("             |                     |                           |                           ");
@@ -357,12 +378,15 @@ public class Main3 {
         }
         for(int i = 0; i < 3; i++){
             if(i > 0){ System.out.print("             |                     |");  }
-            System.out.printf("      %-8s > %6.2f%%", catAggrName[i], 100.00 * (double)catAggr[i] / (double)(catAggr[0] + catAggr[1] + catAggr[2]));
-            System.out.printf("     |    %-12s > %6.2f%%\n", catSizeName[i], 100.00 * (double)catSize[i] / (double)(catSize[0] + catSize[1] + catSize[2] + catSize[3] + catSize[4]));
+            double catA1 = 100.00 * (double)catAggr[i] / (double)(catAggr[0] + catAggr[1] + catAggr[2]);
+            System.out.printf("     %-8s > %6.2f%%", catAggrName[i], Double.isNaN(catA1) ? 0 : catA1);
+            double catS1 = 100.00 * (double)catSize[i] / (double)(catSize[0] + catSize[1] + catSize[2] + catSize[3] + catSize[4]);
+            System.out.printf("    |    %-12s > %6.2f%%\n", catSizeName[i], Double.isNaN(catS1) ? 0 : catS1);
         }
         for(int i = 3; i < 5; i++){
             System.out.print("             |                     |");
-            System.out.printf("                           |    %-12s > %6.2f%%\n", catSizeName[i], 100.00 * (double)catSize[i] / (double)(catSize[0] + catSize[1] + catSize[2] + catSize[3] + catSize[4]));
+            double catS2 =  100.00 * (double)catSize[i] / (double)(catSize[0] + catSize[1] + catSize[2] + catSize[3] + catSize[4]);
+            System.out.printf("                           |    %-12s > %6.2f%%\n",catSizeName[i], Double.isNaN(catS2) ? 0 :catS2);
         }
 
         System.out.println("             |                     |                           |                           ");
@@ -377,12 +401,15 @@ public class Main3 {
         }
         for(int i = 0; i < 3; i++){
             if(i > 0){ System.out.print("             |                     |");  }
-            System.out.printf("      %-8s > %6.2f%%", dogAggrName[i], 100.00 * (double)dogAggr[i] / (double)(dogAggr[0] + dogAggr[1] + dogAggr[2]));
-            System.out.printf("     |    %-12s > %6.2f%%\n", dogSizeName[i], 100.00 * (double)dogSize[i] / (double)(dogSize[0] + dogSize[1] + dogSize[2] + dogSize[3] + dogSize[4]));
+            double dogA1 = 100.00 * (double)dogAggr[i] / (double)(dogAggr[0] + dogAggr[1] + dogAggr[2]);
+            System.out.printf("     %-8s > %6.2f%%", dogAggrName[i], Double.isNaN(dogA1) ? 0 : dogA1);
+            double dogS1 = 100.00 * (double)dogSize[i] / (double)(dogSize[0] + dogSize[1] + dogSize[2] + dogSize[3] + dogSize[4]);
+            System.out.printf("    |    %-12s > %6.2f%%\n", dogSizeName[i], Double.isNaN(dogS1) ? 0 : dogS1);
         }
         for(int i = 3; i < 5; i++){
             System.out.print("             |                     |");
-            System.out.printf("                           |    %-12s > %6.2f%%\n", dogSizeName[i], 100.00 * (double)dogSize[i] / (double)(dogSize[0] + dogSize[1] + dogSize[2] + dogSize[3] + dogSize[4]));
+            double dogS2 = 100.00 * (double)dogSize[i] / (double)(dogSize[0] + dogSize[1] + dogSize[2] + dogSize[3] + dogSize[4]);
+            System.out.printf("                           |    %-12s > %6.2f%%\n", dogSizeName[i], Double.isNaN(dogS2) ? 0 : dogS2);
         }
 
         System.out.println("             |                     |                           |                           ");
@@ -397,12 +424,15 @@ public class Main3 {
         }
         for(int i = 0; i < 3; i++){
             if(i > 0){ System.out.print("             |                     |");  }
-            System.out.printf("      %-8s > %6.2f%%", rabbitAggrName[i], 100.00 * (double)dogAggr[i] / (double)(dogAggr[0] + dogAggr[1] + dogAggr[2]));
-            System.out.printf("     |    %-12s > %6.2f%%\n", rabbitSizeName[i], 100.00 * (double)rabbitSize[i] / (double)(rabbitSize[0] + rabbitSize[1] + rabbitSize[2] + rabbitSize[3] + rabbitSize[4]));
+            double rabbitS1 = 100.00 * (double)rabbitAggr[i] / (double)(rabbitAggr[0] + rabbitAggr[1] + rabbitAggr[2]);
+            System.out.printf("     %-8s > %6.2f%%", rabbitAggrName[i], Double.isNaN(rabbitS1) ? 0 :rabbitS1);
+            double rabbitA1 = 100.00 * (double)rabbitSize[i] / (double)(rabbitSize[0] + rabbitSize[1] + rabbitSize[2] + rabbitSize[3] + rabbitSize[4]);
+            System.out.printf("    |    %-12s > %6.2f%%\n", rabbitSizeName[i], Double.isNaN(rabbitA1) ? 0 : rabbitA1);
         }
         for(int i = 3; i < 5; i++){
             System.out.print("             |                     |");
-            System.out.printf("                           |    %-12s > %6.2f%%\n", rabbitSizeName[i], 100.00 * (double)rabbitSize[i] / (double)(rabbitSize[0] + rabbitSize[1] + rabbitSize[2] + rabbitSize[3] + rabbitSize[4]));
+            double rabbitS2 = 100.00 * (double)rabbitSize[i] / (double)(rabbitSize[0] + rabbitSize[1] + rabbitSize[2] + rabbitSize[3] + rabbitSize[4]);
+            System.out.printf("                           |    %-12s > %6.2f%%\n", rabbitSizeName[i], Double.isNaN(rabbitS2) ? 0 : rabbitS2);
         }
 
         System.out.println("             |                     |                           |                           ");
@@ -465,7 +495,7 @@ public class Main3 {
                     continue;
                 }
                 if(endDate.isAfter(LocalDate.now())){
-                    System.out.println("  End date should not be after today's date...");
+                    System.out.println("  End date should not after today's date...");
                     continue;
                 }
                 return endDate;
@@ -479,7 +509,6 @@ public class Main3 {
 
     // report
     public static void mostSpendingCustomer(ArrayList<Customer> customerList) {
-
         int topHowMany = 10;
 
         // check if customer record is empty
@@ -523,6 +552,7 @@ public class Main3 {
         if (custFiltered.size() < 10) {
             topHowMany = custFiltered.size()-1;
         }
+
         for (int i = 0; i < topHowMany; i ++){
             System.out.printf("     %-6s  |  %-21s  | %-20s  |   RM%8.2f     |", custFiltered.get(i).getID(), custFiltered.get(i).fullName(), custFiltered.get(i).getEmail(), custTotalAmountSpent[i]);
             for (int j = 0; j < custFiltered.get(i).getPets().size(); j ++){
@@ -537,7 +567,7 @@ public class Main3 {
             System.out.println();
         }
         if (custFiltered.size() < 10) {
-            System.out.println("  Not enough data for 10 top spending customers! (displaying " + topHowMany + ")");
+            System.out.println("\n  Not enough data for 10 top spending customer (displaying " + (topHowMany == -1 ? 0 : topHowMany) + ")");
         }
         System.out.println("  ----------------------------------------------------------------------------------------------------------");
         System.out.println();
@@ -576,7 +606,6 @@ public class Main3 {
             }
         }
     }
-
 
     //payment method report
     public static void paymentMethodReport(ArrayList<Customer> customerList){

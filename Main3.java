@@ -96,14 +96,14 @@ public class Main3 {
 
         System.out.println("\n\n                        CUSTOMER DEMOGRAPHIC REPORT                      ");
         System.out.println("\n\n  From: " + startDate + "   To: " + endDate);
-        System.out.printf("\n  ------------------------------------------------------------------------");
-        System.out.printf("\n        Region         Customer        Weight(%%)        Total Amount(RM) ");
-        System.out.printf("\n  ------------------------------------------------------------------------\n");
+        System.out.print("\n  ------------------------------------------------------------------------");
+        System.out.print("\n        Region         Customer        Weight(%%)        Total Amount(RM) ");
+        System.out.print("\n  ------------------------------------------------------------------------\n");
         for(int i = 0; i < 9; i++){
 
             System.out.printf("    %-14s |   %4d      |      %5.2f%%       |    %10.2f\n", regionName[i], regionCount[i], 100.0*(double)regionCount[i]/(double)totalCustCount, regionTotalAmount[i]);
         }
-        System.out.printf("  ------------------------------------------------------------------------\n");
+        System.out.print("  ------------------------------------------------------------------------\n");
         Main.pressAnyKeyToContinue();
     }
 
@@ -126,8 +126,7 @@ public class Main3 {
 
 
     public static void sourcePromoReport(ArrayList<Customer> customer) {
-        ArrayList<Billing> billHistory= new ArrayList<Billing>();
-        //boolean datechk=true;
+        ArrayList<Billing> billHistory;
         LocalDate startdate = reportInputStartDate("\n\n  Enter start date");
         LocalDate enddate = reportInputEndDate("\n  Enter end date", startdate);
 
@@ -187,7 +186,7 @@ public class Main3 {
                 System.out.println("  No record.");
             }
             else {
-                int count =0;
+                int count;
                 System.out.print("  Age Range: ");
                 for(count=0 ; count < 3 ; count++) {
                     int maxNum=0, max=0;
@@ -243,68 +242,65 @@ public class Main3 {
         //get max date
         endDate = reportInputEndDate("\n  Enter end date", startDate);
 
+
         for (Customer customer : customerList) {
-            ArrayList<Billing> cbh = (ArrayList<Billing>) customer.getBillHistory().clone();
-            for(int i = 0; i < cbh.size(); i++){
-                for(int j = 0; j < cbh.get(i).getBillDetails().size(); j++){
-                    if((cbh.get(i).getPaymentDate().isAfter(startDate) || cbh.get(i).getPaymentDate().equals(startDate)) && (cbh.get(i).getPaymentDate().equals(endDate) || cbh.get(i).getPaymentDate().isBefore(endDate))){
-                        if(cbh.get(i).getBillDetails().get(j).getPet() instanceof Bird ){
-                            switch (cbh.get(i).getBillDetails().get(j).getPet().getAggressive()){
+            @SuppressWarnings("unchecked") ArrayList<Billing> cbh = (ArrayList<Billing>) customer.getBillHistory().clone();
+            for (Billing billing : cbh) {
+                for (int j = 0; j < billing.getBillDetails().size(); j++) {
+                    if ((billing.getPaymentDate().isAfter(startDate) || billing.getPaymentDate().equals(startDate)) && (billing.getPaymentDate().equals(endDate) || billing.getPaymentDate().isBefore(endDate))) {
+                        if (billing.getBillDetails().get(j).getPet() instanceof Bird) {
+                            switch (billing.getBillDetails().get(j).getPet().getAggressive()) {
                                 case LOW -> birdAggr[0]++;
                                 case MEDIUM -> birdAggr[1]++;
                                 case HIGH -> birdAggr[2]++;
                             }
-                            switch (cbh.get(i).getBillDetails().get(j).getPet().getSize()){
-                                case XSMALL-> birdSize[0]++;
+                            switch (billing.getBillDetails().get(j).getPet().getSize()) {
+                                case XSMALL -> birdSize[0]++;
                                 case SMALL -> birdSize[1]++;
-                                case MEDIUM-> birdSize[2]++;
+                                case MEDIUM -> birdSize[2]++;
                                 case LARGE -> birdSize[3]++;
                                 case XLARGE -> birdSize[4]++;
                             }
-                        }
-                        else if(cbh.get(i).getBillDetails().get(j).getPet() instanceof Cat ){
-                            switch (cbh.get(i).getBillDetails().get(j).getPet().getAggressive()){
+                        } else if (billing.getBillDetails().get(j).getPet() instanceof Cat) {
+                            switch (billing.getBillDetails().get(j).getPet().getAggressive()) {
                                 case LOW -> catAggr[0]++;
                                 case MEDIUM -> catAggr[1]++;
                                 case HIGH -> catAggr[2]++;
                             }
-                            switch (cbh.get(i).getBillDetails().get(j).getPet().getSize()){
-                                case XSMALL-> catSize[0]++;
+                            switch (billing.getBillDetails().get(j).getPet().getSize()) {
+                                case XSMALL -> catSize[0]++;
                                 case SMALL -> catSize[1]++;
-                                case MEDIUM-> catSize[2]++;
+                                case MEDIUM -> catSize[2]++;
                                 case LARGE -> catSize[3]++;
                                 case XLARGE -> catSize[4]++;
                             }
-                        }
-                        else if(cbh.get(i).getBillDetails().get(j).getPet() instanceof Dog ){
-                            switch (cbh.get(i).getBillDetails().get(j).getPet().getAggressive()){
+                        } else if (billing.getBillDetails().get(j).getPet() instanceof Dog) {
+                            switch (billing.getBillDetails().get(j).getPet().getAggressive()) {
                                 case LOW -> dogAggr[0]++;
                                 case MEDIUM -> dogAggr[1]++;
                                 case HIGH -> dogAggr[2]++;
                             }
-                            switch (cbh.get(i).getBillDetails().get(j).getPet().getSize()){
-                                case XSMALL-> dogSize[0]++;
+                            switch (billing.getBillDetails().get(j).getPet().getSize()) {
+                                case XSMALL -> dogSize[0]++;
                                 case SMALL -> dogSize[1]++;
-                                case MEDIUM-> dogSize[2]++;
+                                case MEDIUM -> dogSize[2]++;
                                 case LARGE -> dogSize[3]++;
                                 case XLARGE -> dogSize[4]++;
                             }
-                        }
-                        else if(cbh.get(i).getBillDetails().get(j).getPet() instanceof Rabbit ){
-                            switch (cbh.get(i).getBillDetails().get(j).getPet().getAggressive()){
+                        } else if (billing.getBillDetails().get(j).getPet() instanceof Rabbit) {
+                            switch (billing.getBillDetails().get(j).getPet().getAggressive()) {
                                 case LOW -> rabbitAggr[0]++;
                                 case MEDIUM -> rabbitAggr[1]++;
                                 case HIGH -> rabbitAggr[2]++;
                             }
-                            switch (cbh.get(i).getBillDetails().get(j).getPet().getSize()){
-                                case XSMALL-> rabbitSize[0]++;
+                            switch (billing.getBillDetails().get(j).getPet().getSize()) {
+                                case XSMALL -> rabbitSize[0]++;
                                 case SMALL -> rabbitSize[1]++;
-                                case MEDIUM-> rabbitSize[2]++;
+                                case MEDIUM -> rabbitSize[2]++;
                                 case LARGE -> rabbitSize[3]++;
                                 case XLARGE -> rabbitSize[4]++;
                             }
-                        }
-                        else{
+                        } else {
                             System.out.println("  Error when sorting type of pet.");
                             break;
                         }
@@ -341,7 +337,7 @@ public class Main3 {
         }
         for(int i = 0; i < 3; i++){
             if(i > 0){ System.out.print("             |                     |");  }
-            System.out.printf("      %-8s > 6.2f%%", birdAggrName[i], 100.00 * (double)birdAggr[i] / (double)(birdAggr[0] + birdAggr[1] + birdAggr[2]));
+            System.out.printf("      %-8s > %6.2f%%", birdAggrName[i], 100.00 * (double)birdAggr[i] / (double)(birdAggr[0] + birdAggr[1] + birdAggr[2]));
             System.out.printf("     |    %-12s > %6.2f%%\n", birdSizeName[i], 100.00 * (double)birdSize[i] / (double)(birdSize[0] + birdSize[1] + birdSize[2] + birdSize[3] + birdSize[4]));
         }
         for(int i = 3; i < 5; i++){
@@ -361,7 +357,7 @@ public class Main3 {
         }
         for(int i = 0; i < 3; i++){
             if(i > 0){ System.out.print("             |                     |");  }
-            System.out.printf("      %-8s > 6.2f%%", catAggrName[i], 100.00 * (double)catAggr[i] / (double)(catAggr[0] + catAggr[1] + catAggr[2]));
+            System.out.printf("      %-8s > %6.2f%%", catAggrName[i], 100.00 * (double)catAggr[i] / (double)(catAggr[0] + catAggr[1] + catAggr[2]));
             System.out.printf("     |    %-12s > %6.2f%%\n", catSizeName[i], 100.00 * (double)catSize[i] / (double)(catSize[0] + catSize[1] + catSize[2] + catSize[3] + catSize[4]));
         }
         for(int i = 3; i < 5; i++){
@@ -381,7 +377,7 @@ public class Main3 {
         }
         for(int i = 0; i < 3; i++){
             if(i > 0){ System.out.print("             |                     |");  }
-            System.out.printf("      %-8s > 6.2f%%", dogAggrName[i], 100.00 * (double)dogAggr[i] / (double)(dogAggr[0] + dogAggr[1] + dogAggr[2]));
+            System.out.printf("      %-8s > %6.2f%%", dogAggrName[i], 100.00 * (double)dogAggr[i] / (double)(dogAggr[0] + dogAggr[1] + dogAggr[2]));
             System.out.printf("     |    %-12s > %6.2f%%\n", dogSizeName[i], 100.00 * (double)dogSize[i] / (double)(dogSize[0] + dogSize[1] + dogSize[2] + dogSize[3] + dogSize[4]));
         }
         for(int i = 3; i < 5; i++){
@@ -401,7 +397,7 @@ public class Main3 {
         }
         for(int i = 0; i < 3; i++){
             if(i > 0){ System.out.print("             |                     |");  }
-            System.out.printf("      %-8s > 6.2f%%", rabbitAggrName[i], 100.00 * (double)dogAggr[i] / (double)(dogAggr[0] + dogAggr[1] + dogAggr[2]));
+            System.out.printf("      %-8s > %6.2f%%", rabbitAggrName[i], 100.00 * (double)dogAggr[i] / (double)(dogAggr[0] + dogAggr[1] + dogAggr[2]));
             System.out.printf("     |    %-12s > %6.2f%%\n", rabbitSizeName[i], 100.00 * (double)rabbitSize[i] / (double)(rabbitSize[0] + rabbitSize[1] + rabbitSize[2] + rabbitSize[3] + rabbitSize[4]));
         }
         for(int i = 3; i < 5; i++){
@@ -469,7 +465,7 @@ public class Main3 {
                     continue;
                 }
                 if(endDate.isAfter(LocalDate.now())){
-                    System.out.println("  End date should not after today's date...");
+                    System.out.println("  End date should not be after today's date...");
                     continue;
                 }
                 return endDate;
@@ -483,6 +479,8 @@ public class Main3 {
 
     // report
     public static void mostSpendingCustomer(ArrayList<Customer> customerList) {
+
+        int topHowMany = 10;
 
         // check if customer record is empty
         if (!Main.checkCustomerRecord(customerList)) {
@@ -522,7 +520,10 @@ public class Main3 {
         System.out.println("    Cust.ID         Customer Name                Email            Spent Amt (RM)             Pets           ");
         System.out.println("  ----------------------------------------------------------------------------------------------------------");
 
-        for (int i = 0; i < 10; i ++){
+        if (custFiltered.size() < 10) {
+            topHowMany = custFiltered.size()-1;
+        }
+        for (int i = 0; i < topHowMany; i ++){
             System.out.printf("     %-6s  |  %-21s  | %-20s  |   RM%8.2f     |", custFiltered.get(i).getID(), custFiltered.get(i).fullName(), custFiltered.get(i).getEmail(), custTotalAmountSpent[i]);
             for (int j = 0; j < custFiltered.get(i).getPets().size(); j ++){
                 if(!petType.contains(custFiltered.get(i).getPets().get(j).getClass().getSimpleName())){
@@ -534,6 +535,9 @@ public class Main3 {
             }
             petType.clear();
             System.out.println();
+        }
+        if (custFiltered.size() < 10) {
+            System.out.println("  Not enough data for 10 top spending customers! (displaying " + topHowMany + ")");
         }
         System.out.println("  ----------------------------------------------------------------------------------------------------------");
         System.out.println();
@@ -572,6 +576,7 @@ public class Main3 {
             }
         }
     }
+
 
     //payment method report
     public static void paymentMethodReport(ArrayList<Customer> customerList){
@@ -665,14 +670,14 @@ public class Main3 {
         System.out.println("\n\n                           PAYMENT METHOD REPORT                      ");
         System.out.println("\n\n  From: " + startDate + "   To: " + endDate);
         System.out.printf("\n\n  Cash                      Total : RM%10.2f      Weight(%%) : %6.2f%%", cashAmount, percentageCash);
-        System.out.printf("\n  -----------------------------------------------------------------------");
+        System.out.print("\n  -----------------------------------------------------------------------");
         System.out.printf("\n  Age Range : 18 - 30   |  Amount : %3d           |               %6.2f%%",ageCash[0], percentageCashAge0);
         System.out.printf("\n              31 - 50   |           %3d           |               %6.2f%%",ageCash[1], percentageCashAge1);
         System.out.printf("\n              51 - 70   |           %3d           |               %6.2f%%",ageCash[2], percentageCashAge2);
         System.out.printf("\n              71 - 90   |           %3d           |               %6.2f%%",ageCash[3], percentageCashAge3);
         System.out.printf("\n              Others    |           %3d           |               %6.2f%%\n\n",ageCash[4], percentageCashAge4);
         System.out.printf("\n  Card                      Total : RM%10.2f      Weight(%%) : %6.2f%%", cardAmount, percentageCard);
-        System.out.printf("\n  -----------------------------------------------------------------------");
+        System.out.print("\n  -----------------------------------------------------------------------");
         System.out.printf("\n  Age Range : 18 - 30   |  Amount : %3d           |               %6.2f%%",ageCard[0], percentageCardAge0);
         System.out.printf("\n              31 - 50   |           %3d           |               %6.2f%%",ageCard[1], percentageCardAge1);
         System.out.printf("\n              51 - 70   |           %3d           |               %6.2f%%",ageCard[2], percentageCardAge2);

@@ -1,14 +1,10 @@
 import java.io.File;
 import java.io.FileWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.text.NumberFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.io.IOException;
@@ -2188,7 +2184,17 @@ public class Main {
 
     public static void searchDateBillingHistory(ArrayList<Customer> customerList) {
         LocalDate startDate = inputSearchStartDate();
-        LocalDate endDate = inputSearchEndDate(startDate);
+        LocalDate endDate;
+
+        do {
+            endDate = inputSearchEndDate(startDate);
+            if (endDate.isAfter(LocalDate.now())) {
+                System.out.println("  End date should not be after today's date...");
+                continue;
+            }
+            break;
+        }
+        while (true);
 
         // searching
         ArrayList<Billing> billHistories = new ArrayList<>();
@@ -2299,7 +2305,6 @@ public class Main {
             if (customer.getBill().calcTotalAmount() >= lower && customer.getBill().calcTotalAmount() <= upper) {
                 customers.add(customer);
             }
-            System.out.println(customer.getBill().getTotalAmount());
         }
 
         // check if there are no results found
@@ -2654,8 +2659,8 @@ public class Main {
             try {
                 System.out.println("\n\n  Enter start date to search > ");
                 startDate = LocalDate.of(Main.promptInt("  Year  > "), Main.promptInt("  Month > "), Main.promptInt("  Day   > "));//TanShiJing
-                if (startDate.isBefore(LocalDate.now().minusYears(21))) {
-                    System.out.println("  Date entered must be after year 2000...");
+                if (startDate.isBefore(LocalDate.now().minusYears(3))) {
+                    System.out.println("  Date entered must be after year 2018...");
                     continue;
                 }
                 return startDate;

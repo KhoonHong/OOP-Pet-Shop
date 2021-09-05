@@ -130,7 +130,7 @@ public class Main2 {
     public static Reservation generateReservation(Customer customer, ArrayList<Employee> employeeList, LocalDateTime date) {
         int petIndex = ThreadLocalRandom.current().nextInt(0,  customer.getPets().size());
         Pet pet = customer.getPets().get(petIndex);
-        Service service = null;
+        Service service;
         ArrayList<Integer> capableService = new ArrayList<>();
 
         if (pet instanceof Bird) {

@@ -133,6 +133,11 @@ public class Address implements Displayable{
         return false;
     }
 
+    /**
+     * Restricted the length of the address to ensure proper display
+     *
+     * @return address with length restricted with ...
+     */
     public String limitAddress() {
         if (displayRow().length() > 59) {
             return displayRow().substring(0, 56) + "...";

@@ -199,7 +199,7 @@ public class Bath extends Service{
     /**
      * Overrides the {@code calculateAddOnPrice()} method in {@code Service}
      *
-     * This method will add the add-on name and prices of Bath service to the addOnPrice hashmap
+     * This method will add the add-on name and prices of {@code Bath} service to the {@code addOnPrice} hashmap
      */
     @Override
     public void calculateAddOnPrice() {

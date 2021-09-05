@@ -20,9 +20,9 @@ public class Main3 {
         LocalDate endDate;
 
         //get min date
-        startDate = reportInputStartDate("\n\nEnter start date");
+        startDate = reportInputStartDate("\n\n  Enter start date");
         //get max date
-        endDate = reportInputEndDate("Enter end date", startDate);
+        endDate = reportInputEndDate("\n  Enter end date", startDate);
 
         for (Customer customer : customerList) {
             switch (customer.getAddress().getRegion()) {
@@ -94,13 +94,16 @@ public class Main3 {
             }
         }
 
-        System.out.println("\n  *** Customer Demographic Report ***\n");
-        System.out.println("From: " + startDate + "   To: " + endDate);
-        System.out.println("Region           Customers    Amount(RM)");
-        System.out.println("------          -----------   -----------");
+        System.out.println("\n\n                        CUSTOMER DEMOGRAPHIC REPORT                      ");
+        System.out.println("\n\n  From: " + startDate + "   To: " + endDate);
+        System.out.printf("\n  ------------------------------------------------------------------------");
+        System.out.printf("\n        Region         Customer        Weight(%%)        Total Amount(RM) ");
+        System.out.printf("\n  ------------------------------------------------------------------------\n");
         for(int i = 0; i < 9; i++){
-            System.out.printf("%-14s%4d (%5.2f%%)  %10.2f\n", regionName[i], regionCount[i], 100.0*(double)regionCount[i]/(double)totalCustCount, regionTotalAmount[i]);
+
+            System.out.printf("    %-14s |   %4d      |      %5.2f%%       |    %10.2f\n", regionName[i], regionCount[i], 100.0*(double)regionCount[i]/(double)totalCustCount, regionTotalAmount[i]);
         }
+        System.out.printf("  ------------------------------------------------------------------------\n");
         Main.pressAnyKeyToContinue();
     }
 
@@ -125,8 +128,8 @@ public class Main3 {
     public static void sourcePromoReport(ArrayList<Customer> customer) {
         ArrayList<Billing> billHistory= new ArrayList<Billing>();
         //boolean datechk=true;
-        LocalDate startdate = reportInputStartDate("Enter start date");
-        LocalDate enddate = reportInputEndDate("Enter end date", startdate);
+        LocalDate startdate = reportInputStartDate("\n\n  Enter start date");
+        LocalDate enddate = reportInputEndDate("\n  Enter end date", startdate);
 
         String[] promoSrc = {"Youtube","Instagram","Facebook","Twitter","Friends"};
         int[] promoSrcCnt = {0,0,0,0,0};
@@ -169,12 +172,11 @@ public class Main3 {
             }
         }
         int cnt=sortSrcCnt.length-1;
-        System.out.println("\n\t\tFrequency of promotion code source");
-        System.out.println("\t-------------------------------------------");
-        System.out.println("From: " + startdate + "   To: " + enddate);
+        System.out.println("\n\n             FREQUENCY OF PROMOTION CODE SOURCE           ");
+        System.out.println("\n\n  From: " + startdate + "   To: " + enddate);
         for(int c=sortPromoSrc.length-1 ; c >= 0 ; c--,cnt--) {
-            System.out.printf("\n%-10s \t\t\tTotal : %d\t\tWeight(%%)\n", sortPromoSrc[c] ,sortSrcCnt[cnt]);
-            System.out.println("---------------------------------------------");
+            System.out.printf("\n\n  %-10s                  Total : %2d           Weight(%%)\n", sortPromoSrc[c] ,sortSrcCnt[cnt]);
+            System.out.println("  ----------------------------------------------------------");
             int num=-1;
             for(int i=0; i <promoSrc.length ;i++) {
                 if(sortPromoSrc[c].equals(promoSrc[i])) {
@@ -182,11 +184,11 @@ public class Main3 {
                 }
             }
             if(sortSrcCnt[cnt]==0) {
-                System.out.println("No record.");
+                System.out.println("  No record.");
             }
             else {
                 int count =0;
-                System.out.print("Age Range : ");
+                System.out.print("  Age Range: ");
                 for(count=0 ; count < 3 ; count++) {
                     int maxNum=0, max=0;
                     for(int i=0 ; i < promoSrcAge[num].length ; i++) {
@@ -196,14 +198,15 @@ public class Main3 {
                         }
                     }
                     if(maxNum!=0) {
-                        System.out.print(max + "0 - "+ max +"9\t\t\t" + maxNum);
-                        System.out.printf("\t\t%.2f%%",( (double) maxNum/sortSrcCnt[cnt] * 100));
-                        System.out.printf("\n %-10s "," ");
+                        System.out.print(" " + max + "0 - "+ max +"9    |             " + maxNum);
+                        System.out.printf("      |      %.2f%%",( (double) maxNum/sortSrcCnt[cnt] * 100));
+                        System.out.printf("\n  %-10s "," ");
                         promoSrcAge[num][max]=-1;
                     }
                 }
             }
         }
+        System.out.println("\n");
         Main.pressAnyKeyToContinue();
     }
 
@@ -236,9 +239,9 @@ public class Main3 {
 
 
         //get min date
-        startDate = reportInputStartDate("Enter start date");
+        startDate = reportInputStartDate("\n\n  Enter start date");
         //get max date
-        endDate = reportInputEndDate("Enter end date", startDate);
+        endDate = reportInputEndDate("\n  Enter end date", startDate);
 
         for (Customer customer : customerList) {
             ArrayList<Billing> cbh = (ArrayList<Billing>) customer.getBillHistory().clone();
@@ -302,7 +305,7 @@ public class Main3 {
                             }
                         }
                         else{
-                            System.out.println("Error when sorting type of pet.");
+                            System.out.println("  Error when sorting type of pet.");
                             break;
                         }
                     }
@@ -323,76 +326,91 @@ public class Main3 {
         petDemoSortFigures(dogSizeName, dogSize);
         petDemoSortFigures(rabbitSizeName, rabbitSize);
 
-        System.out.println("\n      *** Pet Demographic report ***\n");
-        System.out.println("From: " + startDate + "   To: " + endDate);
-        System.out.println(" Pet    Average age   Aggressiveness  Size");
-        System.out.printf(" %-6s", "Bird");
+        System.out.println("\n\n                                  PET DEMOGRAPHIC REPORT                  ");
+        System.out.println("\n\n  From: " + startDate + "   To: " + endDate);
+        System.out.println("\n  --------------------------------------------------------------------------------------------");
+        System.out.println("    Pet            Average Age             Aggressiveness                  Size             ");
+        System.out.println("  --------------------------------------------------------------------------------------------");
+        System.out.println("             |                     |                           |                           ");
+        System.out.printf("   %-8s  |", "Bird");
         if(Double.isNaN(birdAverageAge)){
-            System.out.printf(" %11.2f   ", 0.0);
+            System.out.printf("   %10.2f        |", 0.0);
         }
         else{
-            System.out.printf(" %11.2f   ", birdAverageAge);
+            System.out.printf("   %10.2f        |", birdAverageAge);
         }
         for(int i = 0; i < 3; i++){
-            if(i > 0){ System.out.print("                      ");  }
-            System.out.printf("%-8s%5.2f%%  ", birdAggrName[i], 100.00 * (double)birdAggr[i] / (double)(birdAggr[0] + birdAggr[1] + birdAggr[2]));
-            System.out.printf("%-16s%6.2f%%\n", birdSizeName[i], 100.00 * (double)birdSize[i] / (double)(birdSize[0] + birdSize[1] + birdSize[2] + birdSize[3] + birdSize[4]));
+            if(i > 0){ System.out.print("             |                     |");  }
+            System.out.printf("      %-8s > 6.2f%%", birdAggrName[i], 100.00 * (double)birdAggr[i] / (double)(birdAggr[0] + birdAggr[1] + birdAggr[2]));
+            System.out.printf("     |    %-12s > %6.2f%%\n", birdSizeName[i], 100.00 * (double)birdSize[i] / (double)(birdSize[0] + birdSize[1] + birdSize[2] + birdSize[3] + birdSize[4]));
         }
         for(int i = 3; i < 5; i++){
-            System.out.print("                                      ");
-            System.out.printf("%-16s%6.2f%%\n", birdSizeName[i], 100.00 * (double)birdSize[i] / (double)(birdSize[0] + birdSize[1] + birdSize[2] + birdSize[3] + birdSize[4]));
+            System.out.print("             |                     |");
+            System.out.printf("                           |    %-12s > %6.2f%%\n", birdSizeName[i], 100.00 * (double)birdSize[i] / (double)(birdSize[0] + birdSize[1] + birdSize[2] + birdSize[3] + birdSize[4]));
         }
 
-        System.out.printf("\n %-6s", "Cat");
+        System.out.println("             |                     |                           |                           ");
+        System.out.println("  --------------------------------------------------------------------------------------------");
+        System.out.println("             |                     |                           |                           ");
+        System.out.printf("   %-8s  |", "Cat");
         if(Double.isNaN(catAverageAge)){
-            System.out.printf(" %11.2f   ", 0.0);
+            System.out.printf("   %10.2f        |", 0.0);
         }
         else{
-            System.out.printf(" %11.2f   ", catAverageAge);
+            System.out.printf("   %10.2f        |", catAverageAge);
         }
         for(int i = 0; i < 3; i++){
-            if(i > 0){ System.out.print("                      ");  }
-            System.out.printf("%-8s%5.2f%%  ", catAggrName[i], 100.00 * (double)catAggr[i] / (double)(catAggr[0] + catAggr[1] + catAggr[2]));
-            System.out.printf("%-16s%6.2f%%\n", catSizeName[i], 100.00 * (double)catSize[i] / (double)(catSize[0] + catSize[1] + catSize[2] + catSize[3] + catSize[4]));
+            if(i > 0){ System.out.print("             |                     |");  }
+            System.out.printf("      %-8s > 6.2f%%", catAggrName[i], 100.00 * (double)catAggr[i] / (double)(catAggr[0] + catAggr[1] + catAggr[2]));
+            System.out.printf("     |    %-12s > %6.2f%%\n", catSizeName[i], 100.00 * (double)catSize[i] / (double)(catSize[0] + catSize[1] + catSize[2] + catSize[3] + catSize[4]));
         }
         for(int i = 3; i < 5; i++){
-            System.out.print("                                      ");
-            System.out.printf("%-16s%6.2f%%\n", catSizeName[i], 100.00 * (double)catSize[i] / (double)(catSize[0] + catSize[1] + catSize[2] + catSize[3] + catSize[4]));
+            System.out.print("             |                     |");
+            System.out.printf("                           |    %-12s > %6.2f%%\n", catSizeName[i], 100.00 * (double)catSize[i] / (double)(catSize[0] + catSize[1] + catSize[2] + catSize[3] + catSize[4]));
         }
 
-        System.out.printf("\n %-6s", "Dog");
+        System.out.println("             |                     |                           |                           ");
+        System.out.println("  --------------------------------------------------------------------------------------------");
+        System.out.println("             |                     |                           |                           ");
+        System.out.printf("   %-8s  |", "Dog");
         if(Double.isNaN(dogAverageAge)){
-            System.out.printf(" %11.2f   ", 0.0);
+            System.out.printf("   %10.2f        |", 0.0);
         }
         else{
-            System.out.printf(" %11.2f   ", dogAverageAge);
+            System.out.printf("   %10.2f        |", dogAverageAge);
         }
         for(int i = 0; i < 3; i++){
-            if(i > 0){ System.out.print("                      ");  }
-            System.out.printf("%-8s%5.2f%%  ", dogAggrName[i], 100.00 * (double)dogAggr[i] / (double)(dogAggr[0] + dogAggr[1] + dogAggr[2]));
-            System.out.printf("%-16s%6.2f%%\n", dogSizeName[i], 100.00 * (double)dogSize[i] / (double)(dogSize[0] + dogSize[1] + dogSize[2] + dogSize[3] + dogSize[4]));
+            if(i > 0){ System.out.print("             |                     |");  }
+            System.out.printf("      %-8s > 6.2f%%", dogAggrName[i], 100.00 * (double)dogAggr[i] / (double)(dogAggr[0] + dogAggr[1] + dogAggr[2]));
+            System.out.printf("     |    %-12s > %6.2f%%\n", dogSizeName[i], 100.00 * (double)dogSize[i] / (double)(dogSize[0] + dogSize[1] + dogSize[2] + dogSize[3] + dogSize[4]));
         }
         for(int i = 3; i < 5; i++){
-            System.out.print("                                      ");
-            System.out.printf("%-16s%6.2f%%\n", dogSizeName[i], 100.00 * (double)dogSize[i] / (double)(dogSize[0] + dogSize[1] + dogSize[2] + dogSize[3] + dogSize[4]));
+            System.out.print("             |                     |");
+            System.out.printf("                           |    %-12s > %6.2f%%\n", dogSizeName[i], 100.00 * (double)dogSize[i] / (double)(dogSize[0] + dogSize[1] + dogSize[2] + dogSize[3] + dogSize[4]));
         }
 
-        System.out.printf("\n %-6s", "Rabbit");
+        System.out.println("             |                     |                           |                           ");
+        System.out.println("  --------------------------------------------------------------------------------------------");
+        System.out.println("             |                     |                           |                           ");
+        System.out.printf("   %-8s  |", "Rabbit");
         if(Double.isNaN(rabbitAverageAge)){
-            System.out.printf(" %11.2f   ", 0.00);
+            System.out.printf("   %10.2f        |", 0.00);
         }
         else{
-            System.out.printf(" %11.2f   ", rabbitAverageAge);
+            System.out.printf("   %10.2f        |", rabbitAverageAge);
         }
         for(int i = 0; i < 3; i++){
-            if(i > 0){ System.out.print("                      ");  }
-            System.out.printf("%-8s%5.2f%%  ", rabbitAggrName[i], 100.00 * (double)dogAggr[i] / (double)(dogAggr[0] + dogAggr[1] + dogAggr[2]));
-            System.out.printf("%-16s%6.2f%%\n", rabbitSizeName[i], 100.00 * (double)rabbitSize[i] / (double)(rabbitSize[0] + rabbitSize[1] + rabbitSize[2] + rabbitSize[3] + rabbitSize[4]));
+            if(i > 0){ System.out.print("             |                     |");  }
+            System.out.printf("      %-8s > 6.2f%%", rabbitAggrName[i], 100.00 * (double)dogAggr[i] / (double)(dogAggr[0] + dogAggr[1] + dogAggr[2]));
+            System.out.printf("     |    %-12s > %6.2f%%\n", rabbitSizeName[i], 100.00 * (double)rabbitSize[i] / (double)(rabbitSize[0] + rabbitSize[1] + rabbitSize[2] + rabbitSize[3] + rabbitSize[4]));
         }
         for(int i = 3; i < 5; i++){
-            System.out.print("                                      ");
-            System.out.printf("%-16s%6.2f%%\n", rabbitSizeName[i], 100.00 * (double)rabbitSize[i] / (double)(rabbitSize[0] + rabbitSize[1] + rabbitSize[2] + rabbitSize[3] + rabbitSize[4]));
+            System.out.print("             |                     |");
+            System.out.printf("                           |    %-12s > %6.2f%%\n", rabbitSizeName[i], 100.00 * (double)rabbitSize[i] / (double)(rabbitSize[0] + rabbitSize[1] + rabbitSize[2] + rabbitSize[3] + rabbitSize[4]));
         }
+
+        System.out.println("             |                     |                           |                           ");
+        System.out.println("  --------------------------------------------------------------------------------------------");
         Main.pressAnyKeyToContinue();
     }
 
@@ -423,15 +441,15 @@ public class Main3 {
         do {
             try {
                 System.out.println(text);
-                startDate = LocalDate.of(Main.promptInt("Year  > "), Main.promptInt("Month > "), Main.promptInt("Day   > "));//TanShiJing
+                startDate = LocalDate.of(Main.promptInt("  Year  > "), Main.promptInt("  Month > "), Main.promptInt("  Day   > "));
 
                 if (startDate.isBefore(LocalDate.now().minusYears(4))) {
-                    System.out.println("Date entered must be after year 2018...");
+                    System.out.println("  Date entered must be after year 2018...");
                     continue;
                 }
                 return startDate;
             } catch (DateTimeException e) {
-                System.out.println("Invalid date entered...");
+                System.out.println("  Invalid date entered...");
             }
         } while (true);
     }
@@ -441,22 +459,22 @@ public class Main3 {
         do {
             try {
                 System.out.println(text);
-                endDate = LocalDate.of(Main.promptInt("Year  > "), Main.promptInt("Month > "), Main.promptInt("Day   > "));//TanShiJing
+                endDate = LocalDate.of(Main.promptInt("  Year  > "), Main.promptInt("  Month > "), Main.promptInt("  Day   > "));
                 if (endDate.isBefore(startDate)) {
-                    System.out.println("End date should not be earlier than start date...");
+                    System.out.println("  End date should not be earlier than start date...");
                     continue;
                 }
                 if (endDate.isBefore(LocalDate.now().minusYears(4))) {
-                    System.out.println("Date entered must be after year 2018...");
+                    System.out.println("  Date entered must be after year 2018...");
                     continue;
                 }
-                else if (endDate.isAfter(LocalDate.now())) {
-                    System.out.println("Date entered must be before current date...");
+                if(endDate.isAfter(LocalDate.now())){
+                    System.out.println("  End date should not after today's date...");
                     continue;
                 }
                 return endDate;
             } catch (DateTimeException e) {
-                System.out.println("Invalid date entered...");
+                System.out.println("  Invalid date entered...");
             }
 
         }  while (true);
@@ -468,18 +486,19 @@ public class Main3 {
 
         // check if customer record is empty
         if (!Main.checkCustomerRecord(customerList)) {
-            System.out.println("No customer records found...");
+            System.out.println("  No customer records found...");
             Main.pressAnyKeyToContinue();
             return;
         }
 
         ArrayList<Customer> custFiltered = new ArrayList<>();
 
-        LocalDate startDate = reportInputStartDate("Enter start date");
-        LocalDate endDate = reportInputEndDate("Enter end date", startDate);
+
+        LocalDate startDate = reportInputStartDate("\n\n  Enter start date");
+        LocalDate endDate = reportInputEndDate("\n  Enter end date", startDate);
 
         for (Customer customer : customerList){
-            if (!customer.getBillHistory().isEmpty()){
+            if(!customer.getBillHistory().isEmpty()){
                 filterCustomerInDateRange(customer, custFiltered, startDate, endDate);
             }
         }
@@ -497,24 +516,26 @@ public class Main3 {
         custSpendingSort(custFiltered, custTotalAmountSpent);
         ArrayList<String> petType = new ArrayList<>();
 
-        System.out.println("\n                     *** 10 most spending customer ***");
-        System.out.println("                   -------------------------------------\n");
-        System.out.println("From: " + startDate + "   To: " + endDate);
-        System.out.println("CustID    Customer Name               Email                  Spent Amt (RM)   Pets");
-        System.out.println("------    -------------------------   --------------------   --------------   ----");
+        System.out.println("\n\n                                        10 MOST SPENDING CUSTOMER       ");
+        System.out.println("\n\n  From: " + startDate + "   To: " + endDate);
+        System.out.println("\n  ----------------------------------------------------------------------------------------------------------");
+        System.out.println("    Cust.ID         Customer Name                Email            Spent Amt (RM)             Pets           ");
+        System.out.println("  ----------------------------------------------------------------------------------------------------------");
+
         for (int i = 0; i < 10; i ++){
-            System.out.printf("%-10s%-25s   %-20s   RM%8.2f       ", custFiltered.get(i).getID(), custFiltered.get(i).fullName(), custFiltered.get(i).getEmail(), custTotalAmountSpent[i]);
+            System.out.printf("     %-6s  |  %-21s  | %-20s  |   RM%8.2f     |", custFiltered.get(i).getID(), custFiltered.get(i).fullName(), custFiltered.get(i).getEmail(), custTotalAmountSpent[i]);
             for (int j = 0; j < custFiltered.get(i).getPets().size(); j ++){
                 if(!petType.contains(custFiltered.get(i).getPets().get(j).getClass().getSimpleName())){
                     petType.add(custFiltered.get(i).getPets().get(j).getClass().getSimpleName());
-                    if(j > 0){   System.out.print(", "); }
-                    System.out.printf("%s", custFiltered.get(i).getPets().get(j).getClass().getSimpleName());
+                    if(j > 0){   System.out.print(","); }
+                    System.out.printf(" %s", custFiltered.get(i).getPets().get(j).getClass().getSimpleName());
                 }
 
             }
             petType.clear();
             System.out.println();
         }
+        System.out.println("  ----------------------------------------------------------------------------------------------------------");
         System.out.println();
         Main.pressAnyKeyToContinue();
 
@@ -569,8 +590,8 @@ public class Main3 {
         double cashAmount = 0;
         double cardAmount = 0;
 
-        LocalDate startDate = reportInputStartDate("Enter start date");
-        LocalDate endDate = reportInputEndDate("Enter end date", startDate);
+        LocalDate startDate = reportInputStartDate("\n\n  Enter start date");
+        LocalDate endDate = reportInputEndDate("\n  Enter end date", startDate);
 
         for (Customer customer : customerList){
             for(Billing billing : customer.getBillHistory()){
@@ -634,35 +655,32 @@ public class Main3 {
 
         // check if there is output
         if (totalCust == 0) {
-            System.out.println("No records found...");
+            System.out.println("  No records found...");
             Main.pressAnyKeyToContinue();
             return;
         }
 
         //Output
-        System.out.println("\n                         Payment Report                      ");
-        System.out.println("From: " + startDate + "   To: " + endDate);
-        System.out.print("\n  +-----------------------------------------------------------------+");
-        System.out.print("\n  |          |           |                |                         |");
-        System.out.print("\n  |  Method  | Weight(%) |  Total Amount  |        Age Range        |");
-        System.out.print("\n  |----------|-----------|----------------|-------------------------|");
-        System.out.print("\n  |          |           |                |                         |");
-        System.out.printf("\n  |   Cash   |   %6.2f%% |   RM%8.2f   | 18 - 30 > %6.2f%% (%3d) |",percentageCash, cashAmount, percentageCashAge0, ageCash[0]);
-        System.out.printf("\n  |          |           |                | 31 - 50 > %6.2f%% (%3d) |", percentageCashAge1, ageCash[1]);
-        System.out.printf("\n  |          |           |                | 51 - 70 > %6.2f%% (%3d) |", percentageCashAge2, ageCash[2]);
-        System.out.printf("\n  |          |           |                | 71 - 90 > %6.2f%% (%3d) |", percentageCashAge3, ageCash[3]);
-        System.out.printf("\n  |          |           |                | Others  > %6.2f%% (%3d) |", percentageCashAge4, ageCash[4]);
-        System.out.print("\n  |          |           |                |                         |");
-        System.out.print("\n  +----------|-----------|----------------|-------------------------+");
-        System.out.print("\n  |          |           |                |                         |");
-        System.out.printf("\n  |   Card   |   %6.2f%% |   RM%8.2f   | 18 - 30 > %6.2f%% (%3d) |",percentageCard, cardAmount, percentageCardAge0, ageCard[0]);
-        System.out.printf("\n  |          |           |                | 31 - 50 > %6.2f%% (%3d) |", percentageCardAge1, ageCard[1]);
-        System.out.printf("\n  |          |           |                | 51 - 70 > %6.2f%% (%3d) |", percentageCardAge2, ageCard[2]);
-        System.out.printf("\n  |          |           |                | 71 - 90 > %6.2f%% (%3d) |", percentageCardAge3, ageCard[3]);
-        System.out.printf("\n  |          |           |                | Others  > %6.2f%% (%3d) |", percentageCardAge4, ageCard[4]);
-        System.out.print("\n  |          |           |                |                         |");
-        System.out.print("\n  +-----------------------------------------------------------------+\n\n\n");
+
+        System.out.println("\n\n                           PAYMENT METHOD REPORT                      ");
+        System.out.println("\n\n  From: " + startDate + "   To: " + endDate);
+        System.out.printf("\n\n  Cash                      Total : RM%10.2f      Weight(%%) : %6.2f%%", cashAmount, percentageCash);
+        System.out.printf("\n  -----------------------------------------------------------------------");
+        System.out.printf("\n  Age Range : 18 - 30   |  Amount : %3d           |               %6.2f%%",ageCash[0], percentageCashAge0);
+        System.out.printf("\n              31 - 50   |           %3d           |               %6.2f%%",ageCash[1], percentageCashAge1);
+        System.out.printf("\n              51 - 70   |           %3d           |               %6.2f%%",ageCash[2], percentageCashAge2);
+        System.out.printf("\n              71 - 90   |           %3d           |               %6.2f%%",ageCash[3], percentageCashAge3);
+        System.out.printf("\n              Others    |           %3d           |               %6.2f%%\n\n",ageCash[4], percentageCashAge4);
+        System.out.printf("\n  Card                      Total : RM%10.2f      Weight(%%) : %6.2f%%", cardAmount, percentageCard);
+        System.out.printf("\n  -----------------------------------------------------------------------");
+        System.out.printf("\n  Age Range : 18 - 30   |  Amount : %3d           |               %6.2f%%",ageCard[0], percentageCardAge0);
+        System.out.printf("\n              31 - 50   |           %3d           |               %6.2f%%",ageCard[1], percentageCardAge1);
+        System.out.printf("\n              51 - 70   |           %3d           |               %6.2f%%",ageCard[2], percentageCardAge2);
+        System.out.printf("\n              71 - 90   |           %3d           |               %6.2f%%",ageCard[3], percentageCardAge3);
+        System.out.printf("\n              Others    |           %3d           |               %6.2f%%\n\n",ageCard[4], percentageCardAge4);
+
 
         Main.pressAnyKeyToContinue();
     }
 }
+

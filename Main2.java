@@ -114,6 +114,7 @@ public class Main2 {
         for (int i = 0; i < reserveAmount; i++) {
             reserve.add((generateReservation(customer, employeeList,null)));
         }
+        customer.getReservation().addAll(reserve);
         // have promo applied
         if (applyPromo) {
             customer.getBillHistory().add(new Billing(reserve, price, (double) price*110/100, new Random().nextBoolean() ? "Cash" : "Card",

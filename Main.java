@@ -9,6 +9,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.io.IOException;
 
+/**
+ *  This is the main class of the entire Java project
+ */
 public class Main {
 
     public static void main(String[] args) {
@@ -388,8 +391,9 @@ public class Main {
     }
 
     /**
+     * Displays all the {@code Promotion} objects in a table format
      *
-     * @param promotions
+     * @param promotions An {@code ArrayList} of {@code Promotion} objects
      */
     public static void displayPromo(ArrayList<Promotion> promotions) {
         if (!checkPromotionRecord(promotions)) {
@@ -407,6 +411,12 @@ public class Main {
         pressAnyKeyToContinue();
     }
 
+    /**
+     * Let user be able to edit a {@code Promotion} object.
+     * Namely, description, start date, end date and promo rate.
+     *
+     * @param promotions An {@code ArrayList} of {@code Promotion} objects
+     */
     public static void editPromoMenu(ArrayList<Promotion> promotions) {
         if (!checkPromotionRecord(promotions)) {
             System.out.println("  No promotion records found...");
@@ -456,6 +466,9 @@ public class Main {
         System.out.println("  Changes made successfully");
     }
 
+    /**
+     * Displays all the details of the services offered by the pet shop
+     */
     public static void availableServices() {
         System.out.println("\n\t\t\t\t\t    Available Services\n");
         System.out.println(Groom.getDesc());
@@ -465,6 +478,15 @@ public class Main {
         pressAnyKeyToContinue();
     }
 
+    /**
+     * This is the employee login page
+     *
+     * @param currentUser Current session user
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     * @param ownerList An {@code ArrayList} of {@code Owner} objects
+     * @param promotions An {@code ArrayList} of {@code Promotion} objects
+     */
     public static void employeeLogin(Person currentUser, ArrayList<Customer> customerList, ArrayList<Employee> employeeList, ArrayList<Owner> ownerList, ArrayList<Promotion> promotions) {
         boolean exitFlag = true;
         do {
@@ -505,6 +527,11 @@ public class Main {
         while (exitFlag);
     }
 
+    /**
+     * This is the employee sign up page, which can be accessed through {@code Owner} account
+     *
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     */
     public static void employeeSignup(ArrayList<Employee> employeeList) {
         System.out.println("\n\n\t  Employee Sign up");
         System.out.println("  -------------------------");
@@ -523,6 +550,15 @@ public class Main {
         pressAnyKeyToContinue();
     }
 
+    /**
+     * This is the employee account main menu
+     *
+     * @param currentUser Current session user
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     * @param ownerList An {@code ArrayList} of {@code Owner} objects
+     * @param promotions An {@code ArrayList} of {@code Promotion} objects
+     */
     public static void employeeMainMenu(Person currentUser, ArrayList<Customer> customerList, ArrayList<Employee> employeeList, ArrayList<Owner> ownerList, ArrayList<Promotion> promotions) {
         do {
             System.out.println("\n\n   ________________________________________ ");
@@ -553,6 +589,12 @@ public class Main {
         while (true);
     }
 
+    /**
+     * Displays the {@code Employee} schedule for employee
+     *
+     * @param currentUser Current session user
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     */
     public static void displaySchedule(Person currentUser, ArrayList<Customer> customerList) {
         // display current employee schedule
         ((Employee) currentUser).getWorkSchedule().displaySchedule();
@@ -577,6 +619,13 @@ public class Main {
         pressAnyKeyToContinue();
     }
 
+    /**
+     * Get customer ID with reservation object
+     *
+     * @param reservation A {@code Reservation} object
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     * @return {@code Customer} object id, return empty {@code String} if not found
+     */
     public static String getCustID(Reservation reservation, ArrayList<Customer> customerList) {
         for (Customer obj : customerList) {
             for (Reservation obj1 : obj.getReservation()) {
@@ -589,6 +638,14 @@ public class Main {
         return "";
     }
 
+    /**
+     * Display reservation menu.
+     * Customers will be able to add, edit, cancel and display reservations.
+     *
+     * @param currentUser Current session user
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     */
     public static void reservationMenu(Person currentUser, ArrayList<Customer> customerList, ArrayList<Employee> employeeList) {
         do {
             System.out.println("\n\n   ________________________________________ ");
@@ -616,6 +673,12 @@ public class Main {
         while (true);
     }
 
+    /**
+     * Display pet menu.
+     * Customers will be able to add pet, edit pet, remove pet and display pet.
+     *
+     * @param currentUser Current session user
+     */
     public static void petMenu(Person currentUser) {
         do {
             System.out.println("\n\n   ________________________________________ ");
@@ -651,22 +714,24 @@ public class Main {
     }
 
     /**
-     * To redirect owner or customer to their own respective reservation display method.
+     * To redirect customer to reservation display method.
      *
      * @param currentUser Current session user account object
      * @param customerList An ArrayList of customers
      */
     public static void displayReservation(Person currentUser, ArrayList<Customer> customerList) {
-        // check if current user is an owner
-        if (currentUser instanceof Owner) {
-            Main.displayCustReservation(Main.inputCustomer(customerList));
-        }
         // check if current user is a customer
-        else if (currentUser instanceof Customer) {
+        if (currentUser instanceof Customer) {
             Main.displayCustReservation(((Customer) currentUser));
         }
     }
 
+    /**
+     * Prompts and get input for address such as street, zipcode, city, region, state and city.
+     * {@code inputZipcode()}, {@code inputRegion()} will be called to take in input & do validation
+     *
+     * @return {@code Address} object
+     */
     public static Address createAddress() {
         Address address;
         System.out.println("\n\n\t\t  Address");
@@ -681,6 +746,12 @@ public class Main {
         return address;
     }
 
+    /**
+     * Prompts and get input for zipcode.
+     * Validates for 5 digits only.
+     *
+     * @return String, 5 digits zipcode
+     */
     public static String inputZipcode() {
         String zipcode;
         boolean zipcodeFlag = true;
@@ -696,6 +767,11 @@ public class Main {
         return zipcode;
     }
 
+    /**
+     * Prompts and get input for region.
+     *
+     * @return String, region depends on user choice
+     */
     public static String inputRegion() {
         // Region
         String region = null;
@@ -732,6 +808,11 @@ public class Main {
         return region;
     }
 
+    /**
+     * Current customer can choose a pet, then remove it from record.
+     *
+     * @param currentUser Current session user
+     */
     public static void deletePet(Person currentUser) {
         if (((Customer) currentUser).getPets().isEmpty()) {
             System.out.println("  There are no pets in the record");
@@ -780,6 +861,13 @@ public class Main {
         System.out.println("  Pet deleted successfully");
     }
 
+    /**
+     * Prompt user to choose a type of pet to create.
+     * After choosing a type of pet, customer will need to input the attributes for {@code Pet} object
+     * The {@code Pet} object will be added to the
+     *
+     * @param currentUser Current session user
+     */
     public static void createPet(Person currentUser) {
         boolean exitFlag = false;
         do {
@@ -833,6 +921,12 @@ public class Main {
         while (exitFlag);
     }
 
+    /**
+     * Menu for editing pet info.
+     * Age, gender, color, size and aggressiveness can be modified.
+     *
+     * @param currentUser Current session user
+     */
     public static void editPet(Person currentUser) {
         boolean exitFlag;
         if (((Customer) currentUser).getPets().isEmpty()) {
@@ -888,6 +982,12 @@ public class Main {
         while (exitFlag);
     }
 
+    /**
+     * Prompts and get input to choose pet in current customer records
+     *
+     * @param currentUser Current session user
+     * @return Selected {@code Pet} object
+     */
     public static Pet selectPet(Person currentUser) {
         System.out.println("\n\n\t\t  Pets in record");
         System.out.println("  ------------------------------");
@@ -908,6 +1008,12 @@ public class Main {
         while (true);
     }
 
+    /**
+     * Menu for billing card.
+     * Customers will be able to add, display, remove and edit billing card.
+     *
+     * @param currentUser Current session user
+     */
     public static void billingCardMenu(Person currentUser) {
         do {
             System.out.println("\n\n   ________________________________________ ");
@@ -935,6 +1041,11 @@ public class Main {
         while (true);
     }
 
+    /**
+     * Menu for displaying system reports
+     *
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     */
     public static void reportMenu(ArrayList<Customer> customerList) {
         do {
             System.out.println("\n\n   ________________________________________ ");
@@ -964,6 +1075,13 @@ public class Main {
         while (true);
     }
 
+    /**
+     * Search Menu.
+     * Owner can search for employee records, customer records, reservation records, bill records and bill history records.
+     *
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     */
     public static void searchMenu(ArrayList<Customer> customerList, ArrayList<Employee> employeeList) {
         do {
             System.out.println("\n\n   ________________________________________ ");
@@ -993,6 +1111,12 @@ public class Main {
         while (true);
     }
 
+    /**
+     * Display menu for owner account
+     *
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     */
     public static void ownerDisplayMenu(ArrayList<Employee> employeeList, ArrayList<Customer> customerList) {
         boolean backFlag;
         do {
@@ -1237,6 +1361,15 @@ public class Main {
         while (true);
     }
 
+    /**
+     * Profile menu for owner account
+     *
+     * @param currentUser Current session user
+     * @param ownerList An {@code ArrayList} of {@code Owner} objects
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     * @param promotions An {@code ArrayList} of {@code Promotion} objects
+     */
     public static void ownerProfileMenu(Person currentUser, ArrayList<Owner> ownerList, ArrayList<Customer> customerList, ArrayList<Employee> employeeList, ArrayList<Promotion> promotions) {
         do {
             System.out.println("\n\n   ________________________________________ ");
@@ -1267,6 +1400,15 @@ public class Main {
         while (true);
     }
 
+    /**
+     * Profile menu for employee account
+     *
+     * @param currentUser Current session user
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     * @param ownerList An {@code ArrayList} of {@code Owner} objects
+     * @param promotions An {@code ArrayList} of {@code Promotion} objects
+     */
     public static void empProfileMenu(Person currentUser, ArrayList<Employee> employeeList, ArrayList<Customer> customerList, ArrayList<Owner> ownerList, ArrayList<Promotion> promotions) {
         do {
             System.out.println("\n\n   ________________________________________ ");
@@ -1295,6 +1437,15 @@ public class Main {
         while (true);
     }
 
+    /**
+     * Profile menu for customer account
+     *
+     * @param currentUser Current session user
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     * @param ownerList An {@code ArrayList} of {@code Owner} objects
+     * @param promotions An {@code ArrayList} of {@code Promotion} objects
+     */
     public static void customerProfileMenu(Person currentUser, ArrayList<Employee> employeeList, ArrayList<Customer> customerList, ArrayList<Owner> ownerList, ArrayList<Promotion> promotions) {
         do {
             System.out.println("\n\n   ________________________________________ ");
@@ -1327,6 +1478,12 @@ public class Main {
         while (true);
     }
 
+    /**
+     * Owner can delete any employee accounts through this method
+     *
+     * @param employee {@code Employee} object to be deleted
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     */
     public static void deleteEmployeeAccount(Employee employee, ArrayList<Employee> employeeList) {
         if (promptYesNo("  Are you sure you want to permanently delete account? (Y/N) > ")) {
             employeeList.remove(employee);
@@ -1335,6 +1492,15 @@ public class Main {
         }
     }
 
+    /**
+     * Customer can delete their own account through this method
+     *
+     * @param currentUser Current session user
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     * @param ownerList An {@code ArrayList} of {@code Owner} objects
+     * @param promotions An {@code ArrayList} of {@code Promotion} objects
+     */
     public static void deleteCustomerAccount(Person currentUser, ArrayList<Customer> customerList, ArrayList<Employee> employeeList, ArrayList<Owner> ownerList, ArrayList<Promotion> promotions) {
         if (promptYesNo("  Are you sure you want to permanently delete account? (Y/N) > ")) {
             customerList.remove((Customer) currentUser); // remove account obj from customer array
@@ -1344,6 +1510,15 @@ public class Main {
         }
     }
 
+    /**
+     * Owner can delete their own account through this method
+     *
+     * @param currentUser Current session user
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     * @param ownerList An {@code ArrayList} of {@code Owner} objects
+     * @param promotions An {@code ArrayList} of {@code Promotion} objects
+     */
     public static void deleteOwnerAccount(Person currentUser, ArrayList<Customer> customerList, ArrayList<Employee> employeeList, ArrayList<Owner> ownerList, ArrayList<Promotion> promotions) {
         if (promptYesNo("  Are you sure you want to permanently delete account? (Y/N) > ")) {
             ownerList.remove((Owner) currentUser); // remove account obj from owner array
@@ -1353,6 +1528,12 @@ public class Main {
         }
     }
 
+    /**
+     * Prompt and get input from user for selecting {@code Promotion} object
+     *
+     * @param promotions An {@code ArrayList} of {@code Promotion} objects
+     * @return Selected {@code Promotion} object
+     */
     public static Promotion inputPromotion(ArrayList<Promotion> promotions) {
         Promotion selected;
 
@@ -1377,6 +1558,16 @@ public class Main {
         while (true);
     }
 
+    /**
+     * Profile editing menu for {@code Owner}, {@code Employee} and {@code Customer}
+     * Users can edit their first name, last name, gender, phone no, date of birth,
+     * username, password, e-mail and housing address.
+     *
+     * @param currentUser Current session user
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     * @param ownerList An {@code ArrayList} of {@code Owner} objects
+     */
     public static void editProfileMenu(Person currentUser, ArrayList<Customer> customerList, ArrayList<Employee> employeeList, ArrayList<Owner> ownerList) {
         boolean exitFlag;
         do {
@@ -1447,6 +1638,12 @@ public class Main {
 
     }
 
+    /**
+     * For current user to edit current password to new password.
+     *
+     * @param currentUser Current session user
+     * @return Validated new password
+     */
     public static String editPassword(Person currentUser) {
         while (!promptString("\n  Enter current password > ").equals(currentUser.getPassword())) {
             System.out.println("\n  Invalid password entered...");
@@ -1455,10 +1652,11 @@ public class Main {
     }
 
     /**
-     * Below are the validations required by the owner side display menu,
-     * to ensure that an appropriate message will be displayed to the user.
+     * Check for status of reservation records
+     *
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     * @return true if there are records else false
      */
-
     public static boolean checkReserveRecords(ArrayList<Customer> customerList) {
         if (!checkCustomerRecord(customerList)) {
             return false; // if customer record is empty
@@ -1472,6 +1670,12 @@ public class Main {
         return false;
     }
 
+    /**
+     * Check for status of billing records
+     *
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     * @return true if there are records else false
+     */
     public static boolean checkBillRecords(ArrayList<Customer> customerList) {
         if (!checkCustomerRecord(customerList)) {
             return false; // if customer record is empty
@@ -1485,6 +1689,12 @@ public class Main {
         return false;
     }
 
+    /**
+     * Check for status of bill history records
+     *
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     * @return true if there are records else false
+     */
     public static boolean checkBillHistoryRecords(ArrayList<Customer> customerList) {
         if (!checkCustomerRecord(customerList)) {
             return false; // if customer record is empty
@@ -1500,6 +1710,12 @@ public class Main {
 
     //--------------------------------------------------------------------------------------------
 
+    /**
+     * Sub employee menu in owner account menu
+     * Owner can modify employee salary, add employee, remove employee and display employee
+     *
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     */
     public static void employeeMenu(ArrayList<Employee> employeeList) {
         do {
             System.out.println("\n\n   ________________________________________ ");
@@ -1544,6 +1760,15 @@ public class Main {
         while (true);
     }
 
+    /**
+     * Billing menu.
+     * Customers will need to go through here to check out.
+     * Customers will be able to check personal billing and billing history through here too
+     *
+     * @param currentUser Current session user
+     * @param promotions An {@code ArrayList} of {@code Promotion} objects
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     */
     public static void billingMenu(Person currentUser, ArrayList<Promotion> promotions, ArrayList<Employee> employeeList) {
         do {
             System.out.println("\n\n   ________________________________________ ");
@@ -1571,6 +1796,12 @@ public class Main {
         while (true);
     }
 
+    /**
+     * Cancel reservation method for current session customer
+     *
+     * @param currentUser Current session user
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     */
     public static void cancelReservation(Person currentUser, ArrayList<Employee> employeeList) {
         if (((Customer) currentUser).getReservation().isEmpty()) {
             System.out.println("  No reservation records found...");
@@ -1597,6 +1828,12 @@ public class Main {
         pressAnyKeyToContinue();
     }
 
+    /**
+     * Create a service for reservation purposes
+     *
+     * @param pet Pet to book for reservation
+     * @return Initialized {@code Service} object
+     */
     public static Service createService(Pet pet) {
         Service service = null;
         // different type of pet have specific services
@@ -1664,6 +1901,12 @@ public class Main {
         return service;
     }
 
+    /**
+     * Prompt and get input from user to select {@code Reservation} object
+     *
+     * @param currentUser Current session user
+     * @return Selected {@code Reservation} object
+     */
     public static Reservation promptReservation(Person currentUser) {
         do {
             System.out.println("\n\t  Reservation Records");
@@ -1682,6 +1925,14 @@ public class Main {
         while (true);
     }
 
+    /**
+     * To check which employee is available at specified date and session
+     *
+     * @param date Date of reservation
+     * @param session Session of reservation
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     * @return An {@code Arraylist} of {@code Employee} which are available for that specific date and session.
+     */
     public static ArrayList<Employee> checkEmployeeAvailable(int date, int session, ArrayList<Employee> employeeList) {
         ArrayList<Employee> output = new ArrayList<>();
         for (Employee employee : employeeList) {
@@ -1693,6 +1944,11 @@ public class Main {
         return output;
     }
 
+    /**
+     * Prompt and get input for remarks
+     *
+     * @return Validated remarks
+     */
     public static String inputRemarks() {
         String remark;
         do {
@@ -1707,6 +1963,12 @@ public class Main {
         while (true);
     }
 
+    /**
+     * For current session customer to edit their {@code Reservation} objects
+     *
+     * @param currentUser Current session user
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     */
     public static void editReservation(Person currentUser, ArrayList<Employee> employeeList) {
         Reservation reservation;
         ArrayList<Reservation> reservations = new ArrayList<>(); // to store the unpaid reservations
@@ -1889,6 +2151,12 @@ public class Main {
         }
     }
 
+    /**
+     * Create a {@code Reservation} object then store it into current session customer
+     *
+     * @param currentUser Current session user
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     */
     public static void createReservation(Person currentUser, ArrayList<Employee> employeeList) {
         ArrayList<Employee> availableEmployee;
         Employee selected;
@@ -2025,6 +2293,11 @@ public class Main {
         pressAnyKeyToContinue();
     }
 
+    /**
+     * Search customer by name
+     *
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     */
     public static void searchCustomer(ArrayList<Customer> customerList) {
         ArrayList<Customer> customers = new ArrayList<>();
         System.out.println("\n  Enter keyword to start searching : ");
@@ -2098,6 +2371,11 @@ public class Main {
         pressAnyKeyToContinue();
     }
 
+    /**
+     * Search billing history menu
+     *
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     */
     public static void searchBillingHistory(ArrayList<Customer> customerList) {
         do {
             System.out.println("\n   Search Billing History");
@@ -2119,6 +2397,11 @@ public class Main {
         } while (true);
     }
 
+    /**
+     * Search billing history by total amount
+     *
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     */
     public static void searchTotalBillingHistory(ArrayList<Customer> customerList) {
         double upper, lower;
         ArrayList<Billing> billHistories = new ArrayList<>();
@@ -2217,6 +2500,11 @@ public class Main {
         pressAnyKeyToContinue();
     }
 
+    /**
+     * Search billing history by date
+     *
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     */
     public static void searchDateBillingHistory(ArrayList<Customer> customerList) {
         LocalDate startDate = inputSearchStartDate();
         LocalDate endDate;
@@ -2319,6 +2607,11 @@ public class Main {
         pressAnyKeyToContinue();
     }
 
+    /**
+     * Search billing by total amount
+     *
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     */
     public static void searchTotalBilling(ArrayList<Customer> customerList) {
         ArrayList<Customer> customers = new ArrayList<>();
         double upper, lower;
@@ -2400,6 +2693,11 @@ public class Main {
         pressAnyKeyToContinue();
     }
 
+    /**
+     * Search employee menu
+     *
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     */
     public static void searchEmployee(ArrayList<Employee> employeeList) {
         do {
             System.out.println("\n      Search Employee");
@@ -2421,6 +2719,11 @@ public class Main {
         } while (true);
     }
 
+    /**
+     * Search {@code Employee} objects by salary
+     *
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     */
     public static void searchSalaryEmployee(ArrayList<Employee> employeeList) {
         ArrayList<Employee> employees = new ArrayList<>();
         if (!checkEmployeeRecord(employeeList)) {
@@ -2503,6 +2806,11 @@ public class Main {
         pressAnyKeyToContinue();
     }
 
+    /**
+     * Search {@code Employee} objects by name
+     *
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     */
     public static void searchNameEmployee(ArrayList<Employee> employeeList) {
         ArrayList<Employee> employees = new ArrayList<>();
 
@@ -2581,6 +2889,11 @@ public class Main {
         pressAnyKeyToContinue();
     }
 
+    /**
+     * Search reservation menu
+     *
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     */
     public static void searchReservation(ArrayList<Customer> customerList) {
         do {
             System.out.println("\n\n\t  Search Reservation");
@@ -2602,6 +2915,11 @@ public class Main {
         } while (true);
     }
 
+    /**
+     * Search reservation records by date range
+     *
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     */
     public static void searchDateReservation(ArrayList<Customer> customerList) {
         if (!checkCustomerRecord(customerList)) {
             System.out.println("  No customers found in record...");
@@ -2687,6 +3005,11 @@ public class Main {
         pressAnyKeyToContinue();
     }
 
+    /**
+     * Prompt and get input for search start date
+     *
+     * @return Validated start date in {@code LocalDate}
+     */
     public static LocalDate inputSearchStartDate() {
         LocalDate startDate;
         do {
@@ -2705,6 +3028,12 @@ public class Main {
         while (true);
     }
 
+    /**
+     * Prompt and get input for search end date
+     *
+     * @param startDate Start date for validation
+     * @return Validated end date in {@code LocalDate}
+     */
     public static LocalDate inputSearchEndDate(LocalDate startDate) {
         LocalDate endDate;
         do {
@@ -2723,6 +3052,11 @@ public class Main {
         while (true);
     }
 
+    /**
+     * Owner can search for reservations through customer name.
+     *
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     */
     public static void searchNameReservation(ArrayList<Customer> customerList) {
         if (!checkCustomerRecord(customerList)) {
             System.out.println("  No customers found in record...");
@@ -2781,6 +3115,11 @@ public class Main {
         }
     }
 
+    /**
+     * Add a billing card to current {@code Customer} object
+     *
+     * @param currentUser Current session user
+     */
     public static void addCard(Person currentUser) {
         System.out.println("\n\n\t  Add Your Card");
         System.out.println("  -------------------------");
@@ -2798,6 +3137,12 @@ public class Main {
         pressAnyKeyToContinue();
     }
 
+    /**
+     * Displays all the billing cards of current customer.
+     * Customers can toggle in to view card in detail.
+     *
+     * @param currentUser Current session user
+     */
     public static void displayCard(Person currentUser){
         if(((Customer)currentUser).getCards().isEmpty()){
             System.out.println("  There are no cards in record...");
@@ -2809,6 +3154,11 @@ public class Main {
         pressAnyKeyToContinue();
     }
 
+    /**
+     * Enable customer to edit their specific card details.
+     *
+     * @param currentUser Current session user
+     */
     public static void editCard(Person currentUser) {
         boolean exitFlag;
         if (((Customer) currentUser).getCards().isEmpty()) {
@@ -2853,6 +3203,11 @@ public class Main {
         pressAnyKeyToContinue();
     }
 
+    /**
+     * Remove a card from current customer
+     *
+     * @param currentUser Current session user
+     */
     public static void removeCard(Person currentUser) {
         if (((Customer) currentUser).getCards().isEmpty()) {
             System.out.println("\n  There are no cards in record...");
@@ -2864,6 +3219,12 @@ public class Main {
         pressAnyKeyToContinue();
     }
 
+    /**
+     * Convert words in text into capitals
+     *
+     * @param input {@code String} to be capitalized
+     * @return Capitalized {@code String}
+     */
     public static String convertCapitalize(String input) {
         char[] charArray = input.toCharArray();
         boolean foundSpace = true;
@@ -2884,6 +3245,12 @@ public class Main {
         return String.valueOf(charArray);
     }
 
+    /**
+     * Prompt and get input for billing card number
+     *
+     * @param currentUser Current session user
+     * @return {@code String}, Validated card number
+     */
     public static String inputCardNumber(Person currentUser) {
         String number;
         do {
@@ -2902,6 +3269,13 @@ public class Main {
         } while (true);
     }
 
+    /**
+     * Check if the card number entered is unique within current customer account.
+     *
+     * @param currentUser Current session user
+     * @param cardNumber Card number of debit or credit card
+     * @return true if it is unique else false
+     */
     public static boolean checkCardUnique(Person currentUser, String cardNumber) {
         for (Card card : ((Customer) currentUser).getCards()) {
             // if same in record
@@ -2912,6 +3286,11 @@ public class Main {
         return true;
     }
 
+    /**
+     * Prompt and get input for billing card CVV
+     *
+     * @return Validated CVV
+     */
     public static String inputCardCvv() {
         String cvv;
         do {
@@ -2923,6 +3302,11 @@ public class Main {
         } while (true);
     }
 
+    /**
+     * Prompt and get input from user to chose debit card or credit card
+     *
+     * @return "Debit" or "Credit" depends on user choice
+     */
     public static String inputCardType() {
         String type = null;
         boolean typeFlag; // wait user response to continue
@@ -2944,6 +3328,11 @@ public class Main {
         return type;
     }
 
+    /**
+     * Prompt and get input for billing card expire date
+     *
+     * @return Validated card expire date in {@code LocalDate}
+     */
     public static LocalDate inputCardExpireDate() {
         LocalDate expireDate;
         do {
@@ -2964,6 +3353,11 @@ public class Main {
         return expireDate;
     }
 
+    /**
+     * Prompt and get input for name on billing card
+     *
+     * @return Validated name
+     */
     public static String inputNameOnCard() {
         String nameOnCard;
         boolean nameOnCardFlag = true;
@@ -2979,6 +3373,11 @@ public class Main {
         return nameOnCard;
     }
 
+    /**
+     * Prompt and get input from user to chose card issuer
+     *
+     * @return Validated issuer
+     */
     public static String inputIssuer() {
         String[] banks = {"Alliance Bank Malaysia Berhad", "Affin Bank Berhad", "AmBank (M) Berhad", "Bank Islam Malaysia Berhad", "Bank Simpanan Nasional Berhad", "Bank Rakyat", "CIMB Bank Berhad",
                 "Citibank Berhad", "Hong Leong Bank Berhad", "HSBC Bank Malaysia Berhad", "Maybank Berhad", "OCBC Bank (Malaysia) Berhad", "Public Bank Berhad", "RHB Bank Berhad",
@@ -2997,6 +3396,12 @@ public class Main {
         } while (true);
     }
 
+    /**
+     * Prompt and get input from user for creating new {@code Promotion} object
+     *
+     * @param promo New {@code Promotion} object
+     * @param promotions An {@code ArrayList} of {@code Promotion} objects
+     */
     public static void createPromo(Promotion promo, ArrayList<Promotion> promotions) {
         boolean loopFlag;
         do {
@@ -3023,6 +3428,13 @@ public class Main {
         System.out.println("  Successfully created new promotion");
     }
 
+    /**
+     * To check if new promo code is unique or not
+     *
+     * @param code Promo code to be validated
+     * @param promotions An {@code ArrayList} of {@code Promotion} objects
+     * @return boolean, true if it is unique else false
+     */
     // check promo code uniqueness
     public static boolean checkPromoCode(String code, ArrayList<Promotion> promotions) {
         for (Promotion promo : promotions) {
@@ -3033,6 +3445,12 @@ public class Main {
         return true;
     }
 
+    /**
+     * Prompt and get input for {@code Bath} object
+     *
+     * @param bath Pass in new {@code Bath} object for initialization
+     * @return Initialized {@code Bath} object
+     */
     public static Bath promptBathService(Bath bath) {
         boolean exitFlag;
         do {
@@ -3087,6 +3505,12 @@ public class Main {
         return bath;
     }
 
+    /**
+     * Prompt and get input for {@code Groom} object
+     *
+     * @param groom Pass in new {@code Groom} object for initialization
+     * @return Initialized {@code Groom} object
+     */
     public static Groom promptGroomService(Groom groom) {
         boolean exitFlag;
         do {
@@ -3121,6 +3545,12 @@ public class Main {
         return groom;
     }
 
+    /**
+     * Prompt and get input for {@code Massage} object
+     *
+     * @param massage Pass in new {@code Massage} object for initialization
+     * @return Initialized {@code Massage} object
+     */
     public static Massage promptMassageService(Massage massage) {
         boolean exitFlag;
         do {
@@ -3147,6 +3577,12 @@ public class Main {
         return massage;
     }
 
+    /**
+     * Prompt and get input for {@code Shelter} object
+     *
+     * @param shelter Pass in new {@code Shelter} object for initialization
+     * @return Initialized {@code Shelter} object
+     */
     public static Shelter promptShelterService(Shelter shelter) {
         // prompt check in date
 
@@ -3202,6 +3638,12 @@ public class Main {
         return shelter;
     }
 
+    /**
+     * Prompt and get input from user to choose {@code Promotion} object
+     *
+     * @param promotions An {@code ArrayList} of {@code Promotion} objects
+     * @return Selected {@code Promotion} object
+     */
     public static String inputPromo(ArrayList<Promotion> promotions) {
         String promo;
         System.out.println("\n  +--------------------------------------------------------------------+");
@@ -3224,6 +3666,11 @@ public class Main {
         while (true);
     }
 
+    /**
+     * For user to input {@code Promotion} object promo rate
+     *
+     * @return Validated promo rate
+     */
     public static double inputRate() {
         double promoRate;
         do {
@@ -3235,6 +3682,9 @@ public class Main {
         } while (true);
     }
 
+    /**
+     * Uses {@code Scanner} object to simulate system pause
+     */
     public static void pressAnyKeyToContinue() {
         System.out.println("  Press Enter key to continue...");
         try {
@@ -3243,6 +3693,12 @@ public class Main {
         }
     }
 
+    /**
+     * Prompts and get input for {@code Level} enum
+     *
+     * @param title Title to be displayed while getting input
+     * @return {@code String}, selected {@code Level} enum
+     */
     public static Level promptLevel(String title) {
         do {
             System.out.println("\n\n    " + title);//TanShiJing
@@ -3266,6 +3722,12 @@ public class Main {
         while (true);
     }
 
+    /**
+     * Prompts and get input for {@code Size} enum
+     *
+     * @param title Title to be displayed while getting input
+     * @return {@code String}, selected {@code Size} enum
+     */
     public static Size promptSize(String title) {
         do {
             System.out.println("\n\n    " + title);
@@ -3297,6 +3759,12 @@ public class Main {
         while (true);
     }
 
+    /**
+     * Convert a {@code Size} enum into a displayable format.
+     *
+     * @param size {@code Size} enum
+     * @return {@code String}, "Extra Small", "Small", "Medium", "Large", "Extra Large"
+     */
     public static String displaySize(Size size) {
         switch (size) {
             case XSMALL -> {
@@ -3318,6 +3786,12 @@ public class Main {
         return "Extra Small";
     }
 
+    /**
+     * Convert a {@code Level} enum into a displayable format.
+     *
+     * @param level {@code Level} enum
+     * @return {@code String}, "Low", "Medium" or "High"
+     */
     public static String displayLevel(Level level) {
         switch (level) {
             case LOW -> {
@@ -3333,6 +3807,13 @@ public class Main {
         return "Low";
     }
 
+    /**
+     * Prompt and get input for choice (yes or no)
+     *
+     * @param promptMessage Text to be prompted while getting input
+     * @return boolean, true if user inputs 'y' or 'Y',
+     *                  false if user inputs 'n' or 'N'.
+     */
     public static boolean promptYesNo(String promptMessage) {
         String input;
         do {
@@ -3358,6 +3839,12 @@ public class Main {
         while (true);
     }
 
+    /**
+     * Prompt and get input for pet age
+     *
+     * @param promptMessage Text to be prompted while getting input
+     * @return integer, age of pet within 1 to 20 range
+     */
     public static int inputPetAge(String promptMessage) {
         int age;
         do {
@@ -3370,6 +3857,12 @@ public class Main {
         while (true);
     }
 
+    /**
+     * Prompt and get input for start date.
+     *
+     * @param text Text to be prompted while getting input
+     * @return Start date in {@code LocalDate}
+     */
     public static LocalDate inputStartDate(String text) {
         LocalDate startDate;
         do {
@@ -3388,6 +3881,13 @@ public class Main {
         while (true);
     }
 
+    /**
+     * Prompt and get input for end date.
+     *
+     * @param text Text to be prompted while getting input
+     * @param startDate Start date for validation
+     * @return End date in {@code LocalDate}
+     */
     public static LocalDate inputEndDate(String text, LocalDate startDate) {
         LocalDate endDate;
         do {
@@ -3407,42 +3907,55 @@ public class Main {
     }
 
     /**
-     * Converts {@code LocalDateTime} into a displayable format
+     * Converts {@code LocalDateTime} into a displayable date format
      *
-     * @param date Date & time in {@code LocalDateTime}
-     * @return Date and time in {@code String} formatted in dd/mm/yyyy hh:mm format
+     * @param datetime Date & time in {@code LocalDateTime}
+     * @return Date in {@code String} formatted in dd/mm/yyyy format
      */
-    public static String dateToString(LocalDateTime date) {
+    public static String dateToString(LocalDateTime datetime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return date.format(formatter);
+        return datetime.format(formatter);
     }
 
     /**
+     * Convert {@code LocalDate} into a displayable date format
      *
-     * @param date
-     * @return
+     * @param date Date in {@code LocalDate}
+     * @return Date in {@code String} formatted in dd/mm/yyyy format
      */
     public static String dateToString(LocalDate date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return date.format(formatter);
     }
 
-    // format date time to String
-
     /**
+     * Convert {@code LocalDateTime} into a displayable date and time format
      *
-     * @param date
-     * @return
+     * @param datetime Date & time in {@code LocalDateTime}
+     * @return Date and time in {@code String} formatted in dd/mm/yyyy hh:mm format
      */
-    public static String datetimeToString(LocalDateTime date) {
+    public static String datetimeToString(LocalDateTime datetime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        return date.format(formatter);
+        return datetime.format(formatter);
     }
 
+    /**
+     * To validate the CVV of a card using regular expression.
+     * Check if value entered have only 3 digits.
+     *
+     * @param cvv Card security code
+     * @return boolean, true if correct else false
+     */
     public static boolean cvvValidation(String cvv) {
         return cvv.matches("[0-9]+") && cvv.length() == 3;
     }
 
+    /**
+     * A regular expression for validating card number
+     *
+     * @param cardNumber Number of credit card or debit card
+     * @return boolean, true if correct else false
+     */
     public static boolean cardValidation(String cardNumber) {
         String cardRegex = "^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\\d{3})\\d{11})$";
 
@@ -3453,12 +3966,22 @@ public class Main {
         return match.matches();
     }
 
-    // Validate pet age 1 - 20
+    /**
+     * To validate pet age within 1 - 20 value
+     *
+     * @param age Age to be validated
+     * @return boolean, true if correct else false
+     */
     public static boolean petAgeValidation(int age) {
         return age > 0 && age < 21;
     }
 
-    // Validate username and password
+    /**
+     * To validate username and password
+     *
+     * @param userpass username or password to be validated
+     * @return boolean, true if correct else false
+     */
     public static boolean userpassValidation(String userpass) {
         boolean letter = false, digit = false;
         if (userpass.length() >= 7) {
@@ -3478,6 +4001,12 @@ public class Main {
         return false;
     }
 
+    /**
+     * A regular expression for validating e-mail address
+     *
+     * @param email E-mail address to be validated
+     * @return boolean, true if correct else false
+     */
     public static boolean emailValidation(String email) {
         String emailRegex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 
@@ -3488,6 +4017,12 @@ public class Main {
         return match.matches();
     }
 
+    /**
+     * A regular expression for validating phone number in Malaysia
+     *
+     * @param tel Phone number to be validated
+     * @return boolean, true if correct else false
+     */
     public static boolean telValidation(String tel) {
         String telRegex = "^(\\+?6?01)[02-46-9]-*[0-9]{7}$|^(\\+?6?01)[1]-*[0-9]{8}$";
 
@@ -3498,6 +4033,12 @@ public class Main {
         return match.matches();
     }
 
+    /**
+     * A regular expression for validating name
+     *
+     * @param name Name to be validated
+     * @return boolean, true if correct else false
+     */
     public static boolean nameValidation(String name) {
         // Check for only alphabet in names
         String nameRegex = "[a-zA-Z][a-zA-Z ]+";
@@ -3509,6 +4050,12 @@ public class Main {
         return match.matches();
     }
 
+    /**
+     * Prompts and get user input for last name
+     * {@code nameValidation()} will be called to validate first name
+     *
+     * @return Validated first name
+     */
     public static String inputFirstname() {
         String firstname;
         boolean firstnameFlag = true;
@@ -3525,6 +4072,12 @@ public class Main {
         return firstname;
     }
 
+    /**
+     * Prompts and get user input for last name
+     * {@code nameValidation()} will be called to validate last name
+     *
+     * @return Validated last name
+     */
     public static String inputLastname() {
         String lastname;
         boolean lastnameFlag = true;
@@ -3541,6 +4094,11 @@ public class Main {
         return lastname;
     }
 
+    /**
+     * Prompts and get user input for user gender
+     *
+     * @return Gender in character format, 'M' or 'F'
+     */
     public static char inputGender() {
         char gender = Character.MIN_VALUE;
         boolean genderFlag;// wait user response to continue
@@ -3563,6 +4121,11 @@ public class Main {
         return gender;
     }
 
+    /**
+     * Prompts and get user input for date of birth
+     *
+     * @return Date of birth in {@code LocalDate}
+     */
     public static LocalDate inputDOB() {
         LocalDate dob;
         do {
@@ -3583,6 +4146,12 @@ public class Main {
         return dob;
     }
 
+    /**
+     * Prompts and get user input for phone number
+     * {@code telValidation()} will be called to validate phone number
+     *
+     * @return Validated phone number
+     */
     public static String inputTel() {
         String tel;
         boolean telFlag = true;
@@ -3599,6 +4168,12 @@ public class Main {
         return tel;
     }
 
+    /**
+     * Prompts and get user input for e-mail address
+     * {@code emailValidation()} will be called to validate email address
+     *
+     * @return Validated e-mail address
+     */
     public static String inputEmail() {
         String email;
         boolean emailFlag = true;
@@ -3615,6 +4190,9 @@ public class Main {
         return email;
     }
 
+    /**
+     * Displays username rules when called
+     */
     public static void displayUsernameRules() {
         System.out.println("\n  +--------------------------------------------------------------------+");
         System.out.println("  |                   *** VALID  USERNAME  RULES ***                   |");
@@ -3628,6 +4206,14 @@ public class Main {
         System.out.println("  +--------------------------------------------------------------------+\n");
     }
 
+    /**
+     * Prompt and get user input for customer username.
+     * Validation will be applied in order to ensure username uniqueness.
+     * {@code userpassValidation()} will be called to validate username.
+     *
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     * @return Validated employee username
+     */
     public static String inputCustomerUsername(ArrayList<Customer> customerList) {
         String username;
         boolean usernameFlag;
@@ -3659,6 +4245,14 @@ public class Main {
         return username;
     }
 
+    /**
+     * Prompt and get user input for employee username.
+     * Validation will be applied in order to ensure username uniqueness.
+     * {@code userpassValidation()} will be called to validate username.
+     *
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     * @return Validated employee username
+     */
     public static String inputEmployeeUsername(ArrayList<Employee> employeeList) {
         String username;
         boolean usernameFlag;
@@ -3690,6 +4284,14 @@ public class Main {
         return username;
     }
 
+    /**
+     * Prompt and get user input for owner username.
+     * Validation will be applied in order to ensure username uniqueness.
+     * {@code userpassValidation()} will be called to validate username.
+     *
+     * @param ownerList An {@code ArrayList} of {@code Owner} objects
+     * @return Validated owner username
+     */
     public static String inputOwnerUsername(ArrayList<Owner> ownerList) {
         String username;
         boolean usernameFlag;
@@ -3721,6 +4323,13 @@ public class Main {
         return username;
     }
 
+    /**
+     * Prompt and get password from user.
+     * Validates it with several constraints such as at least 7 characters, only letter & digits and at least one letter and one digit.
+     * {@code userpassValidation()} will be called to validate password.
+     *
+     * @return Validated password
+     */
     public static String inputPassword() {
         String password, confirmPassword;
         boolean passwordFlag = true;
@@ -3756,6 +4365,11 @@ public class Main {
         return password;
     }
 
+    /**
+     * Displays all the {@code Employee} objects in a table format
+     *
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     */
     public static void displayEmployee(ArrayList<Employee> employeeList) {
         System.out.println("""
                 \n  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -3767,18 +4381,39 @@ public class Main {
         }
     }
 
+    /**
+     *
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     * @return boolean, true if there are records, else false.
+     */
     public static boolean checkEmployeeRecord(ArrayList<Employee> employeeList) {
         return !employeeList.isEmpty();
     }
 
+    /**
+     *
+     * @param promotions An {@code ArrayList} of {@code Promotion} objects
+     * @return boolean, true if there are records, else false.
+     */
     public static boolean checkPromotionRecord(ArrayList<Promotion> promotions) {
         return !promotions.isEmpty();
     }
 
+    /**
+     *
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     * @return boolean, true if there are records, else false.
+     */
     public static boolean checkCustomerRecord(ArrayList<Customer> customerList) {
         return !customerList.isEmpty();
     }
 
+    /**
+     * Prompt user to choose a {@code Employee} object.
+     *
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     * @return Selected {@code Employee} object
+     */
     public static Employee inputEmployee(ArrayList<Employee> employeeList) {
         Employee selected;
         // choose which employee to book with
@@ -3803,9 +4438,9 @@ public class Main {
     }
 
     /**
+     *  Displays the reservation info of a specific {@code Customer} object
      *
-     * 
-     * @param customer
+     * @param customer {@code Customer} object to display reservation
      */
     public static void displayCustReservation(Customer customer) {
         if (customer.getReservation().isEmpty()) {
@@ -3841,7 +4476,6 @@ public class Main {
      */
     public static Customer inputCustomer(ArrayList<Customer> customerList) {
         Customer selected;
-        // choose which employee to book with
         for (int i = 0; i < customerList.size(); i++) {
             System.out.println("  "+(i + 1) + ". " +
                     customerList.get(i).getFirstName() +

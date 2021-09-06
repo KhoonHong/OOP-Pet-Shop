@@ -134,20 +134,6 @@ public class Card {
     }
 
     /**
-     * Overrides the {@code equals()} method in {@code Object}.
-     *
-     * @param o Object to be compared
-     * @return True if equals, else return false
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof Card card) {
-            return card.equals(this);
-        }
-        return false;
-    }
-
-    /**
      * Convert card number into censored String of text for security purposes.
      * Only last 4 digits are visible.
      *

@@ -83,11 +83,17 @@ public class Main {
 
     }
 
-
-
     // start of program------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    // Main menu of the whole program
+    /**
+     * This is the main menu of the entire program
+     *
+     * @param currentUser Current session user
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     * @param ownerList An {@code ArrayList} of {@code Owner} objects
+     * @param promotions An {@code ArrayList} of {@code Promotion} objects
+     */
     public static void mainMenu(Person currentUser, ArrayList<Customer> customerList, ArrayList<Employee> employeeList, ArrayList<Owner> ownerList, ArrayList<Promotion> promotions) {
         do {
             System.out.println("\n\n  +-----------------------------------------------------------------+");
@@ -115,13 +121,6 @@ public class Main {
             System.out.println("  | |                                                             | |");
             System.out.println("  | +-------------------------------------------------------------+ |");
             System.out.println("  +-----------------------------------------------------------------+\n");
-            /*System.out.println("\n\n\t\tMain Menu");
-            System.out.println("-------------------------");
-            System.out.println("1. Owner Login");
-            System.out.println("2. Employee Login");
-            System.out.println("3. Customer Login");
-            System.out.println("4. Customer Sign up");
-            System.out.println("5. Exit Program\n");*/
 
             switch (promptInt("  Please enter a selection > ")) {
                 case 1 -> ownerLogin(currentUser, customerList, employeeList, ownerList, promotions);
@@ -144,7 +143,15 @@ public class Main {
         while (true);
     }
 
-    // owner login page
+    /**
+     * This is the owner login page
+     *
+     * @param currentUser Current session user
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     * @param ownerList An {@code ArrayList} of {@code Owner} objects
+     * @param promotions An {@code ArrayList} of {@code Promotion} objects
+     */
     public static void ownerLogin(Person currentUser, ArrayList<Customer> customerList, ArrayList<Employee> employeeList, ArrayList<Owner> ownerList, ArrayList<Promotion> promotions) {
         boolean exitFlag;
         do {
@@ -185,7 +192,15 @@ public class Main {
         while (exitFlag);
     }
 
-    // owner
+    /**
+     * This is the owner account main menu
+     *
+     * @param currentUser Current session user
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     * @param ownerList An {@code ArrayList} of {@code Owner} objects
+     * @param promotions An {@code ArrayList} of {@code Promotion} objects
+     */
     public static void ownerMainMenu(Person currentUser, ArrayList<Customer> customerList, ArrayList<Employee> employeeList, ArrayList<Owner> ownerList, ArrayList<Promotion> promotions) {
         do {
             System.out.println("\n\n   _______________________________________ ");
@@ -220,6 +235,15 @@ public class Main {
         while (true);
     }
 
+    /**
+     * This is the customer login page
+     *
+     * @param currentUser Current session user
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     * @param ownerList An {@code ArrayList} of {@code Owner} objects
+     * @param promotions An {@code ArrayList} of {@code Promotion} objects
+     */
     public static void customerLogin(Person currentUser, ArrayList<Customer> customerList, ArrayList<Employee> employeeList, ArrayList<Owner> ownerList, ArrayList<Promotion> promotions) {
         boolean exitFlag = true;
         do {
@@ -260,6 +284,11 @@ public class Main {
         while (exitFlag);
     }
 
+    /**
+     * This is the customer signup page
+     *
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     */
     public static void customerSignup(ArrayList<Customer> customerList) {
         System.out.println("\n\n   ______________________________ ");
         System.out.println("  |                              |");
@@ -278,6 +307,15 @@ public class Main {
         System.out.println("  Account Successfully Created");
     }
 
+    /**
+     * This is the customer account main menu
+     *
+     * @param currentUser Current session user
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     * @param ownerList An {@code ArrayList} of {@code Owner} objects
+     * @param promotions An {@code ArrayList} of {@code Promotion} objects
+     */
     public static void customerMainMenu(Person currentUser, ArrayList<Customer> customerList, ArrayList<Employee> employeeList, ArrayList<Owner> ownerList, ArrayList<Promotion> promotions) {
         do {
             System.out.println("\n\n   ________________________________________ ");
@@ -310,6 +348,11 @@ public class Main {
         while (true);
     }
 
+    /**
+     * This is the promotion menu which can be through owner account
+     *
+     * @param promotions An {@code ArrayList} of {@code Promotion} objects
+     */
     public static void promoMenu(ArrayList<Promotion> promotions) {
         do {
             System.out.println("\n\n   ______________________________________ ");
@@ -344,6 +387,10 @@ public class Main {
         while (true);
     }
 
+    /**
+     *
+     * @param promotions
+     */
     public static void displayPromo(ArrayList<Promotion> promotions) {
         if (!checkPromotionRecord(promotions)) {
             System.out.println("  No promotion records found...");
@@ -895,26 +942,20 @@ public class Main {
             System.out.println("  |           *** Report Menu ***          |");
             System.out.println("  |                                        |");
             System.out.println("  |     1. Promotion Source Report         |");
-            System.out.println("  |     2. Shelter Report                  |");
-            System.out.println("  |     3. Payment Method Report           |");
-            System.out.println("  |     4. Employee Contribution Report    |");
-            System.out.println("  |     5. Popular Service Report          |");
-            System.out.println("  |     6. Customer Spending Report        |");
-            System.out.println("  |     7. Customer Demographic Report     |");
-            System.out.println("  |     8. Pet Demographic Report          |");
-            System.out.println("  |     9. Back                            |");
+            System.out.println("  |     2. Payment Method Report           |");
+            System.out.println("  |     3. Customer Spending Report        |");
+            System.out.println("  |     4. Customer Demographic Report     |");
+            System.out.println("  |     5. Pet Demographic Report          |");
+            System.out.println("  |     6. Back                            |");
             System.out.println("  |________________________________________|\n");
 
             switch (promptInt("  Please enter a selection > ")) {
                 case 1 -> Main3.sourcePromoReport(customerList);
-                case 2 -> System.out.println("  2. Shelter Report");
-                case 3 -> Main3.paymentMethodReport(customerList);
-                case 4 -> System.out.println("  4. Employee Contribution Report");
-                case 5 -> System.out.println("  5. Popular Service Report");
-                case 6 -> Main3.mostSpendingCustomer(customerList);
-                case 7 -> Main3.custDemoReport(customerList);
-                case 8 -> Main3.petDemoReport(customerList);
-                case 9 -> {
+                case 2 -> Main3.paymentMethodReport(customerList);
+                case 3 -> Main3.mostSpendingCustomer(customerList);
+                case 4 -> Main3.custDemoReport(customerList);
+                case 5 -> Main3.petDemoReport(customerList);
+                case 6 -> {
                     return;
                 }
                 default -> System.out.println("  Invalid menu choice entered...");
@@ -972,8 +1013,6 @@ public class Main {
                 case 1 -> {
                     if (!checkEmployeeRecord(employeeList)) {
                         System.out.println("  No employee records found...");
-                        pressAnyKeyToContinue();
-                        return;
                     }
                     else {
                         System.out.println("""
@@ -982,6 +1021,7 @@ public class Main {
                     +--------+-----------------+-------+--------+----------------+------------+------------+------------------------------+----------------+---------------+------------------------------------------------------------+""");
                         for (int index = 0; index < employeeList.size() ; index++) {
                             System.out.println("  "+employeeList.get(index).displayRow());
+
                             System.out.println("  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
                             if ((index+1) % 10 == 0 && (index+1)!=employeeList.size()) {
                                 switch (promptInt("\n\n  Displaying results (" + (index-8) + "-" + (index+1) + ") out of " + employeeList.size() + " records\n  1. Continue displaying records\n  2. Back\n\n  Please enter a selection > ")) {
@@ -1000,14 +1040,13 @@ public class Main {
                                 }
                             }
                         }
-                        pressAnyKeyToContinue();
                     }
+                    pressAnyKeyToContinue();
                 }
                 case 2 -> {
                     if (!checkCustomerRecord(customerList)) {
                         System.out.println("  No customer records found...");
                         pressAnyKeyToContinue();
-                        return;
                     }
                     else {
                         System.out.println("""
@@ -1034,15 +1073,14 @@ public class Main {
                                 }
                             }
                         }
-                        pressAnyKeyToContinue();
                     }
+                    pressAnyKeyToContinue();
                 }
                 case 3 -> {
                     ArrayList<Reservation> reservations = new ArrayList<>();
                     if (!checkReserveRecords(customerList)) {
                         System.out.println("  No customer reservation records found...");
                         pressAnyKeyToContinue();
-                        return;
                     }
                     else {
                         for (Customer cust : customerList) {
@@ -1091,15 +1129,13 @@ public class Main {
                                 }
                             }
                         }
-                        pressAnyKeyToContinue();
                     }
+                    pressAnyKeyToContinue();
                 }
                 case 4 -> {
                     ArrayList<Customer> custs = new ArrayList<>();
                     if (!checkBillRecords(customerList)) {
                         System.out.println("  No customer billing records found...");
-                        pressAnyKeyToContinue();
-                        return;
                     }
                     else {
                         System.out.println("""
@@ -1142,16 +1178,14 @@ public class Main {
                                 }
                             }
                         }
-                        pressAnyKeyToContinue();
                     }
+                    pressAnyKeyToContinue();
                 }
                 case 5 -> {
                     ArrayList<String> custID = new ArrayList<>();
                     ArrayList<Billing> billHistory = new ArrayList<>();
                     if (!checkBillHistoryRecords(customerList)) {
                         System.out.println("  No customer billing history records found...");
-                        pressAnyKeyToContinue();
-                        return;
                     }
                     else {
                         for (Customer customer : customerList) {
@@ -1164,7 +1198,7 @@ public class Main {
                         if (billHistory.isEmpty()) {
                             System.out.println("  No customer billing history records found...");
                             pressAnyKeyToContinue();
-                            return;
+                            continue;
                         }
                         System.out.println("""
                   \n  +-----------------------------------------------------------------------------------------------------------------------------+
@@ -1191,8 +1225,8 @@ public class Main {
                                 }
                             }
                         }
-                        pressAnyKeyToContinue();
                     }
+                    pressAnyKeyToContinue();
                 }
                 case 6 -> {
                     return;
@@ -1321,7 +1355,8 @@ public class Main {
 
     public static Promotion inputPromotion(ArrayList<Promotion> promotions) {
         Promotion selected;
-        // choose which employee to book with
+
+
         System.out.println("\n     Promotion List");
         System.out.println("  -------------------------");
         for (int i = 0; i < promotions.size() ; i++) {
@@ -2365,7 +2400,6 @@ public class Main {
         pressAnyKeyToContinue();
     }
 
-
     public static void searchEmployee(ArrayList<Employee> employeeList) {
         do {
             System.out.println("\n      Search Employee");
@@ -3372,28 +3406,36 @@ public class Main {
         while (true);
     }
 
-    // format date to String
+    /**
+     * Converts {@code LocalDateTime} into a displayable format
+     *
+     * @param date Date & time in {@code LocalDateTime}
+     * @return Date and time in {@code String} formatted in dd/mm/yyyy hh:mm format
+     */
     public static String dateToString(LocalDateTime date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return date.format(formatter);
     }
 
-
+    /**
+     *
+     * @param date
+     * @return
+     */
     public static String dateToString(LocalDate date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return date.format(formatter);
     }
 
-
     // format date time to String
+
+    /**
+     *
+     * @param date
+     * @return
+     */
     public static String datetimeToString(LocalDateTime date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        return date.format(formatter);
-    }
-
-    // format time to String
-    public static String timeToString(LocalDateTime date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         return date.format(formatter);
     }
 
@@ -3760,6 +3802,11 @@ public class Main {
         while (true);
     }
 
+    /**
+     *
+     * 
+     * @param customer
+     */
     public static void displayCustReservation(Customer customer) {
         if (customer.getReservation().isEmpty()) {
             System.out.println("  No reservation records found...");
@@ -3786,6 +3833,12 @@ public class Main {
         while (true);
     }
 
+    /**
+     * Prompt user to choose a {@code Customer} object.
+     *
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     * @return Selected {@code Customer} object
+     */
     public static Customer inputCustomer(ArrayList<Customer> customerList) {
         Customer selected;
         // choose which employee to book with
@@ -3807,10 +3860,21 @@ public class Main {
         while (true);
     }
 
+    /**
+     * Change the {@code currentUser} into null to simulate logout
+     *
+     * @param currentUser Current session user
+     */
     public static void logout(Person currentUser) {
         currentUser = null;
     }
 
+    /**
+     * To prompt and get input from user with {@code Scanner} object
+     *
+     * @param promptMessage Text to be displayed while prompting user to input
+     * @return Inputted {@code String}
+     */
     public static String promptString(String promptMessage) {
         Scanner input = new Scanner(System.in);
         while (true) {
@@ -3824,6 +3888,12 @@ public class Main {
         }
     }
 
+    /**
+     * To prompt and get input from user with {@code Scanner} object
+     *
+     * @param promptMessage Text to be displayed while prompting user to input
+     * @return Inputted integer value
+     */
     public static int promptInt(String promptMessage) {
         Scanner input = new Scanner(System.in);
         while (true) {
@@ -3839,6 +3909,12 @@ public class Main {
         }
     }
 
+    /**
+     * To prompt and get input from user with {@code Scanner} object
+     *
+     * @param promptMessage Text to be displayed while prompting user to input
+     * @return Inputted double value
+     */
     public static double promptDouble(String promptMessage) {
         Scanner input = new Scanner(System.in);
         while (true) {
@@ -3854,12 +3930,25 @@ public class Main {
         }
     }
 
+    /**
+     * To prompt and get input from user with {@code Scanner} object
+     *
+     * @param promptMessage Text to be displayed while prompting user to input
+     * @return Inputted Character
+     */
     public static char promptChar(String promptMessage) {
         Scanner input = new Scanner(System.in);
         System.out.print(promptMessage);
         return input.nextLine().charAt(0);
     }
 
+    /**
+     * Prompts start date for {@code Promotion} object.
+     * It will validate whether if user input invalid date such as
+     * date that are invalid and date that is in the past.
+     *
+     * @param promo Sets the {@code LocalDate} start date obtained from user into this {@code Promotion} object
+     */
     public static void inputPromoStartDate(Promotion promo) {
         do {
             try {
@@ -3880,6 +3969,13 @@ public class Main {
         while (true);
     }
 
+    /**
+     * Prompts end date fpr {@code Promotion} object
+     * It will validate whether if user input invalid date such as
+     * date that are invalid, date that are before the start date and date that is in the past.
+     *
+     * @param promo Sets the {@code LocalDate} end date obtained from user into this {@code Promotion} object
+     */
     public static void inputPromoEndDate(Promotion promo) {
         do {
             try {
@@ -3902,21 +3998,44 @@ public class Main {
         while (true);
     }
 
-    // enter money value as double to return formatted RM value as string
+    /**
+     * Allows currency to be displayed more easily.
+     * Format an "RM" in front of the {@code String}
+     *
+     * @param amount The amount to be converted
+     * @return Formatted Malaysia currency amount into {@code String}
+     */
     public static String convertCurrency(double amount) {
         return NumberFormat.getCurrencyInstance(new Locale("ms", "MY")).format(amount);
     }
 
+    /**
+     * Converts boolean data into a more distinguishable format (symbol)
+     *
+     * @param bool Boolean value to be converted
+     * @return Character, 'O' if {@code bool} is true, else return 'X'
+     */
     public static char booleanToSymbol(boolean bool) {
         return bool ? 'O' : 'X';
     }
 
+    /**
+     * process payment when customer choose to pay their bill.
+     * calls {@code dispBillSummary()} method, displays the reservations and each reservation's service details and add-ons.
+     * calls {@code dispGrandTotal()} method, displays discount information (if applied) and tax and grand total.
+     * gets promoCode user wants to apply, then validates it and deduct from the total amount.
+     * gets payment method to make payment.
+     *
+     * @param currentUser Object of current customer making payment
+     * @param promotions All valid promotion info
+     * @param employeeList All employee info working at the shop
+     */
     public static void checkOut(Person currentUser, ArrayList<Promotion> promotions, ArrayList<Employee> employeeList) {
         boolean promoYesNo;
         boolean reenterPromoCode;
         String promoCodeEntered;
         ArrayList<Double> amt;
-        double totalAmt = 0;
+        double totalAmt;
         double totalAmtAfterPromo = 0;
         double promoRate = 0;
         System.out.println("\n\n  *** Check Out ***");//TanShiJing
@@ -3992,6 +4111,15 @@ public class Main {
         }
     }
 
+    /**
+     * displays discount information (if applied) and tax and grand total clearly
+     *
+     * @param cb Billing object of current customer, contains all billing info
+     * @param promoYesNo Indicate whether promo code is applied
+     * @param totalAmt Total amount without discount
+     * @param totalAmtAfterPromo Total amount after discount
+     * @param promoRate Percentage of promotion applied
+     */
     public static void dispGrandTotal(Billing cb, boolean promoYesNo, double totalAmt, double totalAmtAfterPromo, double promoRate) {
         if (promoYesNo) {
             System.out.println("\n  Total amount             : " + Main.convertCurrency(totalAmt));
@@ -4009,6 +4137,14 @@ public class Main {
         }
     }
 
+    /**
+     * displays the reservations and each reservation's service details and add-ons in a table clearly
+     *
+     * @param cb Billing object of current customer, contains all billing info
+     * @param amt Charges for each reservation in the bill
+     * @param totalAmt Total amount of all the reservations in the bill
+     * @param dateTime Current date (in checkout & view bill) / payment made date (in bill history & search bill history)
+     */
     public static void dispBillSummary(Billing cb, ArrayList<Double> amt, double totalAmt, LocalDate dateTime) {
         System.out.println("\n");//TanShiJing
         System.out.println("  ====================================================================================================================");
@@ -4036,6 +4172,11 @@ public class Main {
 
     }
 
+    /**
+     * displays each reservation's service add on chosen by customer, like price and name of add-ons
+     *
+     * @param s Service object of a reservation, contains all 4 services info and price
+     */
     public static void dispServiceDetails(Service s) {
         if (s instanceof Bath) {
             System.out.println("  |  Bath Basic               RM  40.00              |");
@@ -4094,6 +4235,24 @@ public class Main {
         }
     }
 
+    /**
+     * process cash payment which is physically in the shop,
+     * after paying with cash, customer will let employee enter their username and password, to verify payment
+     *
+     * calls methods {@code dispBillSummary()} and {@code dispGrandTotal()} to display the reservations details and the grand total details
+     * for final checking before making payment
+     *
+     * @param amt Charges for each reservation in the bill
+     * @param totalAmt Total amount of all the reservations in the bill
+     * @param promoYesNo Indicate whether promo code is applied
+     * @param totalAmtAfterPromo Total amount after discount
+     * @param promoRate Percentage of promotion applied
+     * @param currentUser Object of current customer making payment
+     * @param employeeList All employee info working at the shop
+     *
+     * @return Boolean, indicates whether payment is successful(true) or not(false),
+     * also returns true if cancel payment, but the bill won't be moved from {@code billDetails} to {@code billHistory}
+     */
     public static boolean payByCash(ArrayList<Double> amt, double totalAmt, boolean promoYesNo, double totalAmtAfterPromo, double promoRate, Person currentUser, ArrayList<Employee> employeeList) {
         Billing cb = ((Customer) currentUser).getBill();
         dispBillSummary(cb, amt, totalAmt, LocalDate.now());
@@ -4127,6 +4286,23 @@ public class Main {
         } while (true);
     }
 
+    /**
+     * process card payment which online,
+     *
+     * calls method {@code selectCard()} to let user select a card from all the cards linked with his account
+     * calls methods {@code dispBillSummary()} and {@code dispGrandTotal()} to display the reservations details and the grand total details
+     * for final checking before making payment
+     *
+     * @param amt Charges for each reservation in the bill
+     * @param totalAmt Total amount of all the reservations in the bill
+     * @param promoYesNo Indicate whether promo code is applied
+     * @param totalAmtAfterPromo Total amount after discount
+     * @param promoRate Percentage of promotion applied
+     * @param currentUser Object of current customer making payment
+     *
+     * @return Boolean, indicates whether payment is successful(true) or not(false),
+     * also returns true if cancel payment, but the bill won't be moved from {@code billDetails} to {@code billHistory}
+     */
     public static boolean payByCard(ArrayList<Double> amt, double totalAmt, boolean promoYesNo, double totalAmtAfterPromo, double promoRate, Person currentUser) {
         if (((Customer) currentUser).getCards().size() != 0) {
             selectCard(currentUser);
@@ -4162,6 +4338,11 @@ public class Main {
         return false;
     }
 
+    /**
+     * Causes the current thread to suspend execution for a specified period when processing car payment to imitate loading.
+     *
+     * @param ms Amount of time to pause system in milliseconds
+     */
     public static void wait(int ms) {
         try {
             Thread.sleep(ms);
@@ -4170,7 +4351,13 @@ public class Main {
         }
     }
 
-    // select card for payment
+    /**
+     * displays all the cards linked with his account, and let customer select a card
+     *
+     * @param currentUser Object of current customer making payment
+     *
+     * @return Card, returns the card object of the card selected by customer
+     */
     public static Card selectCard(Person currentUser) {
         System.out.println("\n\n\t\t  Cards in record");
         System.out.println("  ------------------------------");
@@ -4195,7 +4382,11 @@ public class Main {
         while (true);
     }
 
-    // choose payment method
+    /**
+     * displays all the payment method available, and let customer select one
+     *
+     * @return int, returns the int number of the payment method chosen
+     */
     public static int selectPaymentMethod() {
         do {
             try {
@@ -4208,7 +4399,14 @@ public class Main {
         } while (true);
     }
 
-    // search and assign the promo object to billing
+    /**
+     * search and assign the promo object to billing
+     *
+     * @param promoCodeEntered String of the {@code promocode} customer entered
+     * @param promotions All valid promotion info
+     *
+     * @return promotion, returns the promotion object that matches the promo code entered by customer
+     */
     public static Promotion searchAssignPromo(String promoCodeEntered, ArrayList<Promotion> promotions) {
         for (Promotion promotion : promotions) {
             if (promotion.getPromoCode().equals(promoCodeEntered)) {
@@ -4218,7 +4416,15 @@ public class Main {
         return null;
     }
 
-    // search whether promo obj of the entered promo code exists
+    /**
+     * search whether promo obj of the entered promo code exists
+     *
+     * @param promoCodeEntered String of the {@code promocode} customer entered
+     * @param promotions All valid promotion info
+     *
+     * @return Boolean, returns true the promo code customer entered is valid,
+     *                  returns false if promo code customer entered is invalid.
+     */
     public static boolean searchPromo(String promoCodeEntered, ArrayList<Promotion> promotions) {
         String p;
         for (Promotion promotion : promotions) {
@@ -4230,6 +4436,15 @@ public class Main {
         return false;
     }
 
+    /**
+     * validate whether promo code entered by customer is in the valid period
+     *
+     * @param promoCodeEntered String of the {@code promocode} customer entered
+     * @param promotions All valid promotion info
+     *
+     * @return Boolean, returns true the promo code customer entered is in the valid period
+     *                  returns false if promo code customer entered is in the invalid period
+     */
     public static boolean validatePromoExpiry(String promoCodeEntered, ArrayList<Promotion> promotions) {
         Promotion p;
         for (Promotion promotion : promotions) {
@@ -4241,7 +4456,14 @@ public class Main {
         return false;
     }
 
-    // view billHistory
+
+    /**
+     * display short description of all past billings paid of a specific customer (customer's own bill history)
+     * then customer can choose a {@code billHistory} to view in detail
+     *
+     * @param currentUser Object of current customer making payment
+     *
+     */
     public static void displayBillingHistory(Person currentUser) {
         ArrayList<Double> amt = new ArrayList<>();
         double totalAmt;
@@ -4302,7 +4524,12 @@ public class Main {
         } while (anymore);
     }
 
-    // displayBilling
+    /**
+     * display current bill that has not been paid and its reservation details
+     *
+     * @param currentUser Object of current customer making payment
+     *
+     */
     public static void displayBilling(Person currentUser) {
         ArrayList<Double> amt;
         double totalAmt;
@@ -4319,6 +4546,16 @@ public class Main {
         pressAnyKeyToContinue();
     }
 
+    /**
+     * lets customer choose a search method to search bill history, either by grand total amount or payment date.
+     * gets start search date, end search date.
+     *
+     * if search by grand total amount, calls method {@code searchCurrentCustBillingHistoryGrandTotal()}.
+     * if search by payment date, calls method {@code searchCurrentCustBillingHistoryPaymentDate()}.
+     *
+     * @param currentUser Object of current customer making payment
+     *
+     */
     public static void searchCurrentCustBillingHistory(Person currentUser) {
         //boolean searchFlag;
         double min = 0;
@@ -4400,6 +4637,14 @@ public class Main {
         } while (true);
     }
 
+    /**
+     * search by grand total amount, displays brief description of bill history in the grand total amount range
+     * allows customer to choose one to view in detail, the reservation details and also the discount info (if applied) and tax info
+     *
+     * @param min Min grand total amount
+     * @param max Max grand total amount
+     * @param cbh Array of all past billing  (customer's own bill history)
+     */
     public static void searchCurrentCustBillingHistoryGrandTotal(double min, double max, ArrayList<Billing> cbh) {
         int choice;
         double totalAmt;
@@ -4461,6 +4706,15 @@ public class Main {
         System.out.println("  Payment method           : " + cbh.get(choiceArr.get(choice)).getPaymentMethod());
     }
 
+    /**
+     * searchCurrentCustBillingHistoryPaymentDate
+     * search by date of payment, displays brief description of bill history in the date range
+     * allows customer to choose one to view in detail, the reservation details and also the discount info (if applied) and tax info
+     *
+     * @param minDate Min date to search
+     * @param maxDate Max date to search
+     * @param cbh Array of all past billing  (customer's own bill history)
+     */
     public static void searchCurrentCustBillingHistoryPaymentDate(LocalDate minDate, LocalDate maxDate, ArrayList<Billing> cbh) {
         int choice;
         double totalAmt;

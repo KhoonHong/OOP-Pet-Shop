@@ -4,12 +4,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * This class is for storing report methods
+ * This main class is for storing report methods
  */
 
 public class Main3 {
+
     // reports
-    // customer demographic report
+
+    /**
+     * Generate and displays customer demographic report
+     *
+     * @param customerList An array of {@code Customer} objects
+     */
     public static void custDemoReport(ArrayList<Customer> customerList) {
         // 0-North, 1-NE, 2-East, 3-SE, 4-south, 5-sw, 6-w, 7-nw, 8-others
         String[] regionName = {"North","North East","East","South East","South","South West","West","North West","Other States"};
@@ -27,39 +33,39 @@ public class Main3 {
         for (Customer customer : customerList) {
             switch (customer.getAddress().getRegion()) {
                 case "North" -> {
-                    regionCount[0] += calcRegionCount(customer, startDate, endDate);
+                    regionCount[0] += checkPaymentPresent(customer, startDate, endDate);
                     regionTotalAmount[0] += calcRegionTotalAmount(customer, startDate, endDate);
                 }
                 case "North East" -> {
-                    regionCount[1] += calcRegionCount(customer, startDate, endDate);
+                    regionCount[1] += checkPaymentPresent(customer, startDate, endDate);
                     regionTotalAmount[1] += calcRegionTotalAmount(customer, startDate, endDate);
                 }
                 case "East" -> {
-                    regionCount[2] += calcRegionCount(customer, startDate, endDate);
+                    regionCount[2] += checkPaymentPresent(customer, startDate, endDate);
                     regionTotalAmount[2] += calcRegionTotalAmount(customer, startDate, endDate);
                 }
                 case "South East" -> {
-                    regionCount[3] += calcRegionCount(customer, startDate, endDate);
+                    regionCount[3] += checkPaymentPresent(customer, startDate, endDate);
                     regionTotalAmount[3] += calcRegionTotalAmount(customer, startDate, endDate);
                 }
                 case "South" -> {
-                    regionCount[4] += calcRegionCount(customer, startDate, endDate);
+                    regionCount[4] += checkPaymentPresent(customer, startDate, endDate);
                     regionTotalAmount[4] += calcRegionTotalAmount(customer, startDate, endDate);
                 }
                 case "South West" -> {
-                    regionCount[5] += calcRegionCount(customer, startDate, endDate);
+                    regionCount[5] += checkPaymentPresent(customer, startDate, endDate);
                     regionTotalAmount[5] += calcRegionTotalAmount(customer, startDate, endDate);
                 }
                 case "West" -> {
-                    regionCount[6] += calcRegionCount(customer, startDate, endDate);
+                    regionCount[6] += checkPaymentPresent(customer, startDate, endDate);
                     regionTotalAmount[6] += calcRegionTotalAmount(customer, startDate, endDate);
                 }
                 case "North West" -> {
-                    regionCount[7] += calcRegionCount(customer, startDate, endDate);
+                    regionCount[7] += checkPaymentPresent(customer, startDate, endDate);
                     regionTotalAmount[7] += calcRegionTotalAmount(customer, startDate, endDate);
                 }
                 case "Other states" -> {
-                    regionCount[8] += calcRegionCount(customer, startDate, endDate);
+                    regionCount[8] += checkPaymentPresent(customer, startDate, endDate);
                     regionTotalAmount[8] += calcRegionTotalAmount(customer, startDate, endDate);
                 }
             }
@@ -107,7 +113,15 @@ public class Main3 {
         Main.pressAnyKeyToContinue();
     }
 
-    public static int calcRegionCount(Customer c, LocalDate start, LocalDate end){
+    /**
+     * To calculate region count for customer demographic report
+     *
+     * @param c {@code Customer} to obtain bill history
+     * @param start Start date in {@code LocalDate}
+     * @param end End date in {@code LocalDate}
+     * @return 1 if customer have payment in date range, else 0
+     */
+    public static int checkPaymentPresent(Customer c, LocalDate start, LocalDate end){
         for(int i = 0; i < c.getBillHistory().size(); i++){
             if(c.getBillHistory().get(i).getPaymentDate().compareTo(start) >= 0 && c.getBillHistory().get(i).getPaymentDate().compareTo(end) <= 0)
                 return 1;
@@ -115,6 +129,14 @@ public class Main3 {
         return 0;
     }
 
+    /**
+     * To calculate the total amount of billing history of a specific customer within a specific range of dates
+     *
+     * @param c {@code Customer} to obtain bill history
+     * @param start Start date in {@code LocalDate}
+     * @param end End date in {@code LocalDate}
+     * @return Total amount of customer billing history in date range
+     */
     public static double calcRegionTotalAmount(Customer c, LocalDate start, LocalDate end){
         double regionTotalAmount = 0;
         for(int i = 0; i < c.getBillHistory().size(); i++){
@@ -124,7 +146,11 @@ public class Main3 {
         return regionTotalAmount;
     }
 
-
+    /**
+     * Generate and displays source of promo code report
+     *
+     * @param customer An array of {@code Customer} objects
+     */
     public static void sourcePromoReport(ArrayList<Customer> customer) {
         ArrayList<Billing> billHistory;
         LocalDate startdate = reportInputStartDate("\n\n  Enter start date");
@@ -209,7 +235,11 @@ public class Main3 {
         Main.pressAnyKeyToContinue();
     }
 
-    // pet demographic report
+    /**
+     * Generates and displays pet demographic report
+     *
+     * @param customerList An array of {@code Customer} objects
+     */
     public static void petDemoReport(ArrayList<Customer> customerList) {
         int totalBirdAge = 0;
         int totalCatAge = 0;
@@ -440,7 +470,12 @@ public class Main3 {
         Main.pressAnyKeyToContinue();
     }
 
-    // pet demographic sorting
+    /**
+     * Sort figures for pet demographic report
+     *
+     * @param naming Sorted based on the arrangement of {@code figures}
+     * @param figures The values to be sorted
+     */
     public static void petDemoSortFigures(String[] naming, int[] figures){
         int temp1;
         String temp2;
@@ -462,6 +497,12 @@ public class Main3 {
         }
     }
 
+    /**
+     * To prompt user for start date input and validate it
+     *
+     * @param text Text to prompt user for date input
+     * @return Start date in {@code LocalDate}
+     */
     public static LocalDate reportInputStartDate(String text){
         LocalDate startDate;
         do {
@@ -469,9 +510,12 @@ public class Main3 {
                 System.out.println(text);
                 startDate = LocalDate.of(Main.promptInt("  Year  > "), Main.promptInt("  Month > "), Main.promptInt("  Day   > "));
 
-                if (startDate.isBefore(LocalDate.now().minusYears(4))) {
+                if (startDate.isBefore(LocalDate.of(2018,1,1))) {
                     System.out.println("  Date entered must be after year 2018...");
                     continue;
+                }
+                else if (startDate.isAfter(LocalDate.now())) {
+                    System.out.println("  Date entered must be before today's date");
                 }
                 return startDate;
             } catch (DateTimeException e) {
@@ -480,6 +524,13 @@ public class Main3 {
         } while (true);
     }
 
+    /**
+     * To prompt user for end date input and validate it
+     *
+     * @param text Text to prompt user for date input
+     * @param startDate Start date to validate the end date
+     * @return End date in {@code LocalDate}
+     */
     public static LocalDate reportInputEndDate(String text, LocalDate startDate) {
         LocalDate endDate;
         do {
@@ -506,8 +557,11 @@ public class Main3 {
         }  while (true);
     }
 
-
-    // report
+    /**
+     * Generate and displays top 10 most spending customer report
+     *
+     * @param customerList An array of {@code Customer} objects
+     */
     public static void mostSpendingCustomer(ArrayList<Customer> customerList) {
         int topHowMany = 10;
 
@@ -575,6 +629,14 @@ public class Main3 {
 
     }
 
+    /**
+     * Add the customers who have billing history in a specified date range
+     *
+     * @param customer a {@code Customer} object
+     * @param custFiltered an {@code ArrayList} to store selected customers
+     * @param startDate Start date to filter
+     * @param endDate End data to filter
+     */
     public static void filterCustomerInDateRange(Customer customer, ArrayList<Customer> custFiltered, LocalDate startDate, LocalDate endDate){
         for(Billing billing : customer.getBillHistory()){
             if(billing.getPaymentDate().compareTo(startDate) >= 0 && billing.getPaymentDate().compareTo(endDate) <= 0){
@@ -584,6 +646,12 @@ public class Main3 {
         }
     }
 
+    /**
+     * Sort figures for top 10 customer spending report
+     *
+     * @param custFiltered An {@code ArrayList} of selected customer to be sorted accordingly with {@code figures}
+     * @param figures The values to be sorted with bubble sort
+     */
     // most spending customer sorting
     public static void custSpendingSort(ArrayList<Customer> custFiltered, double[] figures){
         double temp1;
@@ -607,7 +675,11 @@ public class Main3 {
         }
     }
 
-    //payment method report
+    /**
+     * Generate and displays payment method report
+     *
+     * @param customerList An array of {@code Customer} objects
+     */
     public static void paymentMethodReport(ArrayList<Customer> customerList){
 
         // check if customer record is empty

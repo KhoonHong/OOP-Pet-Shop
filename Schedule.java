@@ -35,6 +35,7 @@ public class Schedule {
         setDayInWeek(dayInWeekCalc(today.get(Calendar.DAY_OF_WEEK)));// monday - sunday sorting
     }
 
+
     // Getter & Setter
     public static char getAvailable() {
         return AVAILABLE;

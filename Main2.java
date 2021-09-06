@@ -13,21 +13,34 @@ import java.util.concurrent.ThreadLocalRandom;
 
 
 /**
- * This class is for records generating purposes
+ * This main class is for records generating purposes
  */
 
 public class Main2 {
 
     // Methods
+
+    /**
+     * To generate employee accounts for pet shop program
+     *
+     * @param employeeList An array of employee objects
+     */
     public static void generateEmployeeProfile(ArrayList<Employee> employeeList) {
+        // number of employees to generate
         int generateCount = 10;
+
         for (int count = 0; count < generateCount; count++) {
+            // generate username and password
             String username = generateRandomEmployeeUsername(employeeList);
             String password = generateRandomName();
+
+            // write username and password to txt file
             writeCredentials((count + 1) + ". " + username + " " + password, "employee_credentials.txt");
+
+            // generate employee account object
             employeeList.add(new Employee(generateRandomName(),
                     generateRandomName(),
-                    generateRandomNo() + generateRandomNo(),
+                    "0" + generateRandomNo() + generateRandomNo(),
                     new Random().nextBoolean() ? 'M' : 'F',
                     generateRandomDOB(),
                     generateRandomAddress(),
@@ -38,19 +51,29 @@ public class Main2 {
         }
     }
 
+    /**
+     * To generate customer accounts for pet shop program
+     *
+     * @param customerList An array of {@code Customer} objects
+     * @param employeeList An array of {@code Employee} objects
+     * @param promotions An array of {@code Promotion} objects
+     */
     public static void generateCustomerProfile(ArrayList<Customer> customerList, ArrayList<Employee> employeeList, ArrayList<Promotion> promotions) {
+        // number of customers to generate
         int generateCount = 100;
+
         for (int count = 0; count < generateCount; count++) {
+            // generate username and password
             String username = generateRandomCustomerUsername(customerList);
             String password = generateRandomName();
 
             // write username and password to txt file
             writeCredentials((count + 1) + ". " + username + " " + password, "customer_credentials.txt");
 
-            // generate customer account
+            // generate customer account object
             customerList.add(new Customer(Main.convertCapitalize(generateRandomName()),
                     Main.convertCapitalize(generateRandomName()),
-                    generateRandomNo() + generateRandomNo(),
+                    "0" + generateRandomNo() + generateRandomNo(),
                     new Random().nextBoolean() ? 'M' : 'F',
                     generateRandomDOB(),
                     generateRandomAddress(),
@@ -64,25 +87,35 @@ public class Main2 {
             for (int i = 0; i < petCount; i++) {
                 customerList.get(customerList.size() - 1).addPet(generatePet());
             }
+
             // generate & add bill history records
-            int billHistoryCount = ThreadLocalRandom.current().nextInt(0,  10 + 1);
+            int billHistoryCount = ThreadLocalRandom.current().nextInt(0,  10 + 1); // random bill history count 0 - 10
             for (int i = 0; i < billHistoryCount ; i++) {
                 generateBillHistory(customerList.get(customerList.size()-1), employeeList, promotions);
             }
-
-            //customerList.get(customerList.size()-1).addReservation(generateReservation(customerList.get(customerList.size()-1), employeeList,generateLocalDateTime(LocalDate.now().getYear(),LocalDate.now().minusMonths(1).getMonthValue(), LocalDate.now().getDayOfMonth())));
         }
     }
 
+    /**
+     * Method to handle appending text into text file.
+     *
+     * @param input Text to be appended into the text file
+     * @param path File path for the text to be written into
+     */
     public static void writeCredentials(String input, String path) {
         try {
-            Files.write(Paths.get(path), (input + "\n").getBytes(), StandardOpenOption.APPEND);
+            Files.write(Paths.get(path), (input + "\n").getBytes(), StandardOpenOption.APPEND); // append text
         } catch (IOException e) {
-            System.out.println("An error occurred...");
+            System.out.println("An error occurred while handling text file...");
             e.printStackTrace();
         }
     }
 
+    /**
+     * Generator method to generate random promotion source
+     *
+     * @return Promotion source
+     */
     public static String generateSource() {
         switch (ThreadLocalRandom.current().nextInt(1,  5 + 1)) {
             case 1 -> {
@@ -103,30 +136,57 @@ public class Main2 {
         }
     }
 
+    /**
+     * Generator method to generate randomized bill history for the {@code Customer} object passed in by parameter.
+     *
+     * @param customer The customer to generate bill history for
+     * @param employeeList An array of {@code Employee} objects
+     * @param promotions An array of {@code Promotion} objects
+     */
     public static void generateBillHistory(Customer customer, ArrayList<Employee> employeeList, ArrayList<Promotion> promotions) {
-        int reserveAmount = ThreadLocalRandom.current().nextInt(0,  5 + 1);
+        // to store generated reservations
         ArrayList<Reservation> reserve = new ArrayList<>();
+
+        // generate the amount of reservation to be added into
+        int reserveAmount = ThreadLocalRandom.current().nextInt(0,  5 + 1);
+
+        // generate the total price for bill
         int price = ThreadLocalRandom.current().nextInt(100,  1000 + 1);
         Promotion promo = promotions.get(ThreadLocalRandom.current().nextInt(0,  promotions.size()));
         boolean applyPromo = ThreadLocalRandom.current().nextBoolean();
 
+        // there will be at least one reservation in a bill
         reserve.add(generateReservation(customer, employeeList,null));
+
+        // generate a specific amount of reservations
         for (int i = 0; i < reserveAmount; i++) {
             reserve.add((generateReservation(customer, employeeList,null)));
         }
+
+        // add the entire reservation arraylist content to the customer reservation arraylist
         customer.getReservation().addAll(reserve);
         // have promo applied
         if (applyPromo) {
+            // add in new billing object into the customer bill history
             customer.getBillHistory().add(new Billing(reserve, price, (double) price*110/100, new Random().nextBoolean() ? "Cash" : "Card",
                     promo, generateSource(), generateLocalDate()));
         }
         // doesn't have promo applied
         else {
+            // add in new billing object into the customer bill history
             customer.getBillHistory().add(new Billing(reserve, price, (double) price*110/100, new Random().nextBoolean() ? "Cash" : "Card",
                     null, null, generateLocalDate()));
         }
     }
 
+    /**
+     * Generator method to generate randomized {@code Reservation} object for customer
+     *
+     * @param customer The target customer to generate reservation for
+     * @param employeeList An array of {@code Employee} objects
+     * @param date Start date for generating randomized reservation date time
+     * @return {@code Reservation} object with randomized data
+     */
     public static Reservation generateReservation(Customer customer, ArrayList<Employee> employeeList, LocalDateTime date) {
         int petIndex = ThreadLocalRandom.current().nextInt(0,  customer.getPets().size());
         Pet pet = customer.getPets().get(petIndex);
@@ -188,6 +248,11 @@ public class Main2 {
                 employee, reserveDateTime.minusDays(ThreadLocalRandom.current().nextInt(1,7 + 1)));
     }
 
+    /**
+     * Generator method to generate random session hours for customer reservation
+     *
+     * @return Session hours
+     */
     public static int generateSessionHours() {
         int output;
         switch (ThreadLocalRandom.current().nextInt(1, 4 + 1)) {
@@ -200,6 +265,11 @@ public class Main2 {
         return output;
     }
 
+    /**
+     * Generator method to generate random {@code Pet} object for customer
+     *
+     * @return {@code Pet} object with randomized data
+     */
     public static Pet generatePet() {
         int age = ThreadLocalRandom.current().nextInt(1, 20 + 1);
         switch(ThreadLocalRandom.current().nextInt(1, 4 + 1)) {
@@ -223,6 +293,11 @@ public class Main2 {
                 age, new Random().nextBoolean() ? 'M' : 'F', "White", generateLevel(), generateSize(), false);
     }
 
+    /**
+     * Generator method to generate random {@code Level} enum
+     *
+     * @return {@code Level} enum
+     */
     public static Level generateLevel() {
         switch (ThreadLocalRandom.current().nextInt(1, 3 + 1)) {
             case 1 -> {
@@ -238,6 +313,11 @@ public class Main2 {
         return Level.MEDIUM;
     }
 
+    /**
+     * Generator method to generate random {@code Size} enum
+     *
+     * @return {@code Size} enum
+     */
     public static Size generateSize() {
         switch (ThreadLocalRandom.current().nextInt(1, 5 + 1)) {
             case 1 -> {
@@ -259,6 +339,11 @@ public class Main2 {
         return Size.MEDIUM;
     }
 
+    /**
+     * Generator method to generate specific region for customer address
+     *
+     * @return Region cardinal direction
+     */
     public static String generateRegion() {
         String region = "";
         switch (ThreadLocalRandom.current().nextInt(1, 9 + 1)) {
@@ -275,6 +360,14 @@ public class Main2 {
         return region;
     }
 
+    /**
+     * Generator method to generate random {@code LocalDateTime} object
+     *
+     * @param year Starting year to generate
+     * @param month Starting month to generate
+     * @param day Starting day to generate
+     * @return Randomized {@code LocalDateTime}
+     */
     public static LocalDateTime generateLocalDateTime(int year, int month, int day) {
         long minDay = LocalDate.of(year, month, day).toEpochDay();
         long maxDay = LocalDate.now().toEpochDay();
@@ -284,6 +377,12 @@ public class Main2 {
         int minutes = ThreadLocalRandom.current().nextInt(0, 59 + 1);
         return randomDate.atTime(hours, minutes);
     }
+
+    /**
+     * Generator method to generate {@code LocalDate} object
+     *
+     * @return Randomized {@code LocalDate}
+     */
     public static LocalDate generateLocalDate() {
         long minDay = LocalDate.of(2018, 1, 1).toEpochDay();
         long maxDay = LocalDate.now().toEpochDay();
@@ -291,6 +390,12 @@ public class Main2 {
         return LocalDate.ofEpochDay(randomDay);
     }
 
+    /**
+     * Generator method to generate random customer username
+     *
+     * @param customerList An array of {@code Customer} objects
+     * @return Randomized customer username
+     */
     public static String generateRandomCustomerUsername(ArrayList<Customer> customerList) {
         String name;
         boolean restart;
@@ -308,6 +413,12 @@ public class Main2 {
         return name;
     }
 
+    /**
+     * Generator method to generate random username for employee
+     *
+     * @param employeeList An array of {@code Employee} object
+     * @return Randomized employee username
+     */
     public static String generateRandomEmployeeUsername(ArrayList<Employee> employeeList) {
         String name;
         boolean restart;
@@ -325,6 +436,11 @@ public class Main2 {
         return name;
     }
 
+    /**
+     * Generator method to generate random name
+     *
+     * @return Randomized name
+     */
     public static String generateRandomName() {
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'
@@ -338,18 +454,33 @@ public class Main2 {
         return buffer.toString();
     }
 
+    /**
+     * Generator method to generate random 5 digit in {@code String}
+     *
+     * @return Randomized 5 digits in {@code String}
+     */
     public static String generateRandomNo() {
         int number = new Random().nextInt(99999);
         return String.format("%05d", number);
     }
 
+    /**
+     * Generator method to generate {@code LocalDate} object for date of birth
+     *
+     * @return Randomized {@code LocalDate} for date of birth
+     */
     public static LocalDate generateRandomDOB() {
         int day = ThreadLocalRandom.current().nextInt(1, 28 + 1);
         int month = ThreadLocalRandom.current().nextInt(1, 12 + 1);
-        int year = ThreadLocalRandom.current().nextInt(1930, 2000 + 1);
+        int year = ThreadLocalRandom.current().nextInt(1940, 2000 + 1);
         return LocalDate.of(year, month, day);
     }
 
+    /**
+     * Generator method to generate {@code Address} object
+     *
+     * @return Randomized {@code Address} object
+     */
     public static Address generateRandomAddress() {
         return new Address(generateRandomName() + generateRandomName(),
                 generateRandomName(), generateRandomNo(),

@@ -819,7 +819,7 @@ public class Main {
             pressAnyKeyToContinue();
             return;
         }
-        System.out.println("\n\n\t\t  Pet Removal Selection");
+        System.out.println("\n\n\t\t      Pet Removal Selection");
         Pet pet = selectPet(currentUser);
         if (!promptYesNo("  Are you sure you want to remove this pet? (Y/N) > ")) {
             pressAnyKeyToContinue();
@@ -1810,7 +1810,7 @@ public class Main {
         }
         System.out.println("\n\n  Remove a reservation : ");
         Reservation reserve = promptReservation(currentUser);
-        if (!promptYesNo("\n\n  Are you sure to remove this reservation?\n** There will be no refunds issued if paid **\n\n (Y/N) >")) {
+        if (!promptYesNo("\n\n  Are you sure to remove this reservation?\n  ** There will be no refunds issued if paid **\n\n (Y/N) >")) {
             return;
         }
         // remove from reservation array
@@ -4672,8 +4672,7 @@ public class Main {
         double totalAmt;
         double totalAmtAfterPromo = 0;
         double promoRate = 0;
-        System.out.println("\n\n  *** Check Out ***");//TanShiJing
-        //System.out.println("------------------------------");TanShiJing
+        System.out.println("\n\n  *** Check Out ***");
         if (((Customer) currentUser).getBill() != null) {
             Billing cb = ((Customer) currentUser).getBill();
             /**/
@@ -5307,7 +5306,7 @@ public class Main {
         }
 
         if (resultsCounter == 0) {
-            System.out.println("|                                                         |");
+            System.out.println("|                                                           |");
             System.out.println("  -----------------------------------------------------------");
             System.out.printf("  %d search result(s)", resultsCounter);
             return;

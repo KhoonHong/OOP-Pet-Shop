@@ -146,12 +146,11 @@ public class Main2 {
     public static void generateBillHistory(Customer customer, ArrayList<Employee> employeeList, ArrayList<Promotion> promotions) {
         // to store generated reservations
         ArrayList<Reservation> reserve = new ArrayList<>();
+        Billing bill;
 
         // generate the amount of reservation to be added into
         int reserveAmount = ThreadLocalRandom.current().nextInt(0,  5 + 1);
 
-        // generate the total price for bill
-        int price = ThreadLocalRandom.current().nextInt(100,  1000 + 1);
         Promotion promo = promotions.get(ThreadLocalRandom.current().nextInt(0,  promotions.size()));
         boolean applyPromo = ThreadLocalRandom.current().nextBoolean();
 
@@ -167,16 +166,22 @@ public class Main2 {
         customer.getReservation().addAll(reserve);
         // have promo applied
         if (applyPromo) {
+            bill = new Billing(reserve, new Random().nextBoolean() ? "Cash" : "Card",
+                    promo, generateSource(), generateLocalDate());
+
+            bill.setTotalAmount(bill.calcTotalAmount());
+            bill.setGrandTotal((bill.getTotalAmount() - (bill.getTotalAmount()*promo.getPromoRate()))*1.10); // with promo
             // add in new billing object into the customer bill history
-            customer.getBillHistory().add(new Billing(reserve, price, (double) price*110/100, new Random().nextBoolean() ? "Cash" : "Card",
-                    promo, generateSource(), generateLocalDate()));
         }
         // doesn't have promo applied
         else {
             // add in new billing object into the customer bill history
-            customer.getBillHistory().add(new Billing(reserve, price, (double) price*110/100, new Random().nextBoolean() ? "Cash" : "Card",
-                    null, null, generateLocalDate()));
+            bill = new Billing(reserve, new Random().nextBoolean() ? "Cash" : "Card",
+                    null, null, generateLocalDate());
+            bill.setTotalAmount(bill.calcTotalAmount());
+            bill.setGrandTotal(bill.getTotalAmount()*1.10); // without promo
         }
+        customer.getBillHistory().add(bill);
     }
 
     /**
@@ -234,9 +239,9 @@ public class Main2 {
                     new Random().nextBoolean(), new HashMap<>());
 
             default -> service = new Shelter(new Random().nextBoolean(),
-                    new Random().nextBoolean(), new Random().nextBoolean(), generateSize(),
-                    startDate, endDate, (int) ChronoUnit.DAYS.between(startDate, endDate),
-                    new Random().nextBoolean(), new Random().nextBoolean());
+                        new Random().nextBoolean(), new Random().nextBoolean(), generateSize(),
+                        startDate, endDate, (int) ChronoUnit.DAYS.between(startDate, endDate),
+                        new Random().nextBoolean(), new Random().nextBoolean());
         }
 
         Employee employee = employeeList.get(ThreadLocalRandom.current().nextInt(0, employeeList.size()));

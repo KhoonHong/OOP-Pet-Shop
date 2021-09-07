@@ -77,6 +77,8 @@ public class Shelter extends Service {
         this.totalNumOfDays = totalNumOfDays;
         this.playRoom = playRoom;
         this.oneOnOneCare = oneOnOneCare;
+        this.totalPerNightPrice = totalNumOfDays*perNightPrice;
+        calculateAddOnPrice();
     }
 
     Shelter() {

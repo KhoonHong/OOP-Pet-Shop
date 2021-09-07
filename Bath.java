@@ -80,6 +80,7 @@ public class Bath extends Service{
         this.hairRemover_Flushing = hairRemover_Flushing;
         this.breathFreshener = breathFreshener;
         this.teethCleanse = teethCleanse;
+        calculateAddOnPrice();
     }
 
     // Getter & Setter

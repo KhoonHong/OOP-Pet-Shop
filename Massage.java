@@ -58,6 +58,7 @@ public class Massage extends Service{
         this.afterMassageWash = afterMassageWash;
         this.premiumCalmingOil = premiumCalmingOil;
         this.multiMasseur = multiMasseur;
+        calculateAddOnPrice();
     }
 
     // Getter and Setter

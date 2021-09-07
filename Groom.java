@@ -76,6 +76,7 @@ public class Groom extends Service{
         this.scissoringFeet = scissoringFeet;
         this.padShaving = padShaving;
         this.coatStyling = coatStyling;
+        calculateAddOnPrice();
     }
 
     // Getter & Setter

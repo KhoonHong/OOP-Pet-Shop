@@ -117,20 +117,29 @@ abstract class Pet {
         System.out.println(this);
     }
 
-    /**
-     * Overrides the {@code equals()} method in {@code Object}.
-     *
-     * @param o Object to be compared
-     * @return True if equals, else return false
-     */
-    /*
     @Override
-    public boolean equals(Object o) {
-        if (o instanceof Pet pet) {
-            return pet.equals(this);
-        }
-        return false;
+    public String toString() {
+        return String.format("""
+        	\n        HERE IS YOUR PET INFORMATION !
+        	  +---------------------------------------+
+        	  | Pet ID > %-6s                      |
+        	  | Type   > %-6s                       |
+        	  |---------------------------------------|
+        	  | Age    > %-3d        Color  > %-8s |
+        	  | Gender > %c                            |
+        	  |                                       |
+        	  |---------------------------------------|
+        	  |            Characteristic             |
+        	  |---------------------------------------|
+        	  | Size     --> %-15s          |
+        	  | Aggressiveness --> %-10s         |
+        	  |                                       |
+        	  +---------------------------------------+""", getID(),
+                getClass().getSimpleName(),
+                getAge(),
+                getColor(),
+                getGender(),
+                Main.displaySize(getSize()),
+                Main.displayLevel(getAggressive()));
     }
-
-     */
 }

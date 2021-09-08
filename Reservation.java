@@ -80,6 +80,7 @@ public class Reservation implements Displayable, Identifiable {
         currentReserveCount++;
         totalReserveCount++;
         this.reserveID = generateID(currentReserveCount);
+        this.paymentStatus = true;
     }
 
     // Getter & Setter

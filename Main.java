@@ -10,7 +10,13 @@ import java.util.regex.Pattern;
 import java.io.IOException;
 
 /**
- *  This is the main class of the entire Java project
+ * This is the main class of the entire Java project
+ *
+ * @author Lee Khoon Hong
+ * @author Chan Jia Wei
+ * @author Tan Shi Jing
+ * @author Ong Jia Hui
+ *
  */
 public class Main {
 
@@ -63,7 +69,6 @@ public class Main {
                 "tanshijing@gmail.com",
                 "c",
                 "c"));
-
 
         // add a cat into first customer
         customerList.get(0).addPet(new Cat(true, 1, 'M', "Black", Level.MEDIUM, Size.MEDIUM, false));
@@ -819,7 +824,7 @@ public class Main {
             pressAnyKeyToContinue();
             return;
         }
-        System.out.println("\n\n\t\t      Pet Removal Selection");
+        System.out.println("\n\n        Pet Removal Selection");
         Pet pet = selectPet(currentUser);
         if (!promptYesNo("  Are you sure you want to remove this pet? (Y/N) > ")) {
             pressAnyKeyToContinue();
@@ -1803,14 +1808,21 @@ public class Main {
      * @param employeeList An {@code ArrayList} of {@code Employee} objects
      */
     public static void cancelReservation(Person currentUser, ArrayList<Employee> employeeList) {
-        if (((Customer) currentUser).getReservation().isEmpty()) {
+        ArrayList<Reservation> reservations = new ArrayList<>(); // for keeping unpaid reservations
+        for (int i = 0; i < ((Customer) currentUser).getReservation().size(); i++) {
+            if (!((Customer) currentUser).getReservation().get(i).isPaymentStatus()) {
+                reservations.add(((Customer) currentUser).getReservation().get(i));
+            }
+        }
+
+        if (reservations.isEmpty()) {
             System.out.println("  No reservation records found...");
             pressAnyKeyToContinue();
             return;
         }
         System.out.println("\n\n  Remove a reservation : ");
-        Reservation reserve = promptReservation(currentUser);
-        if (!promptYesNo("\n\n  Are you sure to remove this reservation?\n  ** There will be no refunds issued if paid **\n\n (Y/N) >")) {
+        Reservation reserve = promptReservation(currentUser, reservations);
+        if (!promptYesNo("\n\n  Are you sure to remove this reservation? (Y/N) >")) {
             return;
         }
         // remove from reservation array
@@ -1907,17 +1919,19 @@ public class Main {
      * @param currentUser Current session user
      * @return Selected {@code Reservation} object
      */
-    public static Reservation promptReservation(Person currentUser) {
+    public static Reservation promptReservation(Person currentUser, ArrayList<Reservation> unpaidReserve) {
         do {
             System.out.println("\n\t  Reservation Records");
             System.out.println("  -------------------------");
-            for (int i = 0; i < ((Customer) currentUser).getReservation().size(); i++) {
+
+            for (int i = 0; i < unpaidReserve.size(); i++) {
                 System.out.println("  " + (i + 1) + ". " + ((Customer) currentUser).getReservation().get(i).getReserveID() + " " +
                         ((Customer) currentUser).getReservation().get(i).getServices().getClass().getSimpleName() + " " +
                         ((Customer) currentUser).getReservation().get(i).getPet().getClass().getSimpleName());
             }
+
             try {
-                return ((Customer) currentUser).getReservation().get(promptInt("  Please enter a selection > ") - 1);
+                return unpaidReserve.get(promptInt("  Please enter a selection > ") - 1);
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("  Invalid choice selected...");
             }
@@ -4734,13 +4748,13 @@ public class Main {
                     }
                     case 3 -> {
                         paymentFlag = true;
-                        System.out.println("  Payment not processed");
+                        System.out.println("\n  Payment not processed");
                     }
-                    default -> System.out.println("  Invalid choice. Please re-enter.\n");
+                    default -> System.out.println("\n  Invalid choice. Please re-enter.\n");
                 }
             } while (!paymentFlag);
         } else {
-            System.out.println("  There are no pending bills.");
+            System.out.println("\n  There are no pending bills.");
         }
     }
 
@@ -4942,11 +4956,11 @@ public class Main {
             Billing cb = ((Customer) currentUser).getBill();
             dispBillSummary(cb, amt, totalAmt, LocalDate.now());
             dispGrandTotal(cb, promoYesNo, totalAmt, totalAmtAfterPromo, promoRate);
-            if (!Main.promptYesNo("\n  Final confirmation\n  ------------------\n  Confirm to pay? > ")) {
+            if (!Main.promptYesNo("\n  Final confirmation\n  ------------------\n  Confirm to pay? (Y/N)> ")) {
                 System.out.println("  Payment not processed");
                 return true;
             }
-            System.out.print("  Processing your payment ");
+            System.out.print("\n  Processing your payment ");
             wait(1000);
             System.out.print(".  ");
             wait(1000);
@@ -4963,7 +4977,7 @@ public class Main {
             ((Customer) currentUser).getBill().setPaymentDate(LocalDate.now());
             ((Customer) currentUser).getBillHistory().add(((Customer) currentUser).getBill());
             ((Customer) currentUser).setBill(null);
-            System.out.println("  Successful Payment");
+            System.out.println("\n  Successful Payment");
             Main.pressAnyKeyToContinue();
             return true;
         }
@@ -5284,7 +5298,6 @@ public class Main {
         ArrayList<Double> amt = new ArrayList<>();
         ArrayList<Integer> choiceArr = new ArrayList<>();
         int resultsCounter;
-        //ArrayList<Billing> cbh = ((Customer)Main.getCurrentUser()).getBillHistory();
 
         resultsCounter = 0;
         System.out.println("\n  -----------------------------------------------------------");
@@ -5306,7 +5319,7 @@ public class Main {
         }
 
         if (resultsCounter == 0) {
-            System.out.println("|                                                           |");
+            System.out.println("  |                                                         |");
             System.out.println("  -----------------------------------------------------------");
             System.out.printf("  %d search result(s)", resultsCounter);
             return;

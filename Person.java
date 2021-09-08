@@ -163,20 +163,39 @@ abstract class Person {
         return firstName + " " + lastName;
     }
 
-
     /**
-     * Overrides the {@code equals()} method in {@code Object}.
+     * Overrides the {@code toString()} method in {@code Object}.
      *
-     * @param o Object to be compared
-     * @return True if equals, else return false
+     * @return formatted {@code Person} attributes
      */
-    /*
     @Override
-    public boolean equals(Object o) {
-        if (o instanceof Person person) {
-            return person.equals(this);
-        }
-        return false;
+    public String toString() {
+        return String.format("""
+        	       ID : %s
+        	      +--------------------------------------------------------------------------+
+        	      |                                    |                                     |
+        	      |   First Name > %-20s|   Age        > %-4s                 |
+        	      |   Last Name  > %-20s|   Gender     > %c                    |
+        	      |	                                   |   Phone No.  > %-12s         |
+        	      |                                    |   Birth Date > %-10s           |
+        	      |--------------------------------------------------------------------------|
+        	      |                                                                          |
+        	      |                                                                          |
+        	      |   Username > %-60s|
+        	      |   Email    > %-60s|
+        	      |   Address  > %-60s|
+        	      |                                                                          |
+        	      +--------------------------------------------------------------------------+
+        	   	""",
+                getID(),
+                getFirstName(),
+                getAge(),
+                getLastName(),
+                getGender(),
+                getTel(),
+                Main.dateToString(getDob()),
+                getUsername(),
+                getEmail(),
+                getAddress().limitAddress());
     }
-     */
 }

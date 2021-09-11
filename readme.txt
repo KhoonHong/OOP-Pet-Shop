@@ -34,3 +34,19 @@ function :
    ->user profile	: display, edit profile, delete account, billing card(add, display, remove, edit)
 basic flow :
 customer sign up(no account) -> customer log in -> add pet (if not yet register a pet ,pet owned can > 1) -> edit pet (if required) -> add reservation (can > 1) -> edit pet / reservation(if required) -> billing -> check out -> log out
+
+                                 <<< N O T I C E >>>
+                                 
+10 Employee objects and 100 Customer objects will be automatically generated on runtime using Main2.java methods.
+
+Username and password of generated Customer and Employee objects can be found in customer_credidentials.txt and employee_credidentials.txt
+
+The text files can be found in the same path as the .java files.
+
+
+
+
+
+
+
+

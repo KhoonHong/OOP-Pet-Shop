@@ -34,11 +34,14 @@ public class Main {
             FileWriter writer = new FileWriter(custCredentials);
             File empCredentials = new File("employee_credentials.txt");
             FileWriter writer1 = new FileWriter(empCredentials);
+            writer.close();
+            writer1.close();
         }
         catch (IOException e) {
             System.out.println("FIle handling error occurred...");
         }
 
+        // adds a default owner object into the owner array list
         ownerList.add(new Owner("Khoon Hong",
                 "Lee",
                 "0107762938",
@@ -49,6 +52,7 @@ public class Main {
                 "o",
                 "o"));
 
+        // addds a default employee object into the employee array list
         employeeList.add(new Employee("Jia Wei",
                 "Chan",
                 "0123456789",
@@ -60,6 +64,7 @@ public class Main {
                 "e",
                 20000.00));
 
+            
         customerList.add(new Customer("Shi Jing",
                 "Tan",
                 "0129876543",

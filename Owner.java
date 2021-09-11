@@ -139,17 +139,4 @@ public class Owner extends Person implements Identifiable {
         return "MGM" + additionalZero + idNum;
     }
 
-    /**
-     * Overrides the {@code equals()} method in {@code Object} and {@code Person}.
-     *
-     * @param o Object to be compared
-     * @return True if equals, else return false
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof Owner owner) {
-            return owner.equals(this);
-        }
-        return false;
-    }
 }

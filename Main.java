@@ -140,10 +140,13 @@ public class Main {
         JFrame frame = new JFrame("Pet Shop System");
         JPanel panel = new JPanel();
         JProgressBar progressBar = new JProgressBar();
-        frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Main.class.getResource("img/doggo.jpg")));
+        try {
+            frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Main.class.getResource("img/doggo.jpg")));
+        }
+        catch (NullPointerException ignored)
 
         progressBar.setValue(0);
-        progressBar.setStringPainted(true);
+        progressBar.setStringPainted(true); // display numeric percentage indicator
         panel.setLayout(new BorderLayout());
         panel.add(progressBar, BorderLayout.NORTH);
         frame.add(panel);
@@ -175,7 +178,7 @@ public class Main {
                 progressBar.setValue(i + randomValue*4);
 
                 // delay the thread
-                randomValue = ThreadLocalRandom.current().nextInt(1, 2 + 1);
+                randomValue = ThreadLocalRandom.current().nextInt(1, 3 + 1);
                 Thread.sleep(randomValue* 300L);
                 i += randomValue*8;
 

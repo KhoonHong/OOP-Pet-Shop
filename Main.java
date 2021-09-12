@@ -1,3 +1,5 @@
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.text.NumberFormat;
@@ -5,6 +7,7 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.io.IOException;
@@ -126,11 +129,60 @@ public class Main {
                                                              &&&&&&,        *#&&&&&&&&&                &&&&&&&,        .&&&&&&#&                                     \s
                                                                  &&&&&&&&&&&&&&%                            *&&&&&&&&&&&&%                           \s
                 """);
-        pressAnyKeyToContinue();
+        loadingBar();
 
         // start system
         mainMenu(currentUser, customerList, employeeList, ownerList, promotions);
 
+    }
+
+    public static void loadingBar(){
+        JFrame frame = new JFrame("Pet Shop System");
+        JPanel panel = new JPanel();
+        JProgressBar progressBar = new JProgressBar();
+        frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Main.class.getResource("img/doggo.jpg")));
+
+        progressBar.setValue(0);
+        progressBar.setStringPainted(true);
+        panel.setLayout(new BorderLayout());
+        panel.add(progressBar, BorderLayout.NORTH);
+        frame.add(panel);
+
+        frame.setSize(300, 100);
+        frame.setLocationRelativeTo(null);
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // set close button operation
+
+        String[] texts = {"Torturing Jia Wei", "Dying in assignment", "Generating records", "Tormenting Shi Jing", "Agonizing Jia Hui"};
+        JLabel label = new JLabel(texts[ThreadLocalRandom.current().nextInt(0, 4 + 1)]);
+        label.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
+        panel.add(label, BorderLayout.CENTER);
+        label.setBounds(100, 50, 100, 30);
+
+        frame.setVisible(true);
+
+        fill(progressBar, panel, frame);
+        frame.setVisible(false);
+    }
+
+    public static void fill(JProgressBar progressBar, JPanel panel, JFrame frame)
+    {
+        int i = 0;
+        int randomValue = 0;
+        try {
+            while (i <= 100) {
+                // fill the menu bar
+                progressBar.setValue(i + randomValue*4);
+
+                // delay the thread
+                randomValue = ThreadLocalRandom.current().nextInt(1, 2 + 1);
+                Thread.sleep(randomValue* 300L);
+                i += randomValue*8;
+
+            }
+        }
+        catch (Exception ignored) {
+        }
     }
 
     // start of program------------------------------------------------------------------------------------------------------------------------------------------------------------------

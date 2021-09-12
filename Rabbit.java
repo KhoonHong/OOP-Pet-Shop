@@ -170,7 +170,6 @@ public class Rabbit extends Pet implements Identifiable {
      * @param o Object to be compared
      * @return True if equals, else return false
      */
-
     @Override
     public boolean equals(Object o) {
         if (o instanceof Rabbit rabbit) {

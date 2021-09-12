@@ -199,6 +199,12 @@ abstract class Person {
                 getAddress().limitAddress());
     }
 
+    /**
+     * Overrides the {@code equals()} method in {@code Object}
+     *
+     * @param o Object to be compared
+     * @return True if equals, else return false
+     */
     @Override
     public boolean equals(Object o) {
         if (o instanceof Person person) {

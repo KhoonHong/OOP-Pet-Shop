@@ -143,6 +143,12 @@ public class Card {
         return "************" + this.number.substring(12, 16);
     }
 
+    /**
+     * Overrides the {@code equals()} method in {@code Object}
+     *
+     * @param o Object to be compared
+     * @return True if equals, else return false
+     */
     @Override
     public boolean equals(Object o) {
         if (o instanceof Card card) {

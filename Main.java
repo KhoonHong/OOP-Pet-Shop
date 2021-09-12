@@ -5017,7 +5017,7 @@ public class Main {
         for (int i = 0; i < ((Customer)currentUser).getCards().size(); i++) {
             System.out.println("  "+(i + 1) + ". " +
                     "\t   " +
-                    ((Customer) currentUser).getCards().get(i).getNumber() +
+                    ((Customer) currentUser).getCards().get(i).censorCardNo() +
                     "\t\t" +
                     ((Customer) currentUser).getCards().get(i).getType() +
                     "\t\t" +

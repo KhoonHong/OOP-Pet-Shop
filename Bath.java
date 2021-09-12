@@ -267,8 +267,18 @@ public class Bath extends Service{
     @Override
     public boolean equals(Object o) {
         if (o instanceof Bath bath) {
-            return bath.equals(this);
+            return super.equals(bath) &&
+                    bath.isScentedShampoo() == this.isScentedShampoo() &&
+                    bath.isLowShedShampoo() == this.isLowShedShampoo() &&
+                    bath.isAntiTickFleaShampoo() == this.isAntiTickFleaShampoo() &&
+                    bath.isEarCleaning() == this.isEarCleaning() &&
+                    bath.isAnalGlandCleaning() == this.isAnalGlandCleaning() &&
+                    bath.isHairRemover_Flushing() == this.isHairRemover_Flushing() &&
+                    bath.isBreathFreshener() == this.isBreathFreshener() &&
+                    bath.isTeethCleanse() == this.isTeethCleanse() &&
+                    bath.getAddOnPrice().equals(this.getAddOnPrice());
         }
         return false;
     }
+
 }

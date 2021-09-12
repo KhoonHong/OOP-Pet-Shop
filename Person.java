@@ -198,4 +198,21 @@ abstract class Person {
                 getEmail(),
                 getAddress().limitAddress());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Person person) {
+            return person.getFirstName().equals(this.getFirstName()) &&
+                    person.getLastName().equals(this.getLastName()) &&
+                    person.getAge() == this.getAge() &&
+                    person.getTel().equals(this.getTel()) &&
+                    person.getGender() == this.getGender() &&
+                    person.getDob().equals(this.getDob()) &&
+                    person.getAddress().equals(this.getAddress()) &&
+                    person.getEmail().equals(this.getEmail()) &&
+                    person.getUsername().equals(this.getUsername()) &&
+                    person.getPassword().equals(this.getPassword());
+        }
+        return false;
+    }
 }

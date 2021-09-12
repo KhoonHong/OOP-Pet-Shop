@@ -142,4 +142,18 @@ public class Card {
     public String censorCardNo() {
         return "************" + this.number.substring(12, 16);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Card card) {
+            return card.getNumber().equals(this.getNumber()) &&
+                    card.getType().equals(this.getType()) &&
+                    card.getExpireDate().equals(this.getExpireDate()) &&
+                    card.getNameOnCard().equals(this.getNameOnCard()) &&
+                    card.getIssuer().equals(this.getIssuer()) &&
+                    card.getBillingAddress().equals(this.getBillingAddress()) &&
+                    card.getCVV().equals(this.getCVV());
+        }
+        return false;
+    }
 }

@@ -128,7 +128,12 @@ public class Address implements Displayable{
     @Override
     public boolean equals(Object o) {
         if (o instanceof Address address) {
-            return address.equals(this);
+            return address.getStreet().equals(this.getStreet()) &&
+                    address.getZipcode().equals(this.getZipcode()) &&
+                    address.getCity().equals(this.getCity()) &&
+                    address.getRegion().equals(this.getRegion()) &&
+                    address.getState().equals(this.getState()) &&
+                    address.getCountry().equals(this.getCountry());
         }
         return false;
     }

@@ -133,14 +133,11 @@ public class Bird extends Pet implements Identifiable {
      * @param o Object to be compared
      * @return True if equals, else return false
      */
-    /*
     @Override
     public boolean equals(Object o) {
         if (o instanceof Bird bird) {
-            return bird.equals(this);
+            return super.equals(bird);
         }
         return false;
     }
-
-     */
 }

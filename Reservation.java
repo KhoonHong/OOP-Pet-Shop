@@ -299,13 +299,20 @@ public class Reservation implements Displayable, Identifiable {
      * @param o Object to be compared
      * @return True if equals, else return false
      */
-    /*
     @Override
     public boolean equals(Object o) {
         if (o instanceof Reservation reservation) {
-            return reservation.equals(this);
+            return reservation.getReserveID().equals(this.getReserveID()) &&
+                    reservation.getReserveDateTime().equals(this.getReserveDateTime()) &&
+                    reservation.getServices().equals(this.getServices()) &&
+                    reservation.getPet().equals(this.getPet()) &&
+                    reservation.getRemarks().equals(this.getRemarks()) &&
+                    reservation.getReserveMadeDateTime().equals(this.getReserveMadeDateTime()) &&
+                    reservation.getReserveSession() == this.getReserveSession() &&
+                    reservation.getEmployeeSelected().equals(this.getEmployeeSelected()) &&
+                    reservation.getEditMadeDateTime().equals(this.getEditMadeDateTime()) &&
+                    reservation.isPaymentStatus() == this.isPaymentStatus();
         }
         return false;
     }
-     */
 }

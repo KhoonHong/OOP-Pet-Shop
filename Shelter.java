@@ -287,7 +287,17 @@ public class Shelter extends Service {
     @Override
     public boolean equals(Object o) {
         if (o instanceof Shelter shelter) {
-            return shelter.equals(this);
+            return super.equals(shelter) &&
+                    shelter.isVegetarian() == this.isVegetarian() &&
+                    shelter.isHalalFood() == this.isHalalFood() &&
+                    shelter.isAircond() == this.isAircond() &&
+                    shelter.getFoodPortion().equals(this.getFoodPortion()) &&
+                    shelter.getCheckInDate().equals(this.getCheckInDate()) &&
+                    shelter.getCheckOutDate().equals(this.getCheckOutDate()) &&
+                    shelter.getTotalNumOfDays() == this.getTotalNumOfDays() &&
+                    shelter.isPlayRoom() == this.isPlayRoom() &&
+                    shelter.isOneOnOneCare() == this.isOneOnOneCare() &&
+                    shelter.getTotalPerNightPrice() == this.getTotalPerNightPrice();
         }
         return false;
     }

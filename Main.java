@@ -92,6 +92,8 @@ public class Main {
         Main2.generateCustomerProfile(customerList, employeeList, promotions);
 
         System.out.println("""
+                                                                                      
+                                                                                      
                                                                                       &%&&&&%                                                                        \s
                                                                                   &&&&&#***&&&                                                                       \s
                                              .&&&&&&&&&&&                      /&&%%*****,**&&&.                                                                     \s

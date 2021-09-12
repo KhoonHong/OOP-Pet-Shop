@@ -44,7 +44,7 @@ public class Groom extends Service{
 						""";
 
     // Constructor
-    Groom() {
+    public Groom() {
         // no-args
     }
 
@@ -60,7 +60,7 @@ public class Groom extends Service{
      * @param coatStyling True if customer want coat styling
      * @param addOnPrice A hashmap of add-ons selected with name as key and price as value
      */
-    Groom(boolean fancyCut,
+    public Groom(boolean fancyCut,
           boolean sanitaryTrim,
           boolean nailClip,
           boolean nailGrind,
@@ -246,7 +246,14 @@ public class Groom extends Service{
     @Override
     public boolean equals(Object o) {
         if (o instanceof Groom groom) {
-            return groom.equals(this);
+            return super.equals(groom) &&
+                    groom.isFancyCut() == this.isFancyCut() &&
+                    groom.isSanitaryTrim() == this.isSanitaryTrim() &&
+                    groom.isNailClip() == this.isNailClip() &&
+                    groom.isNailGrind() == this.isNailGrind() &&
+                    groom.isScissoringFeet() == this.isScissoringFeet() &&
+                    groom.isPadShaving() == this.isPadShaving() &&
+                    groom.isCoatStyling() == this.isCoatStyling();
         }
         return false;
     }

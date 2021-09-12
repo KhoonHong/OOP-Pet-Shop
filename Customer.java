@@ -195,8 +195,14 @@ public class Customer extends Person implements Displayable, Identifiable {
      */
     @Override
     public boolean equals(Object o) {
-        if (o instanceof Customer) {
-            return ((Customer) o).getUsername().equals(this.username) && (((Customer) o).getPassword().equals(this.password));
+        if (o instanceof Customer customer) {
+            return super.equals(customer) &&
+                    customer.getRegDate().equals(this.getRegDate()) &&
+                    customer.getPets().equals(this.getPets()) &&
+                    customer.getReservation().equals(this.getReservation()) &&
+                    customer.getBill().equals(this.getBill()) &&
+                    customer.getBillHistory().equals(this.getBillHistory()) &&
+                    customer.getCards().equals(this.getCards());
         }
         return false;
     }

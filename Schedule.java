@@ -271,7 +271,8 @@ public class Schedule {
     @Override
     public boolean equals(Object o) {
         if (o instanceof Schedule schedule) {
-            return schedule.equals(this);
+            return schedule.getSymbols().equals(this.getSymbols()) &&
+                    schedule.getRecordPosition().equals(this.getRecordPosition());
         }
         return false;
     }

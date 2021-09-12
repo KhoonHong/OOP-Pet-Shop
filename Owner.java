@@ -139,4 +139,13 @@ public class Owner extends Person implements Identifiable {
         return "MGM" + additionalZero + idNum;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if(o instanceof Owner owner) {
+            return super.equals(owner) &&
+                    owner.getStartWorkDate().equals(this.getStartWorkDate());
+        }
+        return false;
+    }
+
 }

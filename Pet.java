@@ -142,4 +142,17 @@ abstract class Pet {
                 Main.displaySize(getSize()),
                 Main.displayLevel(getAggressive()));
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Pet pet) {
+            return pet.getAge() == this.getAge() &&
+                    pet.getGender() == this.getGender() &&
+                    pet.getID().equals(this.getID()) &&
+                    pet.getColor().equals(this.getColor()) &&
+                    pet.getAggressive().equals(this.getAggressive()) &&
+                    pet.getSize().equals(this.getSize());
+        }
+        return false;
+    }
 }

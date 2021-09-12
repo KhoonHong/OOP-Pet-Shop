@@ -201,13 +201,14 @@ public class Employee extends Person implements Displayable, Identifiable {
      * @param o Object to be compared
      * @return True if equals, else return false
      */
-    /*
     @Override
     public boolean equals(Object o) {
         if (o instanceof Employee employee) {
-            return employee.equals(this);
+            return super.equals(employee) &&
+                    employee.getSalary() == this.getSalary() &&
+                    employee.getStartWorkDate().equals(this.getStartWorkDate()) &&
+                    employee.getWorkSchedule().equals(this.getWorkSchedule());
         }
         return false;
     }
-     */
 }

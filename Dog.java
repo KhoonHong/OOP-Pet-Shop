@@ -175,13 +175,14 @@ public class Dog extends Pet implements Identifiable {
      * @param o Object to be compared
      * @return True if equals, else return false
      */
-    /*
+
     @Override
     public boolean equals(Object o) {
         if (o instanceof Dog dog) {
-            return dog.equals(this);
+            return super.equals(dog) &&
+                    dog.isNeutered() == this.isNeutered() &&
+                    dog.isPregnant() == this.isPregnant();
         }
         return false;
     }
-     */
 }

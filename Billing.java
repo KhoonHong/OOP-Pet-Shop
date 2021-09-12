@@ -256,23 +256,6 @@ public class Billing implements Displayable, Identifiable{
     }
 
     /**
-     * Overrides the {@code equals()} method in {@code Object}.
-     *
-     * @param o Object to be compared
-     * @return True if equals, else return false
-     */
-    /*
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof Billing billing) {
-            return billing.equals(this);
-        }
-        return false;
-    }
-
-     */
-
-    /**
      * Calculate the total amount of each reservation in {@code billDetails} ArrayList and store it into an ArrayList.
      *
      * @return The total amount of each reservation in ArrayList
@@ -318,5 +301,20 @@ public class Billing implements Displayable, Identifiable{
         }
         totalAmount = totalAmt;
         return totalAmt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Billing billing) {
+            return billing.getTotalAmount() == this.getTotalAmount() &&
+                    billing.getGrandTotal() == this.getGrandTotal() &&
+                    billing.getTransactionID().equals(this.getTransactionID()) &&
+                    billing.getBillDetails().equals(this.getBillDetails()) &&
+                    billing.getPaymentMethod().equals(this.getPaymentMethod()) &&
+                    billing.getPromoApplied().equals(this.getPromoApplied()) &&
+                    billing.getPromoOrigin().equals(this.getPromoOrigin()) &&
+                    billing.getPaymentDate().equals(this.getPaymentDate());
+        }
+        return false;
     }
 }

@@ -36,10 +36,6 @@ abstract class Service {
         return totalCustomer;
     }
 
-    public static void setTotalCustomer(int totalCustomer) {
-        Service.totalCustomer = totalCustomer;
-    }
-
     public static double getPrice() {
         return price;
     }
@@ -85,7 +81,7 @@ abstract class Service {
     @Override
     public boolean equals(Object o) {
         if (o instanceof Service service) {
-            return service.equals(this);
+            return service.getAddOnPrice().equals(this.getAddOnPrice());
         }
         return false;
     }

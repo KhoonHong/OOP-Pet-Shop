@@ -161,7 +161,10 @@ public class Massage extends Service{
     @Override
     public boolean equals(Object o) {
         if (o instanceof Massage massage) {
-            return massage.equals(this);
+            return super.equals(massage) &&
+                    massage.isAfterMassageWash() == this.isAfterMassageWash() &&
+                    massage.isPremiumCalmingOil() == this.isPremiumCalmingOil() &&
+                    massage.isMultiMasseur() == this.isMultiMasseur();
         }
         return false;
     }

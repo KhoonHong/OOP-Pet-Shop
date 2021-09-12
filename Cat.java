@@ -171,13 +171,13 @@ public class Cat extends Pet implements Identifiable {
      * @param o Object to be compared
      * @return True if equals, else return false
      */
-    /*
     @Override
     public boolean equals(Object o) {
         if (o instanceof Cat cat) {
-            return cat.equals(this);
+            return super.equals(cat) &&
+                    cat.isNeutered() == this.isNeutered() &&
+                    cat.isPregnant() == this.isPregnant();
         }
         return false;
     }
-     */
 }

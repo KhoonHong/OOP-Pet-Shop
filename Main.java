@@ -143,7 +143,7 @@ public class Main {
         try {
             frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Main.class.getResource("img/doggo.jpg")));
         }
-        catch (NullPointerException ignored)
+        catch (NullPointerException ignored){}
 
         progressBar.setValue(0);
         progressBar.setStringPainted(true); // display numeric percentage indicator

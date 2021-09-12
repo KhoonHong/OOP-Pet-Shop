@@ -52,7 +52,7 @@ public class Main {
                 "o",
                 "o"));
 
-        // addds a default employee object into the employee array list
+        // adds a default employee object into the employee array list
         employeeList.add(new Employee("Jia Wei",
                 "Chan",
                 "0123456789",
@@ -64,7 +64,7 @@ public class Main {
                 "e",
                 20000.00));
 
-            
+        // adds a default customer object into the customer array list
         customerList.add(new Customer("Shi Jing",
                 "Tan",
                 "0129876543",
@@ -90,6 +90,41 @@ public class Main {
         Main2.writeCredentials("\n  Username  Password\n---------  ----------", "customer_credentials.txt");
         Main2.generateEmployeeProfile(employeeList);
         Main2.generateCustomerProfile(customerList, employeeList, promotions);
+
+        System.out.println("""
+                                                                                      &%&&&&%                                                                        \s
+                                                                                  &&&&&#***&&&                                                                       \s
+                                             .&&&&&&&&&&&                      /&&%%*****,**&&&.                                                                     \s
+                                            &&&&*******&&&&&&,               (&&&*****     **&&&                                                                     \s
+                                           *&&&*************&&&&&&&&&&&&&&&#&&&******      ***&&&       ..                                                           \s
+                                           &&&****      *******&&*******,,*,*********      .**&&&&&&&&&&&&&&&&&&&&&&#&&*                                             \s
+                                           &&&***,         ************,*,********************&&&/**********,**,,,****&%&&&&&                                        \s
+                                          .&&&****       ************,************************&&&(**********,**,,,,*,,*****(&&&&%                                    \s
+                                           &&&****   ,**************,**************************#&&&**************,,,***********&&&&,                                 \s
+                           .               &&&*****************,*,,******************************&&&***********,******************&&&%                               \s
+                                           &&&***************************************************/&&&*******************************&&&*                             \s
+                                          .&&&******************************************. ********&&&*********************************&&&                            \s
+                                          (&&&**************************   ************     ******(&&%*********&&&&&&&&&&&&&&&*********&&&                           \s
+                                          (%&&************************      ***********************&&&******&&&&&***********************%&&*                         \s
+                                          .&&&*****************************************************&&%****&&&&***************************%&&.                        \s
+                                           &&&******************************************&&&#&&&&&**&&****&&&******************************&&&                        \s
+                                           #&&&******************%(*****&&&(**************#&&%****&&&**#&&&&&&&&&&&&&&#********************&&&                       \s
+                                            &&&#****************/&&&&&&&&&&******.                 &&&&&&   ******/&&%***********,*********&&&                       \s
+                                             &&&%*****************************    .&&&&&&&&&&%     .&&    ********&&&**********************(&&.                      \s
+                                              &&&&************                  &#&&&&&&&&&&&&     .&&   ********/&&&***********************&&*                      \s
+                                                &&&%*******                      &&&&&&&&&&&      .&&#  **********&&&&*********************#&&                       \s
+                                               &&&&&&&****                                       &&&.   ***********&&#&&**********%&&&*****&&&                       \s
+                                            %&&&/.**&&&&&*              &&#.          &&&&&&&&&&&&     ,************,*%&&&&&&&&&&&&/*******&&%                       \s
+                                           &&&       ,*%&&&&&.   ..      ,&&%&&&&&&&&&&    /&&&&&%      ********,*************************&&&                        \s
+                                           &&#         .***/&&&&&&&,                   %&&&&(**&&&      *********************************&&&                         \s
+                                           &&&.          *****&&&&#&&&&##&&&&&&&&&&&&&&&/******&&&       .*****,***********************&&&%                          \s
+                       .                     &&&&&&&%%&&&&&&&&&&       **********************(&&&&&.       .*************************&&&&                            \s
+                                                  &&&&&&(   &&&           ****************&&&&&  .&&&          *****************, *&&&&                              \s
+                                                            &&&            **********#&&&&&(       .&&&&.                     .&&&&&                                 \s
+                                                             &&&&&&,        *#&&&&&&&&&                &&&&&&&,        .&&&&&&#&                                     \s
+                                                                 &&&&&&&&&&&&&&%                            *&&&&&&&&&&&&%                           \s
+                """);
+        pressAnyKeyToContinue();
 
         // start system
         mainMenu(currentUser, customerList, employeeList, ownerList, promotions);
@@ -3971,6 +4006,7 @@ public class Main {
 
     /**
      * A regular expression for validating card number
+     * This regex can validate card number from vendors such as Visa, MasterCard, American Express, Diners Club, Discover, and JCB cards
      *
      * @param cardNumber Number of credit card or debit card
      * @return boolean, true if correct else false
@@ -3997,6 +4033,12 @@ public class Main {
 
     /**
      * To validate username and password
+     * <pre>
+     *     E.g. matches     leekh12345 | tansj135 | chanjw7 | ongjh1789
+     * </pre>
+     * <pre>
+     *     E.g. not match   pets1 | 1234567 | petshop
+     * </pre>
      *
      * @param userpass username or password to be validated
      * @return boolean, true if correct else false
@@ -4021,7 +4063,16 @@ public class Main {
     }
 
     /**
-     * A regular expression for validating e-mail address
+     * A regular expression for validating e-mail address.
+     * It allows usernames with 1 or 2 alpha-numeric characters, or 3+ chars can have -._ in the middle.
+     * Username may NOT start/end with -._ or any other non alpha-numeric character.
+     * It allows hierarchical domain names (e.g. me@really.big.com).
+     * <pre>
+     *     E.g. matches     e@eee.com | eee@e-e.com | eee@ee.eee.museum
+     * </pre>
+     * <pre>
+     *     E.g. not match   .@eee.com | eee@e-.com | eee@ee.eee.eeeeeeeeee
+     * </pre>
      *
      * @param email E-mail address to be validated
      * @return boolean, true if correct else false
@@ -4038,6 +4089,12 @@ public class Main {
 
     /**
      * A regular expression for validating phone number in Malaysia
+     * <pre>
+     *      E.g. matches    0123456789 | 0123654987 | 0136254789
+     * </pre>
+     * <pre>
+     *      E.g. not match  0978456123 | a012345678 | 0464331725
+     * </pre>
      *
      * @param tel Phone number to be validated
      * @return boolean, true if correct else false
@@ -4054,6 +4111,12 @@ public class Main {
 
     /**
      * A regular expression for validating name
+     * <pre>
+     *      E.g. matches    Adam | Bill | Catherine
+     * </pre>
+     * <pre>
+     *      E.g. no match   Dom1nos | !Dominic | Sa*na
+     * </pre>
      *
      * @param name Name to be validated
      * @return boolean, true if correct else false

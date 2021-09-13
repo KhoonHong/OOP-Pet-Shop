@@ -27,7 +27,7 @@ public class Reservation implements Displayable, Identifiable {
     private boolean paymentStatus = false;
 
     // Constructor
-    Reservation() {
+    public Reservation() {
         // no-args
         this.reserveMadeDateTime = LocalDateTime.now();
         currentReserveCount++;
@@ -45,7 +45,7 @@ public class Reservation implements Displayable, Identifiable {
      * @param reserveSession Session that was reserved
      * @param employeeSelected The employee that was selected by customer
      */
-    Reservation(LocalDateTime reserveDateTime,
+    public Reservation(LocalDateTime reserveDateTime,
                 Service services,
                 Pet pet,
                 String remarks,

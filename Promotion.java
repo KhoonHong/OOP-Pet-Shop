@@ -20,7 +20,7 @@ public class Promotion implements Identifiable {
     private static int totalPromoCount;
 
     // Constructor
-    Promotion() {
+    public Promotion() {
         // no-args
         currentPromoCount++;
         totalPromoCount++;
@@ -36,7 +36,7 @@ public class Promotion implements Identifiable {
      * @param promoRate The promotion rate
      * @param description The promotion description
      */
-    Promotion(String promoCode, LocalDate promoStartDate, LocalDate promoEndDate, double promoRate, String description) {
+    public Promotion(String promoCode, LocalDate promoStartDate, LocalDate promoEndDate, double promoRate, String description) {
         currentPromoCount++;
         totalPromoCount++;
         this.promoCode = promoCode;

@@ -44,7 +44,7 @@ public class Bath extends Service{
 						""";
 
     // Constructor
-    Bath() {
+    public Bath() {
         // no-args
 
     }
@@ -62,7 +62,7 @@ public class Bath extends Service{
      * @param teethCleanse True if customer want teeth cleanse
      * @param addOnPrice A hashmap of add-ons selected with name as key and price as value
      */
-    Bath(boolean scentedShampoo,
+    public Bath(boolean scentedShampoo,
          boolean lowShedShampoo,
          boolean antiTickFleaShampoo,
          boolean earCleaning,

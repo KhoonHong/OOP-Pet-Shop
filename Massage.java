@@ -38,7 +38,7 @@ public class Massage extends Service{
 						""";
 
     // Constructor
-    Massage() {
+    public Massage() {
         // no-args
     }
 
@@ -50,7 +50,7 @@ public class Massage extends Service{
      * @param multiMasseur True if customer want multiple masseur
      * @param addOnPrice A hashmap of add-ons selected with name as key and price as value
      */
-    Massage(boolean afterMassageWash,
+    public Massage(boolean afterMassageWash,
             boolean premiumCalmingOil,
             boolean multiMasseur,
             HashMap<String, Double> addOnPrice) {

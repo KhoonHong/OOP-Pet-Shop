@@ -29,7 +29,7 @@ public class Address implements Displayable{
      * @param state State name
      * @param country Country name
      */
-    Address(String street, String zipcode, String city, String region, String state, String country) {
+    public Address(String street, String zipcode, String city, String region, String state, String country) {
         this.zipcode = zipcode;
         this.city = city;
         this.state = state;
@@ -38,7 +38,7 @@ public class Address implements Displayable{
         this.street = street;
     }
 
-    Address() {
+    public Address() {
         // no-args
     }
 

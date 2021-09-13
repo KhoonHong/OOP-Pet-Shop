@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.FileWriter;
+import java.io.*;
 import java.text.NumberFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -10,7 +9,7 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.io.IOException;
+
 
 /**
  * This is the main class of the entire Java project
@@ -137,48 +136,73 @@ public class Main {
 
     }
 
+    public static Font loadFont(String path, float size){
+        try {
+            InputStream fileStream = Main.class.getResourceAsStream(path);
+            assert fileStream != null;
+            Font myFont = Font.createFont(Font.TRUETYPE_FONT, fileStream);
+            return myFont.deriveFont(Font.PLAIN, size);
+
+        } catch (FontFormatException | IOException e) {
+            return new Font(Font.SANS_SERIF, Font.PLAIN, 18);
+        }
+    }
+
     public static void loadingBar(){
+
         JFrame frame = new JFrame("Pet Shop System");
         JPanel panel = new JPanel();
         JProgressBar progressBar = new JProgressBar();
+        JLabel label = new JLabel("", SwingConstants.CENTER);
 
-        // add img for gui window icon
+        // import font into gui
+        Font font = loadFont("fonts/OpenSans-Italic.ttf", 18);
+
+        // import img for gui window icon
         try {
             frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Main.class.getResource("img/doggo.jpg")));
         }
         catch (NullPointerException ignored){}
 
-        progressBar.setValue(0);
+
+        progressBar.setValue(0); // set progress bar value to zero
         progressBar.setStringPainted(true); // display numeric percentage indicator
         progressBar.setForeground(new Color(30,129,176));
+        progressBar.setPreferredSize(new Dimension(100, 30));
 
         panel.setLayout(new BorderLayout());
         panel.add(progressBar, BorderLayout.NORTH);
         frame.add(panel);
 
-        frame.setSize(300, 100);
+        frame.setSize(500, 150);
         frame.setLocationRelativeTo(null);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // set close button operation
 
         String[] texts = {"Torturing Jia Wei", "Dying in assignment", "Generating records", "Tormenting Shi Jing", "Agonizing Jia Hui",
-        "Man's best pet shop", "Tending to pets", "World class pet shop", "Treat your pet to self care !"};
-        JLabel label = new JLabel(texts[ThreadLocalRandom.current().nextInt(0, 8 + 1)]);
-        label.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
-        panel.add(label, BorderLayout.CENTER);
-        label.setBounds(100, 50, 100, 30);
+                "Man's best pet shop", "Tending to pets", "World class pet shop", "Treat your pet to self care !"};
+
+        setText(label, panel, frame, texts, font);
 
         frame.setVisible(true);
 
-        fill(progressBar, panel, frame, label, texts);
+        fill(progressBar, panel, frame, label, texts, font);
         frame.setVisible(false);
     }
 
-    public static void fill(JProgressBar progressBar, JPanel panel, JFrame frame, JLabel label, String[] texts)
+    public static void setText(JLabel label, JPanel panel, JFrame frame, String[] texts, Font font) {
+        // change text
+        label.setText(texts[ThreadLocalRandom.current().nextInt(0, 8 + 1)]);
+
+        label.setFont(font.deriveFont(18f));
+        panel.add(label, BorderLayout.CENTER);
+        label.setBounds(100, 50, 100, 30);
+        frame.setVisible(true);
+    }
+
+    public static void fill(JProgressBar progressBar, JPanel panel, JFrame frame, JLabel label, String[] texts, Font font)
     {
-        int i = 0;
-        int randomValue = 0;
-        int loopCount;
+        int i = 0, randomValue, loopCount;
         try {
             while (i <= 100) {
 
@@ -186,7 +210,6 @@ public class Main {
                 loopCount = 0;
 
                 randomValue = ThreadLocalRandom.current().nextInt(10, 20 + 1);
-
                 do {
                     // fill the menu bar
                     progressBar.setValue(i);
@@ -197,19 +220,11 @@ public class Main {
                 }
                 while (randomValue > loopCount);
 
-
-                // change text
-                label.setText(texts[ThreadLocalRandom.current().nextInt(0, 8 + 1)]);
-                label.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
-                panel.add(label, BorderLayout.CENTER);
-                label.setBounds(100, 50, 100, 30);
-                frame.setVisible(true);
-
+                setText(label, panel, frame, texts, font);
                 Thread.sleep(randomValue* 50L);
             }
         }
-        catch (Exception ignored) {
-        }
+        catch (Exception ignored) {}
     }
 
     // start of program------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -30,7 +30,7 @@ public class Schedule {
      * Creates a {@code Schedule} class object when called
      *
      */
-    Schedule() {
+    public Schedule() {
         this.defaultSlot();
         setDayInWeek(dayInWeekCalc(today.get(Calendar.DAY_OF_WEEK)));// monday - sunday sorting
     }

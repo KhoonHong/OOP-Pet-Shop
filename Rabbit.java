@@ -31,7 +31,7 @@ public class Rabbit extends Pet implements Identifiable {
      * @param aggressive The aggressiveness of rabbit stored with {@code Level} enum
      * @param size The size of rabbit stored with {@code Size} enum
      */
-    Rabbit(boolean neutered, int age, char gender, String color, Level aggressive, Size size) {
+    public Rabbit(boolean neutered, int age, char gender, String color, Level aggressive, Size size) {
         super(age, gender, color, aggressive, size);
         this.neutered = neutered;
         if (gender == 'f' && !neutered) {
@@ -43,7 +43,7 @@ public class Rabbit extends Pet implements Identifiable {
         this.ID = generateID(currentRabbitCount);
     }
 
-    Rabbit(boolean neutered, int age, char gender, String color, Level aggressive, Size size, boolean pregnant) {
+    public Rabbit(boolean neutered, int age, char gender, String color, Level aggressive, Size size, boolean pregnant) {
         super(age, gender, color, aggressive, size);
         totalRabbitAge+=age;
         totalRabbitCount++;

@@ -35,7 +35,7 @@ public class Billing implements Displayable, Identifiable{
      *
      * @param bill Customer reservation will be passed in for bill processing
      */
-    Billing(Reservation bill) {
+    public Billing(Reservation bill) {
         currentTransactionCount++;
         totalTransactionCount++;
         this.transactionID = generateID(currentTransactionCount); //generate ID
@@ -52,7 +52,7 @@ public class Billing implements Displayable, Identifiable{
      * @param promoOrigin The source which the customer obtained the promotion
      * @param paymentDate The checkout timestamp
      */
-    Billing(ArrayList<Reservation> billDetails ,
+    public Billing(ArrayList<Reservation> billDetails ,
             String paymentMethod,
             Promotion promoApplied,
             String promoOrigin,

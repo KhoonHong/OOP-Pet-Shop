@@ -26,7 +26,7 @@ public class Customer extends Person implements Displayable, Identifiable {
     private static int totalCustCount;
 
     // Constructor
-    Customer() {
+    public Customer() {
         // no-args
         this.regDate = LocalDate.now();
         currentCustCount++;
@@ -47,7 +47,7 @@ public class Customer extends Person implements Displayable, Identifiable {
      * @param username Customer username
      * @param password Customer password
      */
-    Customer(String firstName, String lastName, String tel, char gender, LocalDate dob, Address address, String email, String username, String password) {
+    public Customer(String firstName, String lastName, String tel, char gender, LocalDate dob, Address address, String email, String username, String password) {
         super(firstName, lastName, tel, gender, dob, address, email, username, password);
         this.regDate = LocalDate.now();
         this.age = (LocalDate.now().getYear() - dob.getYear());
@@ -56,7 +56,7 @@ public class Customer extends Person implements Displayable, Identifiable {
         this.id = generateID(currentCustCount);;
     }
 
-    Customer(String firstName, String lastName, String tel, char gender, LocalDate dob, Address address, String email, String username, String password, LocalDate regDate) {
+    public Customer(String firstName, String lastName, String tel, char gender, LocalDate dob, Address address, String email, String username, String password, LocalDate regDate) {
         super(firstName, lastName, tel, gender, dob, address, email, username, password);
         this.regDate = regDate;
         this.age = (LocalDate.now().getYear() - dob.getYear());

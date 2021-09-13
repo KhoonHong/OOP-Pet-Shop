@@ -22,7 +22,7 @@ public class Employee extends Person implements Displayable, Identifiable {
     private static int currentEmployeeCount;
 
     // Constructor
-    Employee() {
+    public Employee() {
         // no-args
         this.startWorkDate = LocalDate.now();
         totalEmpCount++;
@@ -45,7 +45,7 @@ public class Employee extends Person implements Displayable, Identifiable {
      * @param password Employee password
      * @param salary Employee salary
      */
-    Employee(String firstName, String lastName, String tel, char gender, LocalDate dob, Address address, String email, String username, String password, double salary) {
+    public Employee(String firstName, String lastName, String tel, char gender, LocalDate dob, Address address, String email, String username, String password, double salary) {
         super(firstName, lastName, tel, gender, dob, address, email, username, password);
         this.salary = salary;
         this.age = (LocalDate.now().getYear() - dob.getYear());
@@ -55,7 +55,7 @@ public class Employee extends Person implements Displayable, Identifiable {
         this.id = generateID(currentEmployeeCount);
     }
 
-    Employee(String firstName, String lastName, String tel, char gender, LocalDate dob, Address address, String email, String username, String password, double salary, LocalDate startWorkDate) {
+    public Employee(String firstName, String lastName, String tel, char gender, LocalDate dob, Address address, String email, String username, String password, double salary, LocalDate startWorkDate) {
         super(firstName, lastName, tel, gender, dob, address, email, username, password);
         this.salary = salary;
         this.age = (LocalDate.now().getYear() - dob.getYear());

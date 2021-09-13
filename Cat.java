@@ -31,7 +31,7 @@ public class Cat extends Pet implements Identifiable {
      * @param aggressive The aggressiveness of cat stored with {@code Level} enum
      * @param size The size of cat stored with {@code Size} enum
      */
-    Cat(boolean neutered, int age, char gender, String color, Level aggressive, Size size) {
+    public Cat(boolean neutered, int age, char gender, String color, Level aggressive, Size size) {
         super(age, gender, color, aggressive, size);
         this.neutered = neutered;
         if (gender == 'f' && !neutered) {
@@ -43,11 +43,11 @@ public class Cat extends Pet implements Identifiable {
         this.ID = generateID(currentCatCount);
     }
 
-    Cat() {
+    public Cat() {
         // no-args
     }
 
-    Cat(boolean neutered, int age, char gender, String color, Level aggressive, Size size, boolean pregnant) {
+    public Cat(boolean neutered, int age, char gender, String color, Level aggressive, Size size, boolean pregnant) {
         super(age, gender, color, aggressive, size);
         this.neutered = neutered;
         this.pregnant = pregnant;

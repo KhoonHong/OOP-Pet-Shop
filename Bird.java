@@ -26,7 +26,7 @@ public class Bird extends Pet implements Identifiable {
      * @param aggressive The aggressiveness of bird stored with {@code Level} enum
      * @param size The size of bird stored with {@code Size} enum
      */
-    Bird(int age, char gender, String color, Level aggressive, Size size) {
+    public Bird(int age, char gender, String color, Level aggressive, Size size) {
         super(age, gender, color, aggressive, size);
         totalBirdCount++;
         currentBirdCount++;
@@ -34,7 +34,7 @@ public class Bird extends Pet implements Identifiable {
         this.ID = generateID(currentBirdCount);;
     }
 
-    Bird() {
+    public Bird() {
         // no-args
     }
 

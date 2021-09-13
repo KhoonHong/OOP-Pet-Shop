@@ -17,7 +17,7 @@ public class Owner extends Person implements Identifiable {
     private static int currentOwnerCount;
 
     // Constructor
-    Owner() {
+    public Owner() {
         // no-args
         this.startWorkDate = LocalDate.now();
         this.age = (LocalDate.now().getYear() - dob.getYear());
@@ -39,7 +39,7 @@ public class Owner extends Person implements Identifiable {
      * @param username Owner username
      * @param password Owner password
      */
-    Owner(String firstName,
+    public Owner(String firstName,
           String lastName,
           String tel,
           char gender,

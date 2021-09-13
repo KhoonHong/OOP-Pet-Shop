@@ -59,7 +59,7 @@ public class Shelter extends Service {
      * @param playRoom True if customer want play room facility
      * @param oneOnOneCare True if customer want one on one care
      */
-    Shelter(boolean vegetarian,
+    public Shelter(boolean vegetarian,
             boolean halalFood,
             boolean aircond,
             Size foodPortion,
@@ -81,7 +81,7 @@ public class Shelter extends Service {
         calculateAddOnPrice();
     }
 
-    Shelter() {
+    public Shelter() {
         // no-args
     }
 

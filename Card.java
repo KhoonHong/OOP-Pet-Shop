@@ -20,7 +20,7 @@ public class Card {
     private String CVV;
 
     // Constructor
-    Card() {
+    public Card() {
         // no-args
     }
 
@@ -34,7 +34,7 @@ public class Card {
      * @param issuer Card issuer bank name
      * @param billingAddress Card billing address
      */
-    Card(String nameOnCard, String number, String CVV, LocalDate expireDate, String type, String issuer, Address billingAddress) {
+    public Card(String nameOnCard, String number, String CVV, LocalDate expireDate, String type, String issuer, Address billingAddress) {
         this.number = number;
         this.type = type;
         this.expireDate = expireDate;

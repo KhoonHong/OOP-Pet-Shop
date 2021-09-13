@@ -5528,7 +5528,7 @@ public class Main {
     public static void searchCurrentCustBillingHistoryPaymentDate(LocalDate minDate, LocalDate maxDate, ArrayList<Billing> cbh) {
         int choice;
         double totalAmt;
-        ArrayList<Double> amt = new ArrayList<>();
+        ArrayList<Double> amt;
         ArrayList<Integer> choiceArr = new ArrayList<>();
         int resultsCounter;
 
@@ -5573,11 +5573,19 @@ public class Main {
         amt = cbh.get(choiceArr.get(choice)).getEachSubtotal();
         totalAmt = cbh.get(choiceArr.get(choice)).getTotalAmount();
         dispBillSummary(cbh.get(choiceArr.get(choice)), amt, totalAmt, cbh.get(choiceArr.get(choice)).getPaymentDate());
-        boolean p = (!Objects.isNull(cbh.get(choiceArr.get(choice)).getPromoApplied()));
-        if (p) {
-            dispGrandTotal(cbh.get(choiceArr.get(choice)), p, totalAmt, (cbh.get(choiceArr.get(choice)).getTotalAmount() * (cbh.get(choiceArr.get(choice)).getPromoApplied().getPromoRate())), cbh.get(choiceArr.get(choice)).getPromoApplied().getPromoRate());
+        // if have promo
+        if (cbh.get(choiceArr.get(choice)).getPromoApplied() != null) {
+            dispGrandTotal(cbh.get(choiceArr.get(choice)),
+                    true,
+                    totalAmt,
+                    cbh.get(choiceArr.get(choice)).getTotalAmount() - (cbh.get(choiceArr.get(choice)).getTotalAmount() * (cbh.get(choiceArr.get(choice)).getPromoApplied().getPromoRate())),
+                    cbh.get(choiceArr.get(choice)).getPromoApplied().getPromoRate());
         } else {
-            dispGrandTotal(cbh.get(choiceArr.get(choice)), p, totalAmt, cbh.get(choiceArr.get(choice)).getTotalAmount(), 0);
+            dispGrandTotal(cbh.get(choiceArr.get(choice)),
+                    false,
+                    totalAmt,
+                    cbh.get(choiceArr.get(choice)).getTotalAmount(),
+                    0);
         }
 
         //display payment method

@@ -136,6 +136,18 @@ public class Main {
 
     }
 
+    public static void showOnScreen( int screen, JFrame frame ) {
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice[] gd = ge.getScreenDevices();
+        if( screen > -1 && screen < gd.length ) {
+            frame.setLocation(gd[screen].getDefaultConfiguration().getBounds().x, frame.getY());
+        } else if( gd.length > 0 ) {
+            frame.setLocation(gd[0].getDefaultConfiguration().getBounds().x, frame.getY());
+        } else {
+            throw new RuntimeException( "No Screens Found" );
+        }
+    }
+
     public static void loadingBar(){
         JFrame frame = new JFrame("Pet Shop System");
         JPanel panel = new JPanel();
@@ -149,6 +161,7 @@ public class Main {
         progressBar.setStringPainted(true); // display numeric percentage indicator
         panel.setLayout(new BorderLayout());
         panel.add(progressBar, BorderLayout.NORTH);
+        showOnScreen(1, frame);
         frame.add(panel);
 
         frame.setSize(300, 100);
@@ -164,23 +177,29 @@ public class Main {
 
         frame.setVisible(true);
 
-        fill(progressBar, panel, frame);
+        fill(progressBar, panel, frame, label, texts);
         frame.setVisible(false);
     }
 
-    public static void fill(JProgressBar progressBar, JPanel panel, JFrame frame)
+    public static void fill(JProgressBar progressBar, JPanel panel, JFrame frame, JLabel label, String[] texts)
     {
         int i = 0;
         int randomValue = 0;
         try {
             while (i <= 100) {
                 // fill the menu bar
-                progressBar.setValue(i + randomValue*4);
+                progressBar.setValue(i + randomValue*3);
+
+                label.setText(texts[ThreadLocalRandom.current().nextInt(0, 4 + 1)]);
+                label.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
+                panel.add(label, BorderLayout.CENTER);
+                label.setBounds(100, 50, 100, 30);
+                frame.setVisible(true);
 
                 // delay the thread
                 randomValue = ThreadLocalRandom.current().nextInt(1, 3 + 1);
-                Thread.sleep(randomValue* 300L);
-                i += randomValue*8;
+                Thread.sleep(randomValue* 400L);
+                i += randomValue*5;
 
             }
         }

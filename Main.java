@@ -3166,7 +3166,7 @@ public class Main {
             try {
                 System.out.println("\n\n  Enter start date to search > ");
                 startDate = LocalDate.of(Main.promptInt("  Year  > "), Main.promptInt("  Month > "), Main.promptInt("  Day   > "));//TanShiJing
-                if (startDate.isBefore(LocalDate.now().minusYears(3))) {
+                if (startDate.isBefore(LocalDate.of(2018,1,1))) {
                     System.out.println("  Date entered must be after year 2018...");
                     continue;
                 }

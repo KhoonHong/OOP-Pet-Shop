@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Objects;
 
 
 /**
@@ -81,7 +82,7 @@ abstract class Service {
     @Override
     public boolean equals(Object o) {
         if (o instanceof Service service) {
-            return service.getAddOnPrice().equals(this.getAddOnPrice());
+            return Objects.equals(service.getAddOnPrice(), this.getAddOnPrice());
         }
         return false;
     }

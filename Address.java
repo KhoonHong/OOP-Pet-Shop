@@ -1,4 +1,4 @@
-
+import java.util.Objects;
 
 /**
  * The address class is used to ensure that not a single detail is left off when the user key in the information
@@ -128,12 +128,12 @@ public class Address implements Displayable{
     @Override
     public boolean equals(Object o) {
         if (o instanceof Address address) {
-            return address.getStreet().equals(this.getStreet()) &&
-                    address.getZipcode().equals(this.getZipcode()) &&
-                    address.getCity().equals(this.getCity()) &&
-                    address.getRegion().equals(this.getRegion()) &&
-                    address.getState().equals(this.getState()) &&
-                    address.getCountry().equals(this.getCountry());
+            return Objects.equals(address.getStreet(), this.getStreet()) &&
+                    Objects.equals(address.getZipcode(), this.getZipcode()) &&
+                    Objects.equals(address.getCity(), this.getCity()) &&
+                    Objects.equals(address.getRegion(), this.getRegion()) &&
+                    Objects.equals(address.getState(), this.getState()) &&
+                    Objects.equals(address.getCountry(), this.getCountry());
         }
         return false;
     }

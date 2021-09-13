@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 /**
@@ -314,12 +315,12 @@ public class Billing implements Displayable, Identifiable{
         if (o instanceof Billing billing) {
             return billing.getTotalAmount() == this.getTotalAmount() &&
                     billing.getGrandTotal() == this.getGrandTotal() &&
-                    billing.getTransactionID().equals(this.getTransactionID()) &&
-                    billing.getBillDetails().equals(this.getBillDetails()) &&
-                    billing.getPaymentMethod().equals(this.getPaymentMethod()) &&
-                    billing.getPromoApplied().equals(this.getPromoApplied()) &&
-                    billing.getPromoOrigin().equals(this.getPromoOrigin()) &&
-                    billing.getPaymentDate().equals(this.getPaymentDate());
+                    Objects.equals(billing.getTransactionID(), this.getTransactionID()) &&
+                    Objects.equals(billing.getBillDetails(), this.getBillDetails()) &&
+                    Objects.equals(billing.getPaymentMethod(), this.getPaymentMethod()) &&
+                    Objects.equals(billing.getPromoApplied(), this.getPromoApplied()) &&
+                    Objects.equals(billing.getPromoOrigin(), this.getPromoOrigin()) &&
+                    Objects.equals(billing.getPaymentDate(),this.getPaymentDate());
         }
         return false;
     }

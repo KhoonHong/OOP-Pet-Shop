@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Objects;
 
 
 /**
@@ -276,7 +277,7 @@ public class Bath extends Service{
                     bath.isHairRemover_Flushing() == this.isHairRemover_Flushing() &&
                     bath.isBreathFreshener() == this.isBreathFreshener() &&
                     bath.isTeethCleanse() == this.isTeethCleanse() &&
-                    bath.getAddOnPrice().equals(this.getAddOnPrice());
+                    Objects.equals(bath.getAddOnPrice(), this.getAddOnPrice());
         }
         return false;
     }

@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.Objects;
 
 
 /**
@@ -208,16 +209,16 @@ abstract class Person {
     @Override
     public boolean equals(Object o) {
         if (o instanceof Person person) {
-            return person.getFirstName().equals(this.getFirstName()) &&
-                    person.getLastName().equals(this.getLastName()) &&
+            return Objects.equals(person.getFirstName(), this.getFirstName()) &&
+                    Objects.equals(person.getLastName(), this.getLastName()) &&
                     person.getAge() == this.getAge() &&
-                    person.getTel().equals(this.getTel()) &&
+                    Objects.equals(person.getTel(), this.getTel()) &&
                     person.getGender() == this.getGender() &&
-                    person.getDob().equals(this.getDob()) &&
-                    person.getAddress().equals(this.getAddress()) &&
-                    person.getEmail().equals(this.getEmail()) &&
-                    person.getUsername().equals(this.getUsername()) &&
-                    person.getPassword().equals(this.getPassword());
+                    Objects.equals(person.getDob(),this.getDob()) &&
+                    Objects.equals(person.getAddress(), this.getAddress()) &&
+                    Objects.equals(person.getEmail(), this.getEmail()) &&
+                    Objects.equals(person.getUsername(), this.getUsername()) &&
+                    Objects.equals(person.getPassword(), this.getPassword());
         }
         return false;
     }

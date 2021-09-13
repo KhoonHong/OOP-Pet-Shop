@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.Objects;
 
 
 /**
@@ -206,8 +207,8 @@ public class Employee extends Person implements Displayable, Identifiable {
         if (o instanceof Employee employee) {
             return super.equals(employee) &&
                     employee.getSalary() == this.getSalary() &&
-                    employee.getStartWorkDate().equals(this.getStartWorkDate()) &&
-                    employee.getWorkSchedule().equals(this.getWorkSchedule());
+                    Objects.equals(employee.getStartWorkDate(), this.getStartWorkDate()) &&
+                    Objects.equals(employee.getWorkSchedule(), this.getWorkSchedule());
         }
         return false;
     }

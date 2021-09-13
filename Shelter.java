@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.Objects;
 
 
 /**
@@ -291,9 +292,9 @@ public class Shelter extends Service {
                     shelter.isVegetarian() == this.isVegetarian() &&
                     shelter.isHalalFood() == this.isHalalFood() &&
                     shelter.isAircond() == this.isAircond() &&
-                    shelter.getFoodPortion().equals(this.getFoodPortion()) &&
-                    shelter.getCheckInDate().equals(this.getCheckInDate()) &&
-                    shelter.getCheckOutDate().equals(this.getCheckOutDate()) &&
+                    Objects.equals(shelter.getFoodPortion(), this.getFoodPortion()) &&
+                    Objects.equals(shelter.getCheckInDate(), this.getCheckInDate()) &&
+                    Objects.equals(shelter.getCheckOutDate(), this.getCheckOutDate()) &&
                     shelter.getTotalNumOfDays() == this.getTotalNumOfDays() &&
                     shelter.isPlayRoom() == this.isPlayRoom() &&
                     shelter.isOneOnOneCare() == this.isOneOnOneCare() &&

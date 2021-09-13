@@ -1,4 +1,4 @@
-
+import java.util.Objects;
 
 /**
  * Pet class is a superclass for the rabbit class, cat class, dog class and bird class. All of the four classes
@@ -154,10 +154,10 @@ abstract class Pet {
         if (o instanceof Pet pet) {
             return pet.getAge() == this.getAge() &&
                     pet.getGender() == this.getGender() &&
-                    pet.getID().equals(this.getID()) &&
-                    pet.getColor().equals(this.getColor()) &&
-                    pet.getAggressive().equals(this.getAggressive()) &&
-                    pet.getSize().equals(this.getSize());
+                    Objects.equals(pet.getID(), this.getID()) &&
+                    Objects.equals(pet.getColor(), this.getColor()) &&
+                    Objects.equals(pet.getAggressive(),this.getAggressive()) &&
+                    Objects.equals(pet.getSize(), this.getSize());
         }
         return false;
     }

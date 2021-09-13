@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 
 /**
@@ -302,15 +303,15 @@ public class Reservation implements Displayable, Identifiable {
     @Override
     public boolean equals(Object o) {
         if (o instanceof Reservation reservation) {
-            return reservation.getReserveID().equals(this.getReserveID()) &&
-                    reservation.getReserveDateTime().equals(this.getReserveDateTime()) &&
-                    reservation.getServices().equals(this.getServices()) &&
-                    reservation.getPet().equals(this.getPet()) &&
-                    reservation.getRemarks().equals(this.getRemarks()) &&
-                    reservation.getReserveMadeDateTime().equals(this.getReserveMadeDateTime()) &&
+            return Objects.equals(reservation.getReserveID(), this.getReserveID()) &&
+                    Objects.equals(reservation.getReserveDateTime(), this.getReserveDateTime()) &&
+                    Objects.equals(reservation.getServices(), this.getServices()) &&
+                    Objects.equals(reservation.getPet(), this.getPet()) &&
+                    Objects.equals(reservation.getRemarks(), this.getRemarks()) &&
+                    Objects.equals(reservation.getReserveMadeDateTime(), this.getReserveMadeDateTime()) &&
                     reservation.getReserveSession() == this.getReserveSession() &&
-                    reservation.getEmployeeSelected().equals(this.getEmployeeSelected()) &&
-                    reservation.getEditMadeDateTime().equals(this.getEditMadeDateTime()) &&
+                    Objects.equals(reservation.getEmployeeSelected(), this.getEmployeeSelected()) &&
+                    Objects.equals(reservation.getEditMadeDateTime(), this.getEditMadeDateTime()) &&
                     reservation.isPaymentStatus() == this.isPaymentStatus();
         }
         return false;

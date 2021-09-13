@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 /**
@@ -197,11 +198,11 @@ public class Customer extends Person implements Displayable, Identifiable {
     public boolean equals(Object o) {
         if (o instanceof Customer customer) {
             return super.equals(customer) &&
-                    customer.getRegDate().equals(this.getRegDate()) &&
-                    customer.getPets().equals(this.getPets()) &&
-                    customer.getReservation().equals(this.getReservation()) &&
-                    customer.getBillHistory().equals(this.getBillHistory()) &&
-                    customer.getCards().equals(this.getCards());
+                    Objects.equals(customer.getRegDate(), this.getRegDate())&&
+                    Objects.equals(customer.getPets(), this.getPets()) &&
+                    Objects.equals(customer.getReservation(), this.getReservation()) &&
+                    Objects.equals(customer.getBillHistory(), this.getBillHistory()) &&
+                    Objects.equals(customer.getCards(),this.getCards());
         }
         return false;
     }

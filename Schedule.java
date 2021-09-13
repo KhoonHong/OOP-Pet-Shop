@@ -1,10 +1,7 @@
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
+import java.util.*;
 
 
 /**
@@ -271,8 +268,8 @@ public class Schedule {
     @Override
     public boolean equals(Object o) {
         if (o instanceof Schedule schedule) {
-            return schedule.getSymbols().equals(this.getSymbols()) &&
-                    schedule.getRecordPosition().equals(this.getRecordPosition());
+            return Objects.equals(schedule.getSymbols(), this.getSymbols()) &&
+                    Objects.equals(schedule.getRecordPosition(), this.getRecordPosition());
         }
         return false;
     }

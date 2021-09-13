@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.Objects;
 
 
 /**
@@ -152,13 +153,13 @@ public class Card {
     @Override
     public boolean equals(Object o) {
         if (o instanceof Card card) {
-            return card.getNumber().equals(this.getNumber()) &&
-                    card.getType().equals(this.getType()) &&
-                    card.getExpireDate().equals(this.getExpireDate()) &&
-                    card.getNameOnCard().equals(this.getNameOnCard()) &&
-                    card.getIssuer().equals(this.getIssuer()) &&
-                    card.getBillingAddress().equals(this.getBillingAddress()) &&
-                    card.getCVV().equals(this.getCVV());
+            return Objects.equals(card.getNumber(), this.getNumber()) &&
+                    Objects.equals(card.getType(), this.getType()) &&
+                    Objects.equals(card.getExpireDate(), this.getExpireDate()) &&
+                    Objects.equals(card.getNameOnCard(), this.getNameOnCard()) &&
+                    Objects.equals(card.getIssuer(), this.getIssuer()) &&
+                    Objects.equals(card.getBillingAddress(), this.getBillingAddress()) &&
+                    Objects.equals(card.getCVV(), this.getCVV());
         }
         return false;
     }

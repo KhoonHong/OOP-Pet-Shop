@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.Objects;
 
 
 /**
@@ -149,7 +150,7 @@ public class Owner extends Person implements Identifiable {
     public boolean equals(Object o) {
         if(o instanceof Owner owner) {
             return super.equals(owner) &&
-                    owner.getStartWorkDate().equals(this.getStartWorkDate());
+                    Objects.equals(owner.getStartWorkDate(), this.getStartWorkDate());
         }
         return false;
     }

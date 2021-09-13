@@ -141,6 +141,8 @@ public class Main {
         JFrame frame = new JFrame("Pet Shop System");
         JPanel panel = new JPanel();
         JProgressBar progressBar = new JProgressBar();
+
+        // add img for gui window icon
         try {
             frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Main.class.getResource("img/doggo.jpg")));
         }
@@ -148,6 +150,8 @@ public class Main {
 
         progressBar.setValue(0);
         progressBar.setStringPainted(true); // display numeric percentage indicator
+        progressBar.setForeground(new Color(30,129,176));
+
         panel.setLayout(new BorderLayout());
         panel.add(progressBar, BorderLayout.NORTH);
         frame.add(panel);
@@ -174,22 +178,34 @@ public class Main {
     {
         int i = 0;
         int randomValue = 0;
+        int loopCount;
         try {
             while (i <= 100) {
-                // fill the menu bar
-                progressBar.setValue(i + randomValue*6);
 
+                // reset loop count
+                loopCount = 0;
+
+                randomValue = ThreadLocalRandom.current().nextInt(10, 20 + 1);
+
+                do {
+                    // fill the menu bar
+                    progressBar.setValue(i);
+                    // delay the thread
+                    Thread.sleep(30);
+                    i++;
+                    loopCount++;
+                }
+                while (randomValue > loopCount);
+
+
+                // change text
                 label.setText(texts[ThreadLocalRandom.current().nextInt(0, 8 + 1)]);
                 label.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
                 panel.add(label, BorderLayout.CENTER);
                 label.setBounds(100, 50, 100, 30);
                 frame.setVisible(true);
 
-                // delay the thread
-                randomValue = ThreadLocalRandom.current().nextInt(1, 3 + 1);
-                Thread.sleep(randomValue* 400L);
-                i += randomValue*10;
-
+                Thread.sleep(randomValue* 50L);
             }
         }
         catch (Exception ignored) {

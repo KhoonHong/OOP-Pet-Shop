@@ -198,7 +198,7 @@ public class Main {
 
                 // delay the thread
                 randomValue = ThreadLocalRandom.current().nextInt(1, 3 + 1);
-                Thread.sleep(randomValue* 400L);
+                Thread.sleep(randomValue* 200L);
                 i += randomValue*5;
 
             }

@@ -200,7 +200,6 @@ public class Customer extends Person implements Displayable, Identifiable {
                     customer.getRegDate().equals(this.getRegDate()) &&
                     customer.getPets().equals(this.getPets()) &&
                     customer.getReservation().equals(this.getReservation()) &&
-                    customer.getBill().equals(this.getBill()) &&
                     customer.getBillHistory().equals(this.getBillHistory()) &&
                     customer.getCards().equals(this.getCards());
         }

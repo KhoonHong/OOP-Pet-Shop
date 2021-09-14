@@ -129,7 +129,7 @@ public class Main {
                                                 &&&&&&&&&&&&&&%                            *&&&&&&&&&&&&%                  \s
                 """);
         loadingBar();
-        System.out.println("\n\n\n\n\n\n\n\n\n\n");
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
         // start system
         mainMenu(currentUser, customerList, employeeList, ownerList, promotions);
@@ -264,9 +264,9 @@ public class Main {
             System.out.println("  | |                                                             | |");
             System.out.println("  | |                                                             | |");
             System.out.println("  | +-------------------------------------------------------------+ |");
-            System.out.println("  +-----------------------------------------------------------------+\n");
+            System.out.println("  +-----------------------------------------------------------------+");
 
-            switch (promptInt("  Please enter a selection > ")) {
+            switch (promptInt("\n  Please enter a selection > ")) {
                 case 1 -> ownerLogin(currentUser, customerList, employeeList, ownerList, promotions);
                 case 2 -> employeeLogin(currentUser, customerList, employeeList, ownerList, promotions);
                 case 3 -> customerLogin(currentUser, customerList, employeeList, ownerList, promotions);
@@ -306,8 +306,8 @@ public class Main {
             System.out.println("\n\n   _____________________________ ");
             System.out.println("  |                             |");
             System.out.println("  |         OWNER LOGIN         |");
-            System.out.println("  |_____________________________|\n");
-            String username = promptString("  Username > ");
+            System.out.println("  |_____________________________|");
+            String username = promptString("\n  Username > ");
             String password = promptString("  Password > ");
 
             boolean usernameCheck = false;
@@ -318,7 +318,7 @@ public class Main {
                 if (obj.username.equals(username) && obj.password.equals(password)) {
                     // Set login successful user as current user
                     currentUser = obj;
-                    System.out.println("  Successful Login");
+                    System.out.println("\n  Successful Login");
                     ownerMainMenu(currentUser, customerList, employeeList, ownerList, promotions);
                     return; // return to main menu
                 }
@@ -331,7 +331,7 @@ public class Main {
             else {
                 System.out.println("  Invalid password...");
             }
-            exitFlag = promptYesNo("\n\n  Do you want to try again? (Y/N) > ");
+            exitFlag = promptYesNo("\n  Do you want to try again? (Y/N) > ");
         }
         while (exitFlag);
     }
@@ -358,9 +358,9 @@ public class Main {
             System.out.println("  |         5. Display                    |");
             System.out.println("  |         6. User Profile               |");
             System.out.println("  |         7. Log Out                    |");
-            System.out.println("  |_______________________________________|\n");
+            System.out.println("  |_______________________________________|");
 
-            switch (promptInt("  Please enter a selection > ")) {
+            switch (promptInt("\n  Please enter a selection > ")) {
                 case 1 -> employeeMenu(employeeList);
                 case 2 -> promoMenu(promotions);
                 case 3 -> searchMenu(customerList, employeeList);
@@ -398,8 +398,8 @@ public class Main {
             System.out.println("\n\n   ______________________________ ");
             System.out.println("  |                              |");
             System.out.println("  |        CUSTOMER LOGIN        |");
-            System.out.println("  |______________________________|\n");
-            String username = promptString("  Username > ");
+            System.out.println("  |______________________________|");
+            String username = promptString("\n  Username > ");
             String password = promptString("  Password > ");
 
             boolean usernameCheck = false;
@@ -423,7 +423,7 @@ public class Main {
             else {
                 System.out.println("  Invalid password...");
             }
-            exitFlag = promptYesNo("\n\n  Do you want to try again? (Y/N) > ");
+            exitFlag = promptYesNo("\n  Do you want to try again? (Y/N) > ");
         }
         while (exitFlag);
     }
@@ -437,7 +437,7 @@ public class Main {
         System.out.println("\n\n   ______________________________ ");
         System.out.println("  |                              |");
         System.out.println("  |       CUSTOMER SIGN UP       |");
-        System.out.println("  |______________________________|\n");
+        System.out.println("  |______________________________|");
         // Create customer obj and add into customer array
         customerList.add(new Customer(inputFirstname(),
                 inputLastname(),
@@ -448,7 +448,7 @@ public class Main {
                 inputEmail(),
                 inputCustomerUsername(customerList),
                 inputPassword()));
-        System.out.println("  Account Successfully Created");
+        System.out.println("\n  Account Successfully Created");
     }
 
     /**
@@ -472,9 +472,9 @@ public class Main {
             System.out.println("  |        4. Services Available           |");
             System.out.println("  |        5. User Profile                 |");
             System.out.println("  |        6. Log Out                      |");
-            System.out.println("  |________________________________________|\n");
+            System.out.println("  |________________________________________|");
 
-            switch (promptInt("  Please enter a selection > ")) {
+            switch (promptInt("\n  Please enter a selection > ")) {
                 case 1 -> reservationMenu(currentUser, customerList, employeeList);
                 case 2 -> billingMenu(currentUser, promotions, employeeList);
                 case 3 -> petMenu(currentUser);
@@ -508,15 +508,15 @@ public class Main {
             System.out.println("  |         3. Remove Promotion          |");
             System.out.println("  |         4. Display Promotion         |");
             System.out.println("  |         5. Back                      |");
-            System.out.println("  |______________________________________|\n");
+            System.out.println("  |______________________________________|");
 
-            switch (promptInt("  Please enter a selection > ")) {
+            switch (promptInt("\n  Please enter a selection > ")) {
                 case 1 -> createPromo(new Promotion(), promotions);
                 case 2 -> editPromoMenu(promotions);
                 case 3 -> {
                     if (checkPromotionRecord(promotions)) {
                         promotions.remove(inputPromotion(promotions));
-                        System.out.println("  Promotion removed successfully");
+                        System.out.println("\n  Promotion removed successfully");
                     } else {
                         System.out.println("  No promotion records found...");
                     }
@@ -576,10 +576,10 @@ public class Main {
             System.out.println("  |        3. Promotion End Date          |");
             System.out.println("  |        4. Promotion Rate              |");
             System.out.println("  |        5. Back                        |");
-            System.out.println("  |_______________________________________|\n");
+            System.out.println("  |_______________________________________|");
 
-            switch (Main.promptInt("  Please enter a selection > ")) {
-                case 1 -> promotion.setDescription(promptString("  Enter new promotion description > "));
+            switch (Main.promptInt("\n  Please enter a selection > ")) {
+                case 1 -> promotion.setDescription(promptString("\n  Enter new promotion description > "));
                 case 2 -> {
                     do {
                         inputPromoStartDate(promotion);
@@ -604,7 +604,7 @@ public class Main {
             }
         }
         while (exitFlag);
-        System.out.println("  Changes made successfully");
+        System.out.println("\n  Changes made successfully");
     }
 
     /**
@@ -613,8 +613,11 @@ public class Main {
     public static void availableServices() {
         System.out.println("\n\t\t\t\t\t    Available Services\n");
         System.out.println(Groom.getDesc());
+        pressAnyKeyToContinue();
         System.out.println(Bath.getDesc());
+        pressAnyKeyToContinue();
         System.out.println(Massage.getDesc());
+        pressAnyKeyToContinue();
         System.out.println(Shelter.getDesc());
         pressAnyKeyToContinue();
     }
@@ -638,8 +641,8 @@ public class Main {
             System.out.println("\n\n   ______________________________ ");
             System.out.println("  |                              |");
             System.out.println("  |        EMPLOYEE LOGIN        |");
-            System.out.println("  |______________________________|\n");
-            String username = promptString("  Username > ");
+            System.out.println("  |______________________________|");
+            String username = promptString("\n  Username > ");
             String password = promptString("  Password > ");
 
             boolean usernameCheck = false;
@@ -650,7 +653,7 @@ public class Main {
                 if (obj.username.equals(username) && obj.password.equals(password)) {
                     // Set login successful user as current user
                     currentUser = obj;
-                    System.out.println("  Successful Login");
+                    System.out.println("\n  Successful Login");
                     employeeMainMenu(currentUser, customerList, employeeList, ownerList, promotions);
                     return; // return to main menu
                 }
@@ -663,7 +666,7 @@ public class Main {
             else {
                 System.out.println("  Invalid password...");
             }
-            exitFlag = promptYesNo("\n\n  Do you want to try again? (Y/N) > ");
+            exitFlag = promptYesNo("\n  Do you want to try again? (Y/N) > ");
         }
         while (exitFlag);
     }
@@ -686,8 +689,8 @@ public class Main {
                 inputEmail(),
                 inputEmployeeUsername(employeeList),
                 inputPassword(),
-                promptDouble("  Enter salary > RM ")));
-        System.out.println("  Account Successfully Created");
+                promptDouble("\n  Enter salary > RM ")));
+        System.out.println("\n  Account Successfully Created");
         pressAnyKeyToContinue();
     }
 
@@ -711,9 +714,9 @@ public class Main {
             System.out.println("  |        3. Search Reservation           |");
             System.out.println("  |        4. User Profile                 |");
             System.out.println("  |        5. Log Out                      |");
-            System.out.println("  |________________________________________|\n");
+            System.out.println("  |________________________________________|");
 
-            switch (promptInt("  Please enter a selection > ")) {
+            switch (promptInt("\n  Please enter a selection > ")) {
                 case 1 -> displaySchedule(currentUser, customerList);
                 case 2 -> searchCustomer(customerList);
                 case 3 -> searchReservation(customerList);
@@ -742,7 +745,7 @@ public class Main {
 
         // check if there are no reservations
         if (((Employee) currentUser).getWorkSchedule().getRecordPosition().isEmpty()) {
-            System.out.println("  There are no reservation records found...\n");
+            System.out.println("\n  There are no reservation records found...\n");
             pressAnyKeyToContinue();
             return;
         }
@@ -798,9 +801,9 @@ public class Main {
             System.out.println("  |         3. Cancel Reservation          |");
             System.out.println("  |         4. Display Reservation         |");
             System.out.println("  |         5. Back                        |");
-            System.out.println("  |________________________________________|\n");
+            System.out.println("  |________________________________________|");
 
-            switch (Main.promptInt("  Please enter a selection > ")) {
+            switch (Main.promptInt("\n  Please enter a selection > ")) {
                 case 1 -> createReservation(currentUser, employeeList);
                 case 2 -> editReservation(currentUser, employeeList);
                 case 3 -> cancelReservation(currentUser, employeeList);
@@ -831,15 +834,15 @@ public class Main {
             System.out.println("  |             3. Remove Pet              |");
             System.out.println("  |             4. Display Pet             |");
             System.out.println("  |             5. Back                    |");
-            System.out.println("  |________________________________________|\n");
+            System.out.println("  |________________________________________|");
 
-            switch (Main.promptInt("  Please enter a selection > ")) {
+            switch (Main.promptInt("\n  Please enter a selection > ")) {
                 case 1 -> createPet(currentUser);
                 case 2 -> editPet(currentUser);
                 case 3 -> deletePet(currentUser);
                 case 4 -> {
                     if (((Customer) currentUser).getPets().isEmpty()) {
-                        System.out.println("  No pets found in the record...");
+                        System.out.println("\n  No pets found in the record...");
                     } else {
                         selectPet(currentUser).displayPet();
                     }
@@ -901,7 +904,7 @@ public class Main {
             if (zipcode.length() == 5) {
                 zipcodeFlag = false;
             } else {
-                System.out.println("\n  Invalid zipcode...");
+                System.out.println("  Invalid zipcode...");
             }
         }
         while (zipcodeFlag);
@@ -960,9 +963,9 @@ public class Main {
             pressAnyKeyToContinue();
             return;
         }
-        System.out.println("\n\n        Pet Removal Selection");
+        System.out.println("\n\n     *** Pet Removal Selection ***");
         Pet pet = selectPet(currentUser);
-        if (!promptYesNo("  Are you sure you want to remove this pet? (Y/N) > ")) {
+        if (!promptYesNo("\n  Are you sure you want to remove this pet? (Y/N) > ")) {
             pressAnyKeyToContinue();
             return;
         }
@@ -999,7 +1002,7 @@ public class Main {
         catch (NullPointerException ignored) {
         }
 
-        System.out.println("  Pet deleted successfully");
+        System.out.println("\n  Pet deleted successfully");
     }
 
     /**
@@ -1117,7 +1120,7 @@ public class Main {
             }
             System.out.println("\n");
             pet.displayPet();
-            System.out.println("  Changes made successfully");
+            System.out.println("\n  Changes made successfully");
             pressAnyKeyToContinue();
         }
         while (exitFlag);
@@ -1130,9 +1133,9 @@ public class Main {
      * @return Selected {@code Pet} object
      */
     public static Pet selectPet(Person currentUser) {
-        System.out.println("\n\n\t\t  Pets in record");
-        System.out.println("  ------------------------------");
-        System.out.println("\t\tID\t\tType\tGender\tColor");//TanShiJing
+        System.out.println("\n\t\t    Pets in record");
+        System.out.println("  -----------------------------------");
+        System.out.println("\t\tID\t\tType\tGender\tColor");
         for (int i = 0; i < ((Customer)currentUser).getPets().size(); i++) {
             System.out.printf("  %d. %s\t%-6s\t   %c\t%s\n",i+1, ((Customer)currentUser).getPets().get(i).getID(),
                     ((Customer)currentUser).getPets().get(i).getClass().getSimpleName(),
@@ -1141,7 +1144,7 @@ public class Main {
         }
         do {
             try {
-                return ((Customer)currentUser).getPets().get(Main.promptInt("  Choose a pet > ")-1);
+                return ((Customer)currentUser).getPets().get(Main.promptInt("\n  Choose a pet > ")-1);
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("  Invalid choice selected...");
             }
@@ -1166,9 +1169,9 @@ public class Main {
             System.out.println("  |          3. Remove Card                |");
             System.out.println("  |          4. Edit Card                  |");
             System.out.println("  |          5. Back                       |");
-            System.out.println("  |________________________________________|\n");
+            System.out.println("  |________________________________________|");
 
-            switch (Main.promptInt("  Please enter a selection > ")) {
+            switch (Main.promptInt("\n  Please enter a selection > ")) {
                 case 1 -> addCard(currentUser);
                 case 2 -> displayCard(currentUser);
                 case 3 -> removeCard(currentUser);
@@ -1199,9 +1202,9 @@ public class Main {
             System.out.println("  |     4. Customer Demographic Report     |");
             System.out.println("  |     5. Pet Demographic Report          |");
             System.out.println("  |     6. Back                            |");
-            System.out.println("  |________________________________________|\n");
+            System.out.println("  |________________________________________|");
 
-            switch (promptInt("  Please enter a selection > ")) {
+            switch (promptInt("\n  Please enter a selection > ")) {
                 case 1 -> Main3.sourcePromoReport(customerList);
                 case 2 -> Main3.paymentMethodReport(customerList);
                 case 3 -> Main3.mostSpendingCustomer(customerList);
@@ -1235,9 +1238,9 @@ public class Main {
             System.out.println("  |         4. Bill Records                |");
             System.out.println("  |         5. Bill History Records        |");
             System.out.println("  |         6. Back                        |");
-            System.out.println("  |________________________________________|\n");
+            System.out.println("  |________________________________________|");
 
-            switch (promptInt("  Please enter a selection > ")) {
+            switch (promptInt("\n  Please enter a selection > ")) {
                 case 1 -> searchEmployee(employeeList);
                 case 2 -> searchCustomer(customerList);
                 case 3 -> searchReservation(customerList);
@@ -1272,9 +1275,9 @@ public class Main {
             System.out.println("  |     4. Display Bill Records            |");
             System.out.println("  |     5. Display Bill History Records    |");
             System.out.println("  |     6. Back                            |");
-            System.out.println("  |________________________________________|\n");
+            System.out.println("  |________________________________________|");
 
-            switch (promptInt("  Please enter a selection > ")) {
+            switch (promptInt("\n  Please enter a selection > ")) {
                 case 1 -> {
                     if (!checkEmployeeRecord(employeeList)) {
                         System.out.println("  No employee records found...");
@@ -1298,7 +1301,7 @@ public class Main {
                                                   +--------+-----------------+-------+--------+----------------+------------+------------+------------------------------+----------------+---------------+------------------------------------------------------------+""");
                                     }
                                     case 2 -> backFlag = true;
-                                    default -> System.out.println("Invalid selection entered...");
+                                    default -> System.out.println("  Invalid selection entered...");
                                 }
                                 if (backFlag) {
                                     break;
@@ -1331,7 +1334,7 @@ public class Main {
                                                   +---------+-----------------+-------+--------+----------------+------------+------------------------------+----------------+---------------+------------------------------------------------------------+""");
                                     }
                                     case 2 -> backFlag = true;
-                                    default -> System.out.println("Invalid selection entered...");
+                                    default -> System.out.println("  Invalid selection entered...");
                                 }
                                 if (backFlag) {
                                     break;
@@ -1387,7 +1390,7 @@ public class Main {
                     +-----------+---------+---------+-----------------+--------+----------+---------------+----------------------+------------------+""");
                                     }
                                     case 2 -> backFlag = true;
-                                    default -> System.out.println("Invalid selection entered...");
+                                    default -> System.out.println("  Invalid selection entered...");
                                 }
                                 if (backFlag) {
                                     break;
@@ -1436,7 +1439,7 @@ public class Main {
                                     +-----------+----------+------------+----------+""");
                                     }
                                     case 2 -> backFlag = true;
-                                    default -> System.out.println("Invalid selection entered...");
+                                    default -> System.out.println("  Invalid selection entered...");
                                 }
                                 if (backFlag) {
                                     break;
@@ -1483,7 +1486,7 @@ public class Main {
                     +-----------+--------------+-------------+-----------+------------+--------------+-----------------+---------------+----------+""");;
                                     }
                                     case 2 -> backFlag = true;
-                                    default -> System.out.println("Invalid selection entered...");
+                                    default -> System.out.println("  Invalid selection entered...");
                                 }
                                 if (backFlag) {
                                     break;
@@ -1521,11 +1524,11 @@ public class Main {
             System.out.println("  |          2. Edit Profile               |");
             System.out.println("  |          3. Delete Account             |");
             System.out.println("  |          4. Back                       |");
-            System.out.println("  |________________________________________|\n");
+            System.out.println("  |________________________________________|");
 
-            switch (Main.promptInt("  Please enter a selection > ")) {
+            switch (Main.promptInt("\n  Please enter a selection > ")) {
                 case 1 -> {
-                    System.out.println("\n\t\t\t\t\t\t\t*** Profile Info ***");
+                    System.out.println("\n\n\t\t\t\t\t\t\t*** Profile Info ***");
                     System.out.println(currentUser);
                     // Wait user response to continue
                     pressAnyKeyToContinue();
@@ -1559,11 +1562,11 @@ public class Main {
             System.out.println("  |          1. Display Profile            |");
             System.out.println("  |          2. Edit Profile               |");
             System.out.println("  |          3. Back                       |");
-            System.out.println("  |________________________________________|\n");
+            System.out.println("  |________________________________________|");
 
-            switch (Main.promptInt("  Please enter a selection > ")) {
+            switch (Main.promptInt("\n  Please enter a selection > ")) {
                 case 1 -> {
-                    System.out.println("\n\t\t\t\t\t\t\t*** Profile Info ***");
+                    System.out.println("\n\n\t\t\t\t\t\t\t*** Profile Info ***");
                     System.out.println(currentUser);
                     // Wait user response to continue
                     pressAnyKeyToContinue();
@@ -1598,11 +1601,11 @@ public class Main {
             System.out.println("  |          3. Billing Card               |");
             System.out.println("  |          4. Delete Account             |");
             System.out.println("  |          5. Back                       |");
-            System.out.println("  |________________________________________|\n");
+            System.out.println("  |________________________________________|");
 
-            switch (Main.promptInt("  Please enter a selection > ")) {
+            switch (Main.promptInt("\n  Please enter a selection > ")) {
                 case 1 -> {
-                    System.out.println("\n\t\t\t\t\t\t\t*** Profile Info ***");
+                    System.out.println("\n\n\t\t\t\t\t\t\t*** Profile Info ***");
                     System.out.println(currentUser);
                     // Wait user response to continue
                     pressAnyKeyToContinue();
@@ -1626,10 +1629,10 @@ public class Main {
      * @param employeeList An {@code ArrayList} of {@code Employee} objects
      */
     public static void deleteEmployeeAccount(Employee employee, ArrayList<Employee> employeeList) {
-        if (promptYesNo("  Are you sure you want to permanently delete account? (Y/N) > ")) {
+        if (promptYesNo("\n  Are you sure you want to permanently delete account? (Y/N) > ")) {
             employeeList.remove(employee);
             Employee.setTotalEmpCount(Employee.getTotalEmpCount() - 1); // decrement by one from total employee count
-            System.out.println("  Account successfully deleted...");
+            System.out.println("\n  Account successfully deleted...");
         }
     }
 
@@ -1643,7 +1646,7 @@ public class Main {
      * @param promotions An {@code ArrayList} of {@code Promotion} objects
      */
     public static void deleteCustomerAccount(Person currentUser, ArrayList<Customer> customerList, ArrayList<Employee> employeeList, ArrayList<Owner> ownerList, ArrayList<Promotion> promotions) {
-        if (promptYesNo("  Are you sure you want to permanently delete account? (Y/N) > ")) {
+        if (promptYesNo("\n  Are you sure you want to permanently delete account? (Y/N) > ")) {
             customerList.remove((Customer) currentUser); // remove account obj from customer array
             Customer.setTotalCustCount(Customer.getTotalCustCount() - 1); // decrement by one from total customer count
             logout(currentUser); // turn current user to null
@@ -1661,7 +1664,7 @@ public class Main {
      * @param promotions An {@code ArrayList} of {@code Promotion} objects
      */
     public static void deleteOwnerAccount(Person currentUser, ArrayList<Customer> customerList, ArrayList<Employee> employeeList, ArrayList<Owner> ownerList, ArrayList<Promotion> promotions) {
-        if (promptYesNo("  Are you sure you want to permanently delete account? (Y/N) > ")) {
+        if (promptYesNo("\n  Are you sure you want to permanently delete account? (Y/N) > ")) {
             ownerList.remove((Owner) currentUser); // remove account obj from owner array
             Owner.setTotalOwnerCount(Owner.getTotalOwnerCount() - 1); // decrement by one from total owner count
             logout(currentUser); // turn current user to null
@@ -1681,10 +1684,11 @@ public class Main {
 
         System.out.println("\n     Promotion List");
         System.out.println("  -------------------------");
+        System.out.println("     Promo ID    Promo Code");
         for (int i = 0; i < promotions.size() ; i++) {
             System.out.println("  "+(i+1)+ ". "+
                     promotions.get(i).getPromoID() +
-                    " " +
+                    "     " +
                     promotions.get(i).getPromoCode()); // display promo
         }
         // prompt user to choose promotion
@@ -1772,9 +1776,9 @@ public class Main {
             }
         }
         while (exitFlag);
-        System.out.println("\n\t\t\t\t\t\t    *** New Profile Info ***");
+        System.out.println("\n\n\t\t\t\t\t\t    *** New Profile Info ***");
         System.out.println(currentUser);
-        System.out.println("  Changes made successfully\n");
+        System.out.println("\n  Changes made successfully\n");
         pressAnyKeyToContinue();
 
     }
@@ -1787,7 +1791,7 @@ public class Main {
      */
     public static String editPassword(Person currentUser) {
         while (!promptString("\n  Enter current password > ").equals(currentUser.getPassword())) {
-            System.out.println("\n  Invalid password entered...");
+            System.out.println("  Invalid password entered...");
         }
         return inputPassword();
     }
@@ -1868,17 +1872,19 @@ public class Main {
             System.out.println("  |         3. Remove Employee             |");
             System.out.println("  |         4. Display Employee            |");
             System.out.println("  |         5. Back                        |");
-            System.out.println("  |________________________________________|\n");
+            System.out.println("  |________________________________________|");
 
-            switch (Main.promptInt("  Please enter a selection > ")) {
+            switch (Main.promptInt("\n  Please enter a selection > ")) {
                 case 1 -> employeeSignup(employeeList);
                 case 2 -> {
                     if (checkEmployeeRecord(employeeList)) {
+                        System.out.println("\n         Employee List");
+                        System.out.println("  -----------------------------");
                         Employee emp = inputEmployee(employeeList);
                         emp.setSalary(promptDouble("\n  Enter new salary > RM "));
-                        System.out.println("\n\t\t\t\t\t\t  *** New Profile Info ***");
+                        System.out.println("\n\n\t\t\t\t\t\t  *** New Profile Info ***");
                         System.out.println(emp.toString());
-                        System.out.println("  Salary modification success\n");
+                        System.out.println("\n  Salary modification success");
                         pressAnyKeyToContinue();
                     } else {
                         System.out.println("  No employee records found...");
@@ -1886,12 +1892,15 @@ public class Main {
                 }
                 case 3 -> {
                     if (checkEmployeeRecord(employeeList)) {
+                        System.out.println("\n         Employee List");
+                        System.out.println("  -----------------------------");
                         deleteEmployeeAccount(inputEmployee(employeeList), employeeList);
                     } else {
                         System.out.println("  No employee records found...");
                     }
                 }
                 case 4 -> displayEmployee(employeeList);
+
                 case 5 -> {
                     return;
                 }
@@ -1921,9 +1930,9 @@ public class Main {
             System.out.println("  |        3. Display Billing History      |");
             System.out.println("  |        4. Display Billing              |");
             System.out.println("  |        5. Back                         |");
-            System.out.println("  |________________________________________|\n");
+            System.out.println("  |________________________________________|");
 
-            switch (Main.promptInt("  Please enter a selection > ")) {
+            switch (Main.promptInt("\n  Please enter a selection > ")) {
                 case 1 -> checkOut(currentUser, promotions, employeeList);
                 case 2 -> searchCurrentCustBillingHistory(currentUser);
                 case 3 -> displayBillingHistory(currentUser);
@@ -1956,7 +1965,7 @@ public class Main {
             pressAnyKeyToContinue();
             return;
         }
-        System.out.println("\n\n  Remove a reservation : ");
+        System.out.println("\n\n       *** Remove a reservation ***");
         Reservation reserve = promptReservation(currentUser, reservations);
         if (!promptYesNo("\n\n  Are you sure to remove this reservation? (Y/N) >")) {
             return;
@@ -1990,7 +1999,7 @@ public class Main {
             Dog.displayServices();
             do {
                 petFlag = false;
-                switch (Main.promptInt("  Select a service type > ")) {
+                switch (Main.promptInt("\n  Select a service type > ")) {
                     case 1 -> service = promptGroomService(new Groom());
                     case 2 -> service = promptBathService(new Bath());
                     case 3 -> service = promptMassageService(new Massage());
@@ -2057,13 +2066,12 @@ public class Main {
      */
     public static Reservation promptReservation(Person currentUser, ArrayList<Reservation> unpaidReserve) {
         do {
-            System.out.println("\n\t  Reservation Records");
-            System.out.println("  -------------------------");
+            System.out.println("\n\t        Reservation Records");
+            System.out.println("  ----------------------------------------");
+            System.out.println("      Reserve ID    Services     Pet Type");
 
             for (int i = 0; i < unpaidReserve.size(); i++) {
-                System.out.println("  " + (i + 1) + ". " + ((Customer) currentUser).getReservation().get(i).getReserveID() + " " +
-                        ((Customer) currentUser).getReservation().get(i).getServices().getClass().getSimpleName() + " " +
-                        ((Customer) currentUser).getReservation().get(i).getPet().getClass().getSimpleName());
+                System.out.printf("  %d.    %-8s    %-8s     %-8s\n",(i + 1),((Customer) currentUser).getReservation().get(i).getReserveID(),((Customer) currentUser).getReservation().get(i).getServices().getClass().getSimpleName(), ((Customer) currentUser).getReservation().get(i).getPet().getClass().getSimpleName());
             }
 
             try {
@@ -2136,12 +2144,11 @@ public class Main {
             return;
         }
 
-        System.out.println("\n\n    Current Reservations");
-        System.out.println("  -------------------------");
+        System.out.println("\n\t        Current Reservations");
+        System.out.println("  ----------------------------------------");
+        System.out.println("      Reserve ID    Services     Pet Type");
         for (int index = 0; index < reservations.size(); index++) {
-            System.out.println("  " + (index + 1) + ". " + reservations.get(index).getReserveID() + " " +
-                    reservations.get(index).getServices().getClass().getSimpleName() + " " +
-                    reservations.get(index).getPet().getClass().getSimpleName());
+            System.out.printf("  %d.    %-8s    %-8s     %-8s\n",(index + 1),((Customer) currentUser).getReservation().get(index).getReserveID(),((Customer) currentUser).getReservation().get(index).getServices().getClass().getSimpleName(), ((Customer) currentUser).getReservation().get(index).getPet().getClass().getSimpleName());
         }
         do {
             try {
@@ -2166,9 +2173,9 @@ public class Main {
                 System.out.println("  |           - Session                    |");
                 System.out.println("  |           - Employee Responsible       |");
                 System.out.println("  |        4. Back                         |");
-                System.out.println("  |________________________________________|\n");
+                System.out.println("  |________________________________________|");
 
-                switch (Main.promptInt("  Please enter a selection > ")) {
+                switch (Main.promptInt("\n  Please enter a selection > ")) {
                     case 1 -> {
                         reservation.setRemarks(inputRemarks());
                         System.out.println("\n  Changes made successfully");
@@ -2200,7 +2207,7 @@ public class Main {
                             }
                             // prompt user for date selection
                             do {
-                                dateChoice = Main.promptInt("  Choose date to place booking > ");
+                                dateChoice = Main.promptInt("\n  Choose date to place booking > ");
                                 // validate input
                                 if (dateChoice > 0 && dateChoice < 8) {
                                     reservation.setReserveDateTime(Schedule.futureDateLocal(dateChoice));
@@ -2210,14 +2217,14 @@ public class Main {
                             }
                             while (true);
                             // display session choice
-                            System.out.println("\n\n\t  +-----------------------+");
-                            System.out.println("\t  |                       |");
-                            System.out.println("\t  | - We are open daily - |");
-                            System.out.println("\t  |                       |");
-                            System.out.println("\t  | * Opening hours : 9am |");
-                            System.out.println("\t  | * Closing hours : 6pm |");
-                            System.out.println("\t  |                       |");
-                            System.out.println("\t  +-----------------------+\n");
+                            System.out.println("\n\n  +-----------------------+");
+                            System.out.println("  |                       |");
+                            System.out.println("  | - We are open daily - |");
+                            System.out.println("  |                       |");
+                            System.out.println("  | * Opening hours : 9am |");
+                            System.out.println("  | * Closing hours : 6pm |");
+                            System.out.println("  |                       |");
+                            System.out.println("  +-----------------------+\n");
                             String[] sessions = {"Session 1 ->  9am - 11am",
                                     "Session 2 -> 11am -  1pm",
                                     "Session 3 ->  2pm -  4pm",
@@ -2269,9 +2276,9 @@ public class Main {
                 System.out.println("  |         1. Edit Remark                 |");
                 System.out.println("  |         2. Edit Pet & Service          |");
                 System.out.println("  |         3. Back                        |");
-                System.out.println("  |________________________________________|\n");
+                System.out.println("  |________________________________________|");
 
-                switch (Main.promptInt("  Please enter a selection > ")) {
+                switch (Main.promptInt("\n  Please enter a selection > ")) {
                     case 1 -> {
                         reservation.setRemarks(inputRemarks());
                         System.out.println("\n  Changes made successfully");
@@ -2348,7 +2355,7 @@ public class Main {
 
                 // prompt user for date selection
                 do {
-                    dateChoice = Main.promptInt("  Choose date to place booking > ");
+                    dateChoice = Main.promptInt("\n  Choose date to place booking > ");
                     // validate input
                     if (dateChoice > 0 && dateChoice < 8) {
                         dateBooked = Schedule.futureDateLocal(dateChoice);
@@ -2359,18 +2366,18 @@ public class Main {
                 while (true);
 
                 // display session choice
-                System.out.println("\n\n\t  +-----------------------+");
-                System.out.println("\t  |                       |");
-                System.out.println("\t  | - We are open daily - |");
-                System.out.println("\t  |                       |");
-                System.out.println("\t  | * Opening hours : 9am |");
-                System.out.println("\t  | * Closing hours : 6pm |");
-                System.out.println("\t  |                       |");
-                System.out.println("\t  +-----------------------+\n");
-                String[] sessions = {"Session 1 ->  9am - 11am",//TanShiJing
-                        "Session 2 -> 11am -  1pm",//TanShiJing
-                        "Session 3 ->  2pm -  4pm",//TanShiJing
-                        "Session 4 ->  4pm -  6pm"};//TanShiJing
+                System.out.println("\n\n  +-----------------------+");
+                System.out.println("  |                       |");
+                System.out.println("  | - We are open daily - |");
+                System.out.println("  |                       |");
+                System.out.println("  | * Opening hours : 9am |");
+                System.out.println("  | * Closing hours : 6pm |");
+                System.out.println("  |                       |");
+                System.out.println("  +-----------------------+\n");
+                String[] sessions = {"Session 1 ->  9am - 11am",
+                        "Session 2 -> 11am -  1pm",
+                        "Session 3 ->  2pm -  4pm",
+                        "Session 4 ->  4pm -  6pm"};
                 for (int index = 0; index < 4; index++) {
                     System.out.println("  "+(index + 1) + ". " + sessions[index]);
                 }
@@ -2465,7 +2472,7 @@ public class Main {
 
         // if no search results found
         if (customers.isEmpty()) {
-            System.out.println("  No search results found...");
+            System.out.println("\n  No search results found...");
             pressAnyKeyToContinue();
             return;
         }
@@ -2487,7 +2494,7 @@ public class Main {
                 case 1 -> customers.sort((o1, o2) -> o1.getFirstName().compareTo(o2.getFirstName()));
                 case 2 -> customers.sort((o1, o2) -> o2.getFirstName().compareTo(o1.getFirstName()));
                 default -> {
-                    System.out.println("Invalid choice entered...");
+                    System.out.println("  Invalid choice entered...");
                     exitFlag = true;
                 }
             }
@@ -2503,7 +2510,7 @@ public class Main {
             System.out.println("  "+customers.get(index).displayRow());
             System.out.println("  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
             if ((index+1) % 10 == 0 && (index+1)!=customers.size()) {
-                switch (promptInt("\n\nDisplaying results (" + (index - 8) + "-" + (index + 1) + ") out of " + customers.size() + " records\n1. Continue displaying records\n2. Back\n\nPlease enter a selection > ")) {
+                switch (promptInt("\n\n  Displaying results (" + (index - 8) + "-" + (index + 1) + ") out of " + customers.size() + " records\n1. Continue displaying records\n2. Back\n\nPlease enter a selection > ")) {
                     case 1 -> {
                         System.out.println("""
 				\n  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -2511,7 +2518,7 @@ public class Main {
 				  +---------+-----------------+-------+--------+----------------+------------+------------------------------+----------------+---------------+------------------------------------------------------------+""");
                     }
                     case 2 -> backFlag = true;
-                    default -> System.out.println("Invalid selection entered...");
+                    default -> System.out.println("  Invalid selection entered...");
                 }
                 if (backFlag) {
                     break;
@@ -2579,7 +2586,7 @@ public class Main {
 
         // check if there are no results found
         if (billHistories.isEmpty()) {
-            System.out.println("  No search results found...");
+            System.out.println("\n  No search results found...");
             pressAnyKeyToContinue();
             return;
         }
@@ -2601,7 +2608,7 @@ public class Main {
                 case 1 -> billHistories.sort((c1, c2) -> Double.compare(c1.getGrandTotal(), c2.getGrandTotal()));
                 case 2 -> billHistories.sort((c1, c2) -> Double.compare(c2.getGrandTotal(), c1.getGrandTotal()));
                 default -> {
-                    System.out.println("Invalid choice entered...");
+                    System.out.println("  Invalid choice entered...");
                     exitFlag = true;
                 }
             }
@@ -2639,7 +2646,7 @@ public class Main {
                   +-----------+----------------+--------------+-------------+-----------+------------+--------------+-----------------+---------------+----------+""");
                     }
                     case 2 -> backFlag = true;
-                    default -> System.out.println("Invalid selection entered...");
+                    default -> System.out.println("  Invalid selection entered...");
                 }
                 if (backFlag) {
                     break;
@@ -2687,7 +2694,7 @@ public class Main {
 
         // check if there are no results found
         if (billHistories.isEmpty()) {
-            System.out.println("  No search results found...");
+            System.out.println("\n  No search results found...");
             pressAnyKeyToContinue();
             return;
         }
@@ -2709,7 +2716,7 @@ public class Main {
                 case 1 -> billHistories.sort((o1, o2) -> o1.getPaymentDate().compareTo(o2.getPaymentDate()));
                 case 2 -> billHistories.sort((o1, o2) -> o2.getPaymentDate().compareTo(o1.getPaymentDate()));
                 default -> {
-                    System.out.println("Invalid choice entered...");
+                    System.out.println("  Invalid choice entered...");
                     exitFlag = true;
                 }
             }
@@ -2747,7 +2754,7 @@ public class Main {
                   +-----------+----------------+--------------+-------------+-----------+------------+--------------+-----------------+---------------+----------+""");
                     }
                     case 2 -> backFlag = true;
-                    default -> System.out.println("Invalid selection entered...");
+                    default -> System.out.println("  Invalid selection entered...");
                 }
                 if (backFlag) {
                     break;
@@ -2787,7 +2794,7 @@ public class Main {
 
         // check if there are no results found
         if (customers.isEmpty()) {
-            System.out.println("  No search results found...");
+            System.out.println("\n  No search results found...");
             pressAnyKeyToContinue();
             return;
         }
@@ -2809,7 +2816,7 @@ public class Main {
                 case 1 -> customers.sort((c1, c2) -> Double.compare(c1.getBill().calcTotalAmount(), c2.getBill().calcTotalAmount()));
                 case 2 -> customers.sort((c1, c2) -> Double.compare(c2.getBill().calcTotalAmount(), c1.getBill().calcTotalAmount()));
                 default -> {
-                    System.out.println("Invalid choice entered...");
+                    System.out.println("  Invalid choice entered...");
                     exitFlag = true;
                 }
             }
@@ -2822,7 +2829,7 @@ public class Main {
                       |  Cust.ID  | Total Amount | Grand Total | Services |
                       +-----------+--------------+-------------+----------+""");
         for (int index = 0; index < customers.size(); index++) {
-            System.out.printf("  |  %6s   |  %10s  | %10s  |Count : %d |\n",customers.get(index).getID(),convertCurrency(customers.get(index).getBill().getTotalAmount()),convertCurrency(customers.get(index).getBill().getGrandTotal()),customers.get(index).getBill().getBillDetails().size());//TanShiJing
+            System.out.printf("  |  %6s   |  %10s  | %10s  |Count : %d |\n",customers.get(index).getID(),convertCurrency(customers.get(index).getBill().getTotalAmount()),convertCurrency(customers.get(index).getBill().getGrandTotal()),customers.get(index).getBill().getBillDetails().size());
             System.out.println("  +----------------------------------------+----------+");
             if ((index+1) % 10 == 0 && (index+1)!=customers.size()) {
                 switch (promptInt("\n\n  Displaying results (" + (index - 8) + "-" + (index + 1) + ") out of " + customers.size() + " records\n  1. Continue displaying records\n  2. Back\n\n  Please enter a selection > ")) {
@@ -2833,7 +2840,7 @@ public class Main {
                       +-----------+--------------+-------------+----------+""");
                     }
                     case 2 -> backFlag = true;
-                    default -> System.out.println("Invalid selection entered...");
+                    default -> System.out.println("  Invalid selection entered...");
                 }
                 if (backFlag) {
                     break;
@@ -2899,7 +2906,7 @@ public class Main {
 
         // if no search results found
         if (employees.isEmpty()) {
-            System.out.println("  No search results found...");
+            System.out.println("\n  No search results found...");
             pressAnyKeyToContinue();
             return;
         }
@@ -2921,7 +2928,7 @@ public class Main {
                 case 1 -> employees.sort((c1, c2) -> Double.compare(c1.getSalary(), c2.getSalary()));
                 case 2 -> employees.sort((c1, c2) -> Double.compare(c2.getSalary(), c1.getSalary()));
                 default -> {
-                    System.out.println("Invalid choice entered...");
+                    System.out.println("  Invalid choice entered...");
                     exitFlag = true;
                 }
             }
@@ -2946,7 +2953,7 @@ public class Main {
                   +--------+-----------------+-------+--------+----------------+------------+------------+------------------------------+----------------+---------------+------------------------------------------------------------+""");
                     }
                     case 2 -> backFlag = true;
-                    default -> System.out.println("Invalid selection entered...");
+                    default -> System.out.println("  Invalid selection entered...");
                 }
                 if (backFlag) {
                     break;
@@ -2965,12 +2972,12 @@ public class Main {
         ArrayList<Employee> employees = new ArrayList<>();
 
         if (!checkEmployeeRecord(employeeList)) {
-            System.out.println("  No employees found in record...");
+            System.out.println("\n  No employees found in record...");
             return;
         }
         System.out.println("\n  Enter keyword to start searching : ");
         String firstname = promptString("  Enter first name > ").trim().toLowerCase();
-        String lastname = promptString("  Enter last name  > ").trim().toLowerCase();//TanShiJing
+        String lastname = promptString("  Enter last name  > ").trim().toLowerCase();
         // searching
         for (Employee employee : employeeList) {
             // check first name and last name
@@ -2982,7 +2989,7 @@ public class Main {
 
         // if no search results found
         if (employees.isEmpty()) {
-            System.out.println("  No search results found...");
+            System.out.println("\n  No search results found...");
             pressAnyKeyToContinue();
             return;
         }
@@ -3004,7 +3011,7 @@ public class Main {
                 case 1 -> employees.sort((o1, o2) -> o1.getFirstName().compareTo(o2.getFirstName()));
                 case 2 -> employees.sort((o1, o2) -> o2.getFirstName().compareTo(o1.getFirstName()));
                 default -> {
-                    System.out.println("Invalid choice entered...");
+                    System.out.println("  Invalid choice entered...");
                     exitFlag = true;
                 }
             }
@@ -3029,7 +3036,7 @@ public class Main {
                   +--------+-----------------+-------+--------+----------------+------------+------------+------------------------------+----------------+---------------+------------------------------------------------------------+""");
                     }
                     case 2 -> backFlag = true;
-                    default -> System.out.println("Invalid selection entered...");
+                    default -> System.out.println("  Invalid selection entered...");
                 }
                 if (backFlag) {
                     break;
@@ -3092,7 +3099,7 @@ public class Main {
             }
         }
         if (reservations.isEmpty()) {
-            System.out.println("  No search results found...");
+            System.out.println("\n  No search results found...");
             pressAnyKeyToContinue();
             return;
         }
@@ -3114,7 +3121,7 @@ public class Main {
                 case 1 -> reservations.sort((o1, o2) -> o1.getReserveDateTime().compareTo(o2.getReserveDateTime()));
                 case 2 -> reservations.sort((o1, o2) -> o2.getReserveDateTime().compareTo(o1.getReserveDateTime()));
                 default -> {
-                    System.out.println("Invalid choice entered...");
+                    System.out.println("  Invalid choice entered...");
                     exitFlag = true;
                 }
             }
@@ -3145,7 +3152,7 @@ public class Main {
                   +-----------+---------+---------+-----------------+--------+----------+---------------+----------------------+------------------+""");
                     }
                     case 2 -> backFlag = true;
-                    default -> System.out.println("Invalid selection entered...");
+                    default -> System.out.println("  Invalid selection entered...");
                 }
                 if (backFlag) {
                     break;
@@ -3165,8 +3172,8 @@ public class Main {
         do {
             try {
                 System.out.println("\n\n  Enter start date to search > ");
-                startDate = LocalDate.of(Main.promptInt("  Year  > "), Main.promptInt("  Month > "), Main.promptInt("  Day   > "));//TanShiJing
-                if (startDate.isBefore(LocalDate.of(2018,1,1))) {
+                startDate = LocalDate.of(Main.promptInt("  Year  > "), Main.promptInt("  Month > "), Main.promptInt("  Day   > "));
+                if (startDate.isBefore(LocalDate.now().minusYears(3))) {
                     System.out.println("  Date entered must be after year 2018...");
                     continue;
                 }
@@ -3189,7 +3196,7 @@ public class Main {
         do {
             try {
                 System.out.println("\n  Enter end date to search > ");
-                endDate = LocalDate.of(Main.promptInt("  Year  > "), Main.promptInt("  Month > "), Main.promptInt("  Day   > "));//TanShiJing
+                endDate = LocalDate.of(Main.promptInt("  Year  > "), Main.promptInt("  Month > "), Main.promptInt("  Day   > "));
                 if (endDate.isBefore(startDate)) {
                     System.out.println("  End date should not earlier than start date...");
                     continue;
@@ -3209,12 +3216,12 @@ public class Main {
      */
     public static void searchNameReservation(ArrayList<Customer> customerList) {
         if (!checkCustomerRecord(customerList)) {
-            System.out.println("  No customers found in record...");
+            System.out.println("\n  No customers found in record...");
             return;
         }
         System.out.println("\n  Enter keyword to start searching : ");
         String firstname = promptString("  Enter first name > ").trim().toLowerCase();
-        String lastname = promptString("  Enter last name  > ").trim().toLowerCase();//TanShiJing
+        String lastname = promptString("  Enter last name  > ").trim().toLowerCase();
 
         // searching
         ArrayList<Reservation> reservations = new ArrayList<>();
@@ -3227,7 +3234,7 @@ public class Main {
             }
         }
         if (reservations.isEmpty()) {
-            System.out.println("  No search results found...");
+            System.out.println("\n  No search results found...");
             pressAnyKeyToContinue();
             return;
         }
@@ -3256,7 +3263,7 @@ public class Main {
                   +-----------+----------------+---------+---------+-----------------+--------+----------+---------------+----------------------+------------------+""");
                     }
                     case 2 -> backFlag = true;
-                    default -> System.out.println("Invalid selection entered...");
+                    default -> System.out.println("  Invalid selection entered...");
                 }
                 if (backFlag) {
                     break;
@@ -3295,7 +3302,7 @@ public class Main {
      */
     public static void displayCard(Person currentUser){
         if(((Customer)currentUser).getCards().isEmpty()){
-            System.out.println("  There are no cards in record...");
+            System.out.println("\n  There are no cards in record...");
             pressAnyKeyToContinue();
             return;
         }
@@ -3312,7 +3319,7 @@ public class Main {
     public static void editCard(Person currentUser) {
         boolean exitFlag;
         if (((Customer) currentUser).getCards().isEmpty()) {
-            System.out.println("  There are no cards in record...");
+            System.out.println("\n  There are no cards in record...");
             pressAnyKeyToContinue();
             return;
         }
@@ -3331,7 +3338,7 @@ public class Main {
             System.out.println("  7. Billing Address");
             System.out.println("  8. Back");
 
-            switch (Main.promptInt("  Please enter a selection > ")) {
+            switch (Main.promptInt("\n  Please enter a selection > ")) {
                 case 1 -> card.setNameOnCard(inputNameOnCard());
                 case 2 -> card.setNumber(inputCardNumber(currentUser));
                 case 3 -> card.setCVV(inputCardCvv());
@@ -3404,7 +3411,7 @@ public class Main {
     public static String inputCardNumber(Person currentUser) {
         String number;
         do {
-            number = promptString("\n  Enter 16-digits credit card number > ");//TanShiJing
+            number = promptString("\n  Enter 16-digits credit card number > ");
             if (number.length() == 16 && cardValidation(number)) {
                 // check for unique
                 if (checkCardUnique(currentUser, number)) {
@@ -3444,7 +3451,7 @@ public class Main {
     public static String inputCardCvv() {
         String cvv;
         do {
-            cvv = promptString("\n  Enter CVV Number > ");//TanShiJing
+            cvv = promptString("\n  Enter CVV Number > ");
             if (cvvValidation(cvv)) {
                 return cvv;
             }
@@ -3462,11 +3469,11 @@ public class Main {
         boolean typeFlag; // wait user response to continue
         do {
             typeFlag = false;
-            System.out.println("\n\n\t  Type of Card");//TanShiJing
+            System.out.println("\n\n\t  Type of Card");
             System.out.println("  -------------------------");
             System.out.println("  1. Debit Card");
             System.out.println("  2. Credit Card");
-            switch (promptInt("  Please select type of card > ")) {
+            switch (promptInt("\n  Please select type of card > ")) {
                 case 1 -> type = "Debit";
                 case 2 -> type = "Credit";
                 default -> {
@@ -3489,7 +3496,7 @@ public class Main {
             System.out.println("\n\n    Expired Date of Card");
             System.out.println("  -------------------------");
             try {
-                expireDate = LocalDate.of(promptInt("  Year  > "), promptInt("  Month > "), 1);//TanShiJing
+                expireDate = LocalDate.of(promptInt("  Year  > "), promptInt("  Month > "), 1);
                 //if year entered is before now
                 if (expireDate.isBefore(LocalDate.now()) || expireDate.isAfter(LocalDate.now().plusYears(10))) {
                     System.out.println("  Invalid expired date...");
@@ -3512,7 +3519,7 @@ public class Main {
         String nameOnCard;
         boolean nameOnCardFlag = true;
         do {
-            nameOnCard = convertCapitalize(promptString("\n  Enter Name On Card > "));//TanShiJing
+            nameOnCard = convertCapitalize(promptString("\n  Enter Name On Card > "));
             //name validation - set to false if correct
             if (nameValidation(nameOnCard)) {
                 nameOnCardFlag = false;
@@ -3557,7 +3564,7 @@ public class Main {
         do {
             loopFlag = false;
             promo.setPromoCode(inputPromo(promotions));
-            promo.setDescription(promptString("  Enter promotion description > "));
+            promo.setDescription(promptString("\n  Enter promotion description > "));
             //promo start date
             inputPromoStartDate(promo);
             //promo end date
@@ -3575,7 +3582,7 @@ public class Main {
         }
         while (loopFlag);
         promotions.add(promo); // add promo to record
-        System.out.println("  Successfully created new promotion");
+        System.out.println("\n  Successfully created new promotion");
     }
 
     /**
@@ -3705,7 +3712,7 @@ public class Main {
         boolean exitFlag;
         do {
             exitFlag = true;
-            System.out.println("\n\n\t   Massage Service Add-Ons");//TanShiJing
+            System.out.println("\n\n\t   Massage Service Add-Ons");
             System.out.println("  -----------------------------------");
             System.out.println("  1. After Massage Wash   (RM15.00) > " + Main.booleanToSymbol(massage.isAfterMassageWash()));
             System.out.println("  2. Premium Calming Oil  (RM20.00) > " + Main.booleanToSymbol(massage.isPremiumCalmingOil()));
@@ -3737,7 +3744,7 @@ public class Main {
         // prompt check in date
 
         do {
-            shelter.setCheckInDate(Main.inputStartDate("\n\n  Enter check-in date  : "));//TanShiJing
+            shelter.setCheckInDate(Main.inputStartDate("\n\n  Enter check-in date  : "));
             shelter.setCheckOutDate(Main.inputEndDate("\n\n  Enter check-out date : ", shelter.getCheckInDate()));
             if (ChronoUnit.DAYS.between(shelter.getCheckInDate(), shelter.getCheckOutDate()) > 31) {
                 System.out.println("  Maximum days of stay is 30 days only...");
@@ -3745,7 +3752,7 @@ public class Main {
                 continue;
             }
             else if (ChronoUnit.DAYS.between(shelter.getCheckInDate(), shelter.getCheckOutDate()) == 0) {
-                System.out.println("\n  Invalid date entered... \nStart date and end date shouldn't be the same\n");
+                System.out.println("\n  Invalid date entered... \n  Start date and end date shouldn't be the same\n");
                 pressAnyKeyToContinue();
                 continue;
             }
@@ -3805,9 +3812,9 @@ public class Main {
         System.out.println("  |        least one digit                                             |");
         System.out.println("  |      - Promotion Code must be unique                               |");
         System.out.println("  |                                                                    |");
-        System.out.println("  +--------------------------------------------------------------------+\n");
+        System.out.println("  +--------------------------------------------------------------------+");
         do {
-            promo = promptString("  Enter promotion code > ");
+            promo = promptString("\n  Enter promotion code > ");
             if (userpassValidation(promo) && checkPromoCode(promo, promotions)) {
                 return promo;
             }
@@ -3836,7 +3843,7 @@ public class Main {
      * Uses {@code Scanner} object to simulate system pause
      */
     public static void pressAnyKeyToContinue() {
-        System.out.println("  Press Enter key to continue...");
+        System.out.println("\n  Press Enter key to continue...");
         try {
             System.in.read();
         } catch (Exception ignored) {
@@ -3851,8 +3858,8 @@ public class Main {
      */
     public static Level promptLevel(String title) {
         do {
-            System.out.println("\n\n    " + title);//TanShiJing
-            System.out.println("  -----------------------------");//TanShiJing
+            System.out.println("\n\n    " + title);
+            System.out.println("  -----------------------------");
             System.out.println("  1. Low");
             System.out.println("  2. Medium");
             System.out.println("  3. High");
@@ -3971,7 +3978,7 @@ public class Main {
 
                 input = promptString(promptMessage);
                 if (input.length() != 1) {
-                    System.out.println("\n  Invalid choice selected...\n");
+                    System.out.println("  Invalid choice selected...\n");
                     continue;
                 }
                 // if input is yes
@@ -3980,7 +3987,7 @@ public class Main {
                 } else if (input.charAt(0) == 'n' || input.charAt(0) == 'N') {
                     return false;
                 } else {
-                    System.out.println("\n  Invalid choice selected...\n");
+                    System.out.println("  Invalid choice selected...\n");
                 }
             } catch (StringIndexOutOfBoundsException e) {
                 System.out.println("  Please enter a selection...");
@@ -4018,14 +4025,14 @@ public class Main {
         do {
             try {
                 System.out.println(text);
-                startDate = LocalDate.of(Main.promptInt("  Year  > "), Main.promptInt("  Month > "), Main.promptInt("  Day   > "));//TanShiJing
+                startDate = LocalDate.of(Main.promptInt("  Year  > "), Main.promptInt("  Month > "), Main.promptInt("  Day   > "));
                 if (startDate.isBefore(LocalDate.now())) {
                     System.out.println("  Date entered must be in the future...");
                     continue;
                 }
                 return startDate;
             } catch (DateTimeException e) {
-                System.out.println("Invalid date entered...");
+                System.out.println("  Invalid date entered...");
             }
         }
         while (true);
@@ -4043,7 +4050,7 @@ public class Main {
         do {
             try {
                 System.out.println(text);
-                endDate = LocalDate.of(Main.promptInt("  Year  > "), Main.promptInt("  Month > "), Main.promptInt("  Day   > "));//TanShiJing
+                endDate = LocalDate.of(Main.promptInt("  Year  > "), Main.promptInt("  Month > "), Main.promptInt("  Day   > "));
                 if (endDate.isBefore(startDate)) {
                     System.out.println("  End date should not earlier than start date...");
                     continue;
@@ -4238,7 +4245,7 @@ public class Main {
         String firstname;
         boolean firstnameFlag = true;
         do {
-            firstname = convertCapitalize(promptString("\n  Enter first name    > "));//TanShiJing
+            firstname = convertCapitalize(promptString("\n  Enter first name    > "));
             // first name validation - set to false if correct
             if (nameValidation(firstname)) {
                 firstnameFlag = false;
@@ -4260,7 +4267,7 @@ public class Main {
         String lastname;
         boolean lastnameFlag = true;
         do {
-            lastname = convertCapitalize(promptString("\n  Enter last name     > "));//TanShiJing
+            lastname = convertCapitalize(promptString("\n  Enter last name     > "));
             // last name validation
             if (nameValidation(lastname)) {
                 lastnameFlag = false;
@@ -4309,7 +4316,7 @@ public class Main {
         do {
             try {
                 System.out.println("\n\n  Enter date of birth : ");
-                dob = LocalDate.of(promptInt("  Year  > "), promptInt("  Month > "), promptInt("  Day   > "));//TanShiJing
+                dob = LocalDate.of(promptInt("  Year  > "), promptInt("  Month > "), promptInt("  Day   > "));
                 // if date entered is in the future or is before year 1905
                 if (dob.isAfter(LocalDate.now().minusYears(16)) || dob.isBefore(LocalDate.of(1905, 1, 1))) {
                     System.out.println("  Invalid date entered...");
@@ -4334,7 +4341,7 @@ public class Main {
         String tel;
         boolean telFlag = true;
         do {
-            tel = promptString("\n  Enter phone number  > ");//TanShiJing
+            tel = promptString("\n  Enter phone number  > ");
             // Tel validation
             if (telValidation(tel)) {
                 telFlag = false;
@@ -4381,7 +4388,7 @@ public class Main {
         System.out.println("  |           least one digit                                          |");
         System.out.println("  |         - Username must be unique                                  |");
         System.out.println("  |                                                                    |");
-        System.out.println("  +--------------------------------------------------------------------+\n");
+        System.out.println("  +--------------------------------------------------------------------+");
     }
 
     /**
@@ -4398,7 +4405,7 @@ public class Main {
         do {
             usernameFlag = false;
             displayUsernameRules();
-            username = promptString("  Enter your desired username > ");
+            username = promptString("\n  Enter your desired username > ");
             // If username is in correct format
             if (userpassValidation(username)) {
                 try {
@@ -4437,7 +4444,7 @@ public class Main {
         do {
             usernameFlag = false;
             displayUsernameRules();
-            username = promptString("  Enter your desired username > ");
+            username = promptString("\n  Enter your desired username > ");
             // If username is in correct format
             if (userpassValidation(username)) {
                 try {
@@ -4476,7 +4483,7 @@ public class Main {
         do {
             usernameFlag = false;
             displayUsernameRules();
-            username = promptString("  Enter your desired username > ");
+            username = promptString("\n  Enter your desired username > ");
             // If username is in correct format
             if (userpassValidation(username)) {
                 try {
@@ -4520,8 +4527,8 @@ public class Main {
             System.out.println("  |         - Password must contain at least one letter and at         |");
             System.out.println("  |           least one digit                                          |");
             System.out.println("  |                                                                    |");
-            System.out.println("  +--------------------------------------------------------------------+\n");
-            password = promptString("  Enter your desired password   > ");//TanShiJing
+            System.out.println("  +--------------------------------------------------------------------+");
+            password = promptString("\n  Enter your desired password   > ");
             confirmPassword = promptString("  Confirm your desired password > ");
 
             // If input password not equals to input confirm password
@@ -4595,10 +4602,11 @@ public class Main {
     public static Employee inputEmployee(ArrayList<Employee> employeeList) {
         Employee selected;
         // choose which employee to book with
+        System.out.println("      Emp.ID    Emp.Name   ");
         for (int i = 0; i < employeeList.size(); i++) {
-            System.out.println("  "+(i + 1) + ". " +
+            System.out.println("  "+(i + 1) + ".  " +
                     employeeList.get(i).getID() +
-                    " " +
+                    "    " +
                     employeeList.get(i).getFirstName() +
                     " " +
                     employeeList.get(i).getLastName()); // display employees
@@ -4606,7 +4614,7 @@ public class Main {
         // prompt user to choose employee
         do {
             try {
-                selected = employeeList.get(Main.promptInt("  Choose an employee > ") - 1);
+                selected = employeeList.get(Main.promptInt("\n  Choose an employee > ") - 1);
                 return selected;
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("  Invalid choice selected...");
@@ -4626,16 +4634,17 @@ public class Main {
             pressAnyKeyToContinue();
             return;
         }
-        System.out.println("\n\n\t  Reservation Records");
-        System.out.println("  -----------------------------");
+        System.out.println("\n\n\t    Reservation Records");
+        System.out.println("  ---------------------------------");
+        System.out.println("        Services   Reserve DateTime");
 
         for (int index = 0; index < customer.getReservation().size(); index++) {
-            System.out.printf("  %d.\t%-8s  %s\n",index+1,customer.getReservation().get(index).getServices().getClass().getSimpleName(),
+            System.out.printf("  %d.\t%-8s   %s\n",index+1,customer.getReservation().get(index).getServices().getClass().getSimpleName(),
                     datetimeToString(customer.getReservation().get(index).getReserveDateTime()));
         }
         do {
             try {
-                System.out.println(customer.getReservation().get(Main.promptInt("  Choose a reservation > ")-1));
+                System.out.println(customer.getReservation().get(Main.promptInt("\n  Choose a reservation > ")-1));
                 pressAnyKeyToContinue();
                 break;
             }
@@ -4765,7 +4774,7 @@ public class Main {
         do {
             try {
                 System.out.println("\n  Enter promotion start date : ");
-                promo.setPromoStartDate(LocalDate.of(Main.promptInt("  Year  > "), Main.promptInt("  Month > "), Main.promptInt("  Day   > ")));//TanShiJing
+                promo.setPromoStartDate(LocalDate.of(Main.promptInt("  Year  > "), Main.promptInt("  Month > "), Main.promptInt("  Day   > ")));
                 if (promo.getPromoStartDate().isBefore(LocalDate.now())) {
                     System.out.println("  Date entered must be in the future...");
                     continue;
@@ -4792,7 +4801,7 @@ public class Main {
         do {
             try {
                 System.out.println("\n  Enter promotion end date : ");
-                promo.setPromoEndDate(LocalDate.of(Main.promptInt("  Year  > "), Main.promptInt("  Month > "), Main.promptInt("  Day   > ")));//TanShiJing
+                promo.setPromoEndDate(LocalDate.of(Main.promptInt("  Year  > "), Main.promptInt("  Month > "), Main.promptInt("  Day   > ")));
                 if (promo.getPromoEndDate().isBefore(promo.getPromoStartDate())) {
                     System.out.println("  End date should not earlier than start date...");
                     continue;
@@ -4866,7 +4875,7 @@ public class Main {
                     reenterPromoCode = false;
                     promoCodeEntered = Main.promptString("\n  Promo code > ");
                     if (!searchPromo(promoCodeEntered, promotions)) {
-                        System.out.println("  No such promo code!");
+                        System.out.println("\n  No such promo code!");
                         reenterPromoCode = promptYesNo("  Would you like to re-enter promo code? (Y/N) > ");
                         if (!reenterPromoCode) {
                             promoYesNo = false;
@@ -4881,7 +4890,7 @@ public class Main {
                 } while (reenterPromoCode);
 
                 if (promoYesNo) {
-                    System.out.println("\n  Please share the source of promo code with us");//TanShiJing
+                    System.out.println("\n  Please share the source of promo code with us");
                     System.out.println("  1. Youtube\n  2. Instagram\n  3. Facebook\n  4. Twitter\n  5. Friends");
                     switch (Main.promptInt("  Source > ")) {
                         case 1 -> cb.setPromoOrigin("Youtube");
@@ -4957,9 +4966,9 @@ public class Main {
      * @param dateTime Current date (in checkout & view bill) / payment made date (in bill history & search bill history)
      */
     public static void dispBillSummary(Billing cb, ArrayList<Double> amt, double totalAmt, LocalDate dateTime) {
-        System.out.println("\n");//TanShiJing
+        System.out.println("\n");
         System.out.println("  ====================================================================================================================");
-        System.out.println("  |\t\t                             Transaction ID: " + cb.getTransactionID() + "       Date: " + Main.dateToString(dateTime) + "                                   |");//TanShiJing
+        System.out.println("  |\t\t                             Transaction ID: " + cb.getTransactionID() + "       Date: " + Main.dateToString(dateTime) + "                                   |");
         System.out.println("  ====================================================================================================================");
         System.out.println("  |    Resv. ID   |    Pet ID     |     Date      |  Charges(RM)  |  Service Details                                 |");
         System.out.println("  ====================================================================================================================");
@@ -5085,7 +5094,7 @@ public class Main {
                     ((Customer) currentUser).getBill().setPaymentDate(LocalDate.now());
                     ((Customer) currentUser).getBillHistory().add(((Customer) currentUser).getBill());
                     ((Customer) currentUser).setBill(null);
-                    System.out.println("  Successful Payment");
+                    System.out.println("\n  Successful Payment");
                     Main.pressAnyKeyToContinue();
                     return true;
                 }
@@ -5170,8 +5179,8 @@ public class Main {
      * @return Card, returns the card object of the card selected by customer
      */
     public static Card selectCard(Person currentUser) {
-        System.out.println("\n\n\t\t  Cards in record");
-        System.out.println("  ------------------------------");
+        System.out.println("\n\n  Cards in record");
+        System.out.println("  -----------------------------------------------------");
         System.out.println("  No.\t\tCard Number\t\t\tType\t\t\tIssuer");
         for (int i = 0; i < ((Customer)currentUser).getCards().size(); i++) {
             System.out.println("  "+(i + 1) + ". " +
@@ -5185,7 +5194,7 @@ public class Main {
         }
         do {
             try {
-                return ((Customer) currentUser).getCards().get(Main.promptInt("  Choose a card > ") - 1);
+                return ((Customer) currentUser).getCards().get(Main.promptInt("\n  Choose a card > ") - 1);
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("  Invalid choice selected...");
             }
@@ -5283,8 +5292,7 @@ public class Main {
         Customer c = ((Customer) currentUser);
         do {
             amt.clear();
-            System.out.println("\n\n  *** Bill History ***");//TanShiJing
-            //System.out.println("------------------------------");TanShiJing
+            System.out.println("\n\n  *** Bill History ***");
             if (c.getBillHistory().size() == 0) {
                 System.out.println("  No billing history yet.");
                 return;
@@ -5345,8 +5353,7 @@ public class Main {
         ArrayList<Double> amt;
         double totalAmt;
         Billing c = ((Customer) currentUser).getBill();
-        System.out.println("\n\n  *** Bill Records ***");//TanShiJing
-        //System.out.println("------------------------------");TanShiJing
+        System.out.println("\n\n  *** Bill Records ***");
         if (((Customer) currentUser).getBill() == null) {
             System.out.println("  There are no pending bills.");
             return;

@@ -65,7 +65,7 @@ public class Bird extends Pet implements Identifiable {
 
     // Methods
     public static void displayServices() {
-        System.out.println("\n\n\t  Services available");
+        System.out.println("\n\n\t Services available");
         System.out.println("  ------------------------");
         System.out.printf("  1. Shelter (%s per night)\n", Main.convertCurrency(120));
     }
@@ -78,7 +78,7 @@ public class Bird extends Pet implements Identifiable {
     @Override
     public String toString() {
         return String.format("""
-        	\n        HERE IS YOUR PET INFORMATION !
+        	\n\n        HERE IS YOUR PET INFORMATION !
         	  +---------------------------------------+
         	  | Pet ID > %-6s                      |
         	  | Type   > %-6s                       |

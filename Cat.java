@@ -100,7 +100,7 @@ public class Cat extends Pet implements Identifiable {
 
     // Methods
     public static void displayServices() {
-        System.out.println("\n\n\t  Services available");
+        System.out.println("\n\n\t Services available");
         System.out.println("  ------------------------");
         System.out.printf("  1. Groom   (%s)\n", Main.convertCurrency(80));
         System.out.printf("  2. Bath    (%s)\n", Main.convertCurrency(40));
@@ -116,7 +116,7 @@ public class Cat extends Pet implements Identifiable {
     @Override
     public String toString() {
         return String.format("""
-        	\n        HERE IS YOUR PET INFORMATION !
+        	\n\n        HERE IS YOUR PET INFORMATION !
         	  +---------------------------------------+
         	  | Pet ID > %-6s                      |
         	  | Type   > %-6s                       |

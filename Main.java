@@ -136,6 +136,13 @@ public class Main {
 
     }
 
+    /**
+     *
+     *
+     * @param path
+     * @param size
+     * @return
+     */
     public static Font loadFont(String path, float size){
         try {
             InputStream fileStream = Main.class.getResourceAsStream(path);
@@ -148,12 +155,15 @@ public class Main {
         }
     }
 
+    /**
+     * Creates a loading bar gui which 'loads' the program during startup
+     */
     public static void loadingBar(){
 
-        JFrame frame = new JFrame("Pet Shop System");
-        JPanel panel = new JPanel();
-        JProgressBar progressBar = new JProgressBar();
-        JLabel label = new JLabel("", SwingConstants.CENTER);
+        JFrame frame = new JFrame("Pet Shop System"); // frame for loading bar gui
+        JPanel panel = new JPanel(); // panel in frame for loading bar gui
+        JProgressBar progressBar = new JProgressBar(); // loading bar to be placed into panel
+        JLabel label = new JLabel("", SwingConstants.CENTER); // label to be display with loading bar
 
         // import font into gui
         Font font = loadFont("fonts/OpenSans-Italic.ttf", 18);
@@ -204,8 +214,8 @@ public class Main {
     {
         int i = 0, randomValue, loopCount;
         try {
+            // while 'i' is within percentage count value
             while (i <= 100) {
-
                 // reset loop count
                 loopCount = 0;
 
@@ -215,13 +225,13 @@ public class Main {
                     progressBar.setValue(i);
                     // delay the thread
                     Thread.sleep(30);
-                    i++;
-                    loopCount++;
+                    i++; // increment for percentage count
+                    loopCount++; // increment for loop criteria checking
                 }
                 while (randomValue > loopCount);
 
-                setText(label, panel, frame, texts, font);
-                Thread.sleep(randomValue* 50L);
+                setText(label, panel, frame, texts, font); // set text for gui window
+                Thread.sleep(randomValue* 50L); // delay loading
             }
         }
         catch (Exception ignored) {}
@@ -2034,6 +2044,13 @@ public class Main {
                 }
             }
         }
+
+        // remove from billing
+        ((Customer)currentUser).getBill().getBillDetails().remove(reserve);
+        if (((Customer)currentUser).getBill().getBillDetails().size() == 0) {
+            ((Customer)currentUser).setBill(null); // set billing to null if empty
+        }
+
         System.out.println("\n\n  Reservation successfully removed");
         pressAnyKeyToContinue();
     }

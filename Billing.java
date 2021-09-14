@@ -155,7 +155,7 @@ public class Billing implements Displayable, Identifiable{
      */
     @Override
     public String displayRow(){
-        return String.format("|  %10s  | %10s  |  %6s   | %-8s   |  %10s  |   %10s    |%14s |Count : %d |",//TanShiJing
+        return String.format("| %-13s| %-12s|  %6s   | %-8s   |  %10s  |   %10s    |%14s |Count : %d |",
                 Main.convertCurrency(getTotalAmount()),
                 Main.convertCurrency(getGrandTotal()),
                 getTransactionID(),

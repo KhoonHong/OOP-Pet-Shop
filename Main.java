@@ -1256,15 +1256,271 @@ public class Main {
     }
 
     /**
+     * Display employee records 10 by 10 for the owner to view
+     * Owner can choose to exit viewing if they wish to
+     *
+     * @param employeeList An {@code ArrayList} of {@code Employee} objects
+     */
+    public static void displayEmployeeRecords(ArrayList<Employee> employeeList) {
+        boolean backFlag = false;
+        if (!checkEmployeeRecord(employeeList)) {
+            System.out.println("  No employee records found...");
+        }
+        else {
+            System.out.println("""
+                  \n  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+                    | Emp.ID |      Name       |  Age  | Gender | Contact Number | Birth Date |   Salary   |             Email            |    Username    | Register Date |                           Address                          |
+                    +--------+-----------------+-------+--------+----------------+------------+------------+------------------------------+----------------+---------------+------------------------------------------------------------+""");
+            for (int index = 0; index < employeeList.size() ; index++) {
+                System.out.println("  "+employeeList.get(index).displayRow());
+
+                System.out.println("  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+                if ((index+1) % 10 == 0 && (index+1)!=employeeList.size()) {
+                    switch (promptInt("\n\n  Displaying results (" + (index-8) + "-" + (index+1) + ") out of " + employeeList.size() + " records\n  1. Continue displaying records\n  2. Back\n\n  Please enter a selection > ")) {
+                        case 1 -> {
+                            System.out.println("""                                                                       
+                                                                  
+                                                \n  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+                                                  | Emp.ID |      Name       |  Age  | Gender | Contact Number | Birth Date |   Salary   |             Email            |    Username    | Register Date |                           Address                          |
+                                                  +--------+-----------------+-------+--------+----------------+------------+------------+------------------------------+----------------+---------------+------------------------------------------------------------+""");
+                        }
+                        case 2 -> backFlag = true;
+                        default -> System.out.println("  Invalid selection entered...");
+                    }
+                    if (backFlag) {
+                        break;
+                    }
+                }
+            }
+        }
+        pressAnyKeyToContinue();
+    }
+
+    /**
+     * Display customer records 10 by 10 for the owner to view
+     * Owner can choose to exit viewing if they wish to
+     *
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     */
+    public static void displayCustomerRecords(ArrayList<Customer> customerList) {
+        boolean backFlag = false;
+        if (!checkCustomerRecord(customerList)) {
+            System.out.println("  No customer records found...");
+            pressAnyKeyToContinue();
+        }
+        else {
+            System.out.println("""
+				  \n  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+				    | Cust.ID |      Name       |  Age  | Gender | Contact Number | Birth Date |             Email            |    Username    | Register Date |                           Address                          |
+				    +---------+-----------------+-------+--------+----------------+------------+------------------------------+----------------+---------------+------------------------------------------------------------+""");
+            for (int index = 0; index < customerList.size(); index++) {
+                System.out.println("  " +customerList.get(index).displayRow());
+                System.out.println("  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+                if ((index+1) % 10 == 0 && (index+1)!=customerList.size()) {
+                    switch (promptInt("\n\n  Displaying results (" + (index-8) + "-" + (index+1) + ") out of " + customerList.size() + " records\n  1. Continue displaying records\n  2. Back\n\n  Please enter a selection > ")) {
+                        case 1 -> {
+                            System.out.println("""
+                                                                                                 	  
+                                                \n  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+                                                  | Cust.ID |      Name       |  Age  | Gender | Contact Number | Birth Date |             Email            |    Username    | Register Date |                           Address                          |
+                                                  +---------+-----------------+-------+--------+----------------+------------+------------------------------+----------------+---------------+------------------------------------------------------------+""");
+                        }
+                        case 2 -> backFlag = true;
+                        default -> System.out.println("  Invalid selection entered...");
+                    }
+                    if (backFlag) {
+                        break;
+                    }
+                }
+            }
+        }
+        pressAnyKeyToContinue();
+    }
+
+    /**
+     * Display customers reservation records 10 by 10 for the owner to view
+     * Owner can choose to exit viewing if they wish to
+     *
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     */
+    public static void displayReserveRecords(ArrayList<Customer> customerList) {
+        boolean backFlag = false;
+        ArrayList<Reservation> reservations = new ArrayList<>();
+        if (!checkReserveRecords(customerList)) {
+            System.out.println("  No customer reservation records found...");
+            pressAnyKeyToContinue();
+        }
+        else {
+            for (Customer cust : customerList) {
+                reservations.addAll(cust.getReservation());
+            }
+            if (reservations.isEmpty()) {
+                System.out.println("  No customer reservation records found...");
+                pressAnyKeyToContinue();
+                return;
+            }
+
+            System.out.println("""
+                  \n  +-------------------------------------------------------------------------------------------------------------------------------+
+                    |  Cust.ID  | Resv.ID | Service | Resv. Timestamp | Pet ID | Pet Type | Resv. Session | Resv. Made TimeStamp |  Employee Name   |
+                    +-----------+---------+---------+-----------------+--------+----------+---------------+----------------------+------------------+""");
+            boolean exitFlag;
+            for (int index  = 0; index < reservations.size(); index++) {
+                exitFlag = false;
+                for (Customer cust : customerList) {
+                    for(Reservation resv : cust.getReservation()) {
+                        if (resv.equals(reservations.get(index))) {
+                            System.out.printf("  |  %6s   ", cust.getID());
+                            exitFlag = true;
+                            break;
+                        }
+                    }
+                    if (exitFlag) {
+                        break;
+                    }
+                }
+                System.out.print(reservations.get(index).displayRow()+"\n");
+                System.out.println("  +-------------------------------------------------------------------------------------------------------------------------------+");
+                if ((index+1) % 10 == 0 && (index+1)!=reservations.size()) {
+                    switch (promptInt("\n\n  Displaying results (" + (index-8) + "-" + (index+1) + ") out of " + reservations.size() + " records\n  1. Continue displaying records\n  2. Back\n\n  Please enter a selection > ")) {
+                        case 1 -> {
+                            System.out.println("""
+                  \n  +-------------------------------------------------------------------------------------------------------------------------------+
+                    |  Cust.ID  | Resv.ID | Service | Resv. Timestamp | Pet ID | Pet Type | Resv. Session | Resv. Made TimeStamp |  Employee Name   |
+                    +-----------+---------+---------+-----------------+--------+----------+---------------+----------------------+------------------+""");
+                        }
+                        case 2 -> backFlag = true;
+                        default -> System.out.println("  Invalid selection entered...");
+                    }
+                    if (backFlag) {
+                        break;
+                    }
+                }
+            }
+        }
+        pressAnyKeyToContinue();
+    }
+
+    /**
+     * Display customer billing records 10 by 10 for the owner to view
+     * Owner can choose to exit viewing if they wish to
+     *
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     */
+    public static void displayBillRecords(ArrayList<Customer> customerList) {
+        boolean backFlag = false;
+        ArrayList<Customer> custs = new ArrayList<>();
+        if (!checkBillRecords(customerList)) {
+            System.out.println("  No customer billing records found...");
+        }
+        else {
+            System.out.println("""
+                                  \n  +----------------------------------------------+
+                                    |  Cust.ID  |Trans. ID |Total Amount| Services |
+                                    +-----------+----------+------------+----------+""");
+            // filtering
+            for (Customer customer : customerList) {
+                if (customer.getBill() == null) {
+                    continue;
+                }
+                custs.add(customer);
+            }
+
+            if (custs.isEmpty()) {
+                System.out.println("  No customer billing records found...");
+                pressAnyKeyToContinue();
+                return;
+            }
+
+            for (int index = 0; index < custs.size(); index++) {
+                System.out.printf("  |  %6s   |  %6s  | %10s |    %2d    |\n", custs.get(index).getID(),
+                        custs.get(index).getBill().getTransactionID(),
+                        convertCurrency(custs.get(index).getBill().calcTotalAmount()),
+                        custs.get(index).getBill().getBillDetails().size());
+                System.out.println("  +----------------------------------------------+");
+                if ((index+1) % 10 == 0 && (index+1)!=custs.size()) {
+                    switch (promptInt("\n\n  Displaying results (" + (index - 8) + "-" + (index + 1) + ") out of " + custs.size() + " records\n  1. Continue displaying records\n  2. Back\n\n  Please enter a selection > ")) {
+                        case 1 -> {
+                            System.out.println("""
+                                  \n  +----------------------------------------------+
+                                    |  Cust.ID  |Trans. ID |Total Amount| Services |
+                                    +-----------+----------+------------+----------+""");
+                        }
+                        case 2 -> backFlag = true;
+                        default -> System.out.println("  Invalid selection entered...");
+                    }
+                    if (backFlag) {
+                        break;
+                    }
+                }
+            }
+        }
+        pressAnyKeyToContinue();
+    }
+
+    /**
+     * Display customer billing history records 10 by 10 for the owner to view
+     * Owner can choose to exit viewing if they wish to
+     *
+     * @param customerList An {@code ArrayList} of {@code Customer} objects
+     */
+    public static void displayBillHistoryRecords(ArrayList<Customer> customerList) {
+        boolean backFlag = false;
+        ArrayList<String> custID = new ArrayList<>();
+        ArrayList<Billing> billHistory = new ArrayList<>();
+        if (!checkBillHistoryRecords(customerList)) {
+            System.out.println("  No customer billing history records found...");
+        }
+        else {
+            for (Customer customer : customerList) {
+                for (Billing billing : customer.getBillHistory()) {
+                    custID.add(customer.getID());
+                    billHistory.add(billing);
+                }
+            }
+
+            if (billHistory.isEmpty()) {
+                System.out.println("  No customer billing history records found...");
+            }
+            else {
+                System.out.println("""
+                  \n  +-----------------------------------------------------------------------------------------------------------------------------+
+                    |  Cust.ID  | Total Amount | Grand Total | Trans. ID | Pay Method | Promo Origin |  Payment Date   | Promo Applied | Services |
+                    +-----------+--------------+-------------+-----------+------------+--------------+-----------------+---------------+----------+""");
+
+                for (int index = 0; index < billHistory.size(); index++) {
+                    System.out.printf("  |  %6s   ", custID.get(index));
+                    System.out.print(billHistory.get(index).displayRow()+"\n");
+                    System.out.println("  +-----------------------------------------------------------------------------------------------------------------------------+");
+                    if ((index+1) % 10 == 0 && (index+1)!=billHistory.size()) {
+                        switch (promptInt("\n\n  Displaying results (" + (index - 8) + "-" + (index + 1) + ") out of " + billHistory.size() + " records\n  1. Continue displaying records\n  2. Back\n\n  Please enter a selection > ")) {
+                            case 1 -> {
+                                System.out.println("""
+                  \n  +-----------------------------------------------------------------------------------------------------------------------------+
+                    |  Cust.ID  | Total Amount | Grand Total | Trans. ID | Pay Method | Promo Origin |  Payment Date   | Promo Applied | Services |
+                    +-----------+--------------+-------------+-----------+------------+--------------+-----------------+---------------+----------+""");;
+                            }
+                            case 2 -> backFlag = true;
+                            default -> System.out.println("  Invalid selection entered...");
+                        }
+                        if (backFlag) {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        pressAnyKeyToContinue();
+    }
+
+    /**
      * Display menu for owner account
      *
      * @param employeeList An {@code ArrayList} of {@code Employee} objects
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      */
     public static void ownerDisplayMenu(ArrayList<Employee> employeeList, ArrayList<Customer> customerList) {
-        boolean backFlag;
         do {
-            backFlag = false;
             System.out.println("\n\n   ________________________________________ ");
             System.out.println("  |                                        |");
             System.out.println("  |          *** Display Menu ***          |");
@@ -1279,222 +1535,19 @@ public class Main {
 
             switch (promptInt("\n  Please enter a selection > ")) {
                 case 1 -> {
-                    if (!checkEmployeeRecord(employeeList)) {
-                        System.out.println("  No employee records found...");
-                    }
-                    else {
-                        System.out.println("""
-                  \n  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-                    | Emp.ID |      Name       |  Age  | Gender | Contact Number | Birth Date |   Salary   |             Email            |    Username    | Register Date |                           Address                          |
-                    +--------+-----------------+-------+--------+----------------+------------+------------+------------------------------+----------------+---------------+------------------------------------------------------------+""");
-                        for (int index = 0; index < employeeList.size() ; index++) {
-                            System.out.println("  "+employeeList.get(index).displayRow());
-
-                            System.out.println("  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-                            if ((index+1) % 10 == 0 && (index+1)!=employeeList.size()) {
-                                switch (promptInt("\n\n  Displaying results (" + (index-8) + "-" + (index+1) + ") out of " + employeeList.size() + " records\n  1. Continue displaying records\n  2. Back\n\n  Please enter a selection > ")) {
-                                    case 1 -> {
-                                        System.out.println("""                                                                       
-                                                                  
-                                                \n  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-                                                  | Emp.ID |      Name       |  Age  | Gender | Contact Number | Birth Date |   Salary   |             Email            |    Username    | Register Date |                           Address                          |
-                                                  +--------+-----------------+-------+--------+----------------+------------+------------+------------------------------+----------------+---------------+------------------------------------------------------------+""");
-                                    }
-                                    case 2 -> backFlag = true;
-                                    default -> System.out.println("  Invalid selection entered...");
-                                }
-                                if (backFlag) {
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    pressAnyKeyToContinue();
+                    displayEmployeeRecords(employeeList);
                 }
                 case 2 -> {
-                    if (!checkCustomerRecord(customerList)) {
-                        System.out.println("  No customer records found...");
-                        pressAnyKeyToContinue();
-                    }
-                    else {
-                        System.out.println("""
-				  \n  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-				    | Cust.ID |      Name       |  Age  | Gender | Contact Number | Birth Date |             Email            |    Username    | Register Date |                           Address                          |
-				    +---------+-----------------+-------+--------+----------------+------------+------------------------------+----------------+---------------+------------------------------------------------------------+""");
-                        for (int index = 0; index < customerList.size(); index++) {
-                            System.out.println("  " +customerList.get(index).displayRow());
-                            System.out.println("  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-                            if ((index+1) % 10 == 0 && (index+1)!=customerList.size()) {
-                                switch (promptInt("\n\n  Displaying results (" + (index-8) + "-" + (index+1) + ") out of " + customerList.size() + " records\n  1. Continue displaying records\n  2. Back\n\n  Please enter a selection > ")) {
-                                    case 1 -> {
-                                        System.out.println("""
-                                                                                                 	  
-                                                \n  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-                                                  | Cust.ID |      Name       |  Age  | Gender | Contact Number | Birth Date |             Email            |    Username    | Register Date |                           Address                          |
-                                                  +---------+-----------------+-------+--------+----------------+------------+------------------------------+----------------+---------------+------------------------------------------------------------+""");
-                                    }
-                                    case 2 -> backFlag = true;
-                                    default -> System.out.println("  Invalid selection entered...");
-                                }
-                                if (backFlag) {
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    pressAnyKeyToContinue();
+                    displayCustomerRecords(customerList);
                 }
                 case 3 -> {
-                    ArrayList<Reservation> reservations = new ArrayList<>();
-                    if (!checkReserveRecords(customerList)) {
-                        System.out.println("  No customer reservation records found...");
-                        pressAnyKeyToContinue();
-                    }
-                    else {
-                        for (Customer cust : customerList) {
-                            reservations.addAll(cust.getReservation());
-                        }
-                        if (reservations.isEmpty()) {
-                            System.out.println("  No customer reservation records found...");
-                            pressAnyKeyToContinue();
-                            return;
-                        }
-
-                        System.out.println("""
-                  \n  +-------------------------------------------------------------------------------------------------------------------------------+
-                    |  Cust.ID  | Resv.ID | Service | Resv. Timestamp | Pet ID | Pet Type | Resv. Session | Resv. Made TimeStamp |  Employee Name   |
-                    +-----------+---------+---------+-----------------+--------+----------+---------------+----------------------+------------------+""");
-                        boolean exitFlag;
-                        for (int index  = 0; index < reservations.size(); index++) {
-                            exitFlag = false;
-                            for (Customer cust : customerList) {
-                                for(Reservation resv : cust.getReservation()) {
-                                    if (resv.equals(reservations.get(index))) {
-                                        System.out.printf("  |  %6s   ", cust.getID());
-                                        exitFlag = true;
-                                        break;
-                                    }
-                                }
-                                if (exitFlag) {
-                                    break;
-                                }
-                            }
-                            System.out.print(reservations.get(index).displayRow()+"\n");
-                            System.out.println("  +-------------------------------------------------------------------------------------------------------------------------------+");
-                            if ((index+1) % 10 == 0 && (index+1)!=reservations.size()) {
-                                switch (promptInt("\n\n  Displaying results (" + (index-8) + "-" + (index+1) + ") out of " + reservations.size() + " records\n  1. Continue displaying records\n  2. Back\n\n  Please enter a selection > ")) {
-                                    case 1 -> {
-                                        System.out.println("""
-                  \n  +-------------------------------------------------------------------------------------------------------------------------------+
-                    |  Cust.ID  | Resv.ID | Service | Resv. Timestamp | Pet ID | Pet Type | Resv. Session | Resv. Made TimeStamp |  Employee Name   |
-                    +-----------+---------+---------+-----------------+--------+----------+---------------+----------------------+------------------+""");
-                                    }
-                                    case 2 -> backFlag = true;
-                                    default -> System.out.println("  Invalid selection entered...");
-                                }
-                                if (backFlag) {
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    pressAnyKeyToContinue();
+                    displayReserveRecords(customerList);
                 }
                 case 4 -> {
-                    ArrayList<Customer> custs = new ArrayList<>();
-                    if (!checkBillRecords(customerList)) {
-                        System.out.println("  No customer billing records found...");
-                    }
-                    else {
-                        System.out.println("""
-                                  \n  +----------------------------------------------+
-                                    |  Cust.ID  |Trans. ID |Total Amount| Services |
-                                    +-----------+----------+------------+----------+""");
-                        // filtering
-                        for (Customer customer : customerList) {
-                            if (customer.getBill() == null) {
-                                continue;
-                            }
-                            custs.add(customer);
-                        }
-
-                        if (custs.isEmpty()) {
-                            System.out.println("  No customer billing records found...");
-                            pressAnyKeyToContinue();
-                            return;
-                        }
-
-                        for (int index = 0; index < custs.size(); index++) {
-                            System.out.printf("  |  %6s   |  %6s  | %10s |    %2d    |\n", custs.get(index).getID(),
-                                    custs.get(index).getBill().getTransactionID(),
-                                    convertCurrency(custs.get(index).getBill().calcTotalAmount()),
-                                    custs.get(index).getBill().getBillDetails().size());
-                            System.out.println("  +----------------------------------------------+");
-                            if ((index+1) % 10 == 0 && (index+1)!=custs.size()) {
-                                switch (promptInt("\n\n  Displaying results (" + (index - 8) + "-" + (index + 1) + ") out of " + custs.size() + " records\n  1. Continue displaying records\n  2. Back\n\n  Please enter a selection > ")) {
-                                    case 1 -> {
-                                        System.out.println("""
-                                  \n  +----------------------------------------------+
-                                    |  Cust.ID  |Trans. ID |Total Amount| Services |
-                                    +-----------+----------+------------+----------+""");
-                                    }
-                                    case 2 -> backFlag = true;
-                                    default -> System.out.println("  Invalid selection entered...");
-                                }
-                                if (backFlag) {
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    pressAnyKeyToContinue();
+                    displayBillRecords(customerList);
                 }
                 case 5 -> {
-                    ArrayList<String> custID = new ArrayList<>();
-                    ArrayList<Billing> billHistory = new ArrayList<>();
-                    if (!checkBillHistoryRecords(customerList)) {
-                        System.out.println("  No customer billing history records found...");
-                    }
-                    else {
-                        for (Customer customer : customerList) {
-                            for (Billing billing : customer.getBillHistory()) {
-                                custID.add(customer.getID());
-                                billHistory.add(billing);
-                            }
-                        }
-
-                        if (billHistory.isEmpty()) {
-                            System.out.println("  No customer billing history records found...");
-                            pressAnyKeyToContinue();
-                            continue;
-                        }
-                        System.out.println("""
-                  \n  +-----------------------------------------------------------------------------------------------------------------------------+
-                    |  Cust.ID  | Total Amount | Grand Total | Trans. ID | Pay Method | Promo Origin |  Payment Date   | Promo Applied | Services |
-                    +-----------+--------------+-------------+-----------+------------+--------------+-----------------+---------------+----------+""");
-
-                        for (int index = 0; index < billHistory.size(); index++) {
-                            System.out.printf("  |  %6s   ", custID.get(index));
-                            System.out.print(billHistory.get(index).displayRow()+"\n");
-                            System.out.println("  +-----------------------------------------------------------------------------------------------------------------------------+");
-                            if ((index+1) % 10 == 0 && (index+1)!=billHistory.size()) {
-                                switch (promptInt("\n\n  Displaying results (" + (index - 8) + "-" + (index + 1) + ") out of " + billHistory.size() + " records\n  1. Continue displaying records\n  2. Back\n\n  Please enter a selection > ")) {
-                                    case 1 -> {
-                                        System.out.println("""
-                  \n  +-----------------------------------------------------------------------------------------------------------------------------+
-                    |  Cust.ID  | Total Amount | Grand Total | Trans. ID | Pay Method | Promo Origin |  Payment Date   | Promo Applied | Services |
-                    +-----------+--------------+-------------+-----------+------------+--------------+-----------------+---------------+----------+""");;
-                                    }
-                                    case 2 -> backFlag = true;
-                                    default -> System.out.println("  Invalid selection entered...");
-                                }
-                                if (backFlag) {
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    pressAnyKeyToContinue();
+                    displayBillHistoryRecords(customerList);
                 }
                 case 6 -> {
                     return;
@@ -1899,7 +1952,7 @@ public class Main {
                         System.out.println("  No employee records found...");
                     }
                 }
-                case 4 -> displayEmployee(employeeList);
+                case 4 -> displayEmployeeRecords(employeeList);
 
                 case 5 -> {
                     return;
@@ -2015,7 +2068,7 @@ public class Main {
             do {
                 Cat.displayServices();
                 petFlag = false;
-                switch (Main.promptInt("  Select a service type > ")) {
+                switch (Main.promptInt("\n  Select a service type > ")) {
                     case 1 -> service = promptGroomService(new Groom());
                     case 2 -> service = promptBathService(new Bath());
                     case 3 -> service = promptMassageService(new Massage());
@@ -2031,7 +2084,7 @@ public class Main {
             do {
                 Bird.displayServices();
                 petFlag = false;
-                if (Main.promptInt("  Select a service type > ") == 1) {
+                if (Main.promptInt("\n  Select a service type > ") == 1) {
                     service = promptShelterService(new Shelter());
                 } else {
                     System.out.println("  Invalid choice selected...");
@@ -2043,7 +2096,7 @@ public class Main {
             do {
                 Rabbit.displayServices();
                 petFlag = false;
-                switch (Main.promptInt("  Select a service type > ")) {
+                switch (Main.promptInt("\n  Select a service type > ")) {
                     case 1 -> service = promptGroomService(new Groom());
                     case 2 -> service = promptBathService(new Bath());
                     case 3 -> service = promptShelterService(new Shelter());
@@ -4548,22 +4601,6 @@ public class Main {
         }
         while (passwordFlag);
         return password;
-    }
-
-    /**
-     * Displays all the {@code Employee} objects in a table format
-     *
-     * @param employeeList An {@code ArrayList} of {@code Employee} objects
-     */
-    public static void displayEmployee(ArrayList<Employee> employeeList) {
-        System.out.println("""
-                \n  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-                  | Emp.ID |      Name       |  Age  | Gender | Contact Number | Birth Date |   Salary   |             Email            |    Username    | Register Date |                           Address                          |
-                  +--------+-----------------+-------+--------+----------------+------------+------------+------------------------------+----------------+---------------+------------------------------------------------------------+""");
-        for (Employee employee : employeeList) {
-            System.out.println("  "+employee.displayRow()); // display employees
-            System.out.println("  +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-        }
     }
 
     /**

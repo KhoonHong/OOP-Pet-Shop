@@ -80,6 +80,7 @@ public class Main {
         // add a cat into first customer
         customerList.get(0).addPet(new Cat(true, 1, 'M', "Black", Level.MEDIUM, Size.MEDIUM, false));
 
+        // default promotions
         promotions.add(new Promotion("11Double11", LocalDate.of(2021, 11, 1), LocalDate.of(2021, 11, 11), 0.1111, "Special 11.11% discount for spending along 1.11 to 11.11"));
         promotions.add(new Promotion("PetDay0411", LocalDate.of(2021, 4, 11), LocalDate.of(2021, 4, 12), 0.15, "15% caring to your pet on International Pet Day"));
         promotions.add(new Promotion("10Of500", LocalDate.of(2021, 9, 18), LocalDate.of(2022, 1, 1), 0.1, "Get 10% discount when spend up to RM50 and above"));
@@ -93,6 +94,7 @@ public class Main {
         Main2.generateEmployeeProfile(employeeList);
         Main2.generateCustomerProfile(customerList, employeeList, promotions);
 
+        // ASCII art of dog
         System.out.println("""
                                                                     
                                                                     
@@ -128,7 +130,8 @@ public class Main {
                                             &&&&&&,        *#&&&&&&&&&                &&&&&&&,        .&&&&&&#&                                     \s
                                                 &&&&&&&&&&&&&&%                            *&&&&&&&&&&&&%                  \s
                 """);
-        loadingBar();
+
+        loadingBar(); // loading bar gui
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
         // start system
@@ -137,11 +140,13 @@ public class Main {
     }
 
     /**
+     * Loads a font from True Type font file into a {@code Font} object
      *
+     * @author Lee Khoon Hong
      *
-     * @param path
-     * @param size
-     * @return
+     * @param path File path for font file
+     * @param size Font size
+     * @return Font loaded into a {@code Font} object
      */
     public static Font loadFont(String path, float size){
         try {
@@ -157,6 +162,8 @@ public class Main {
 
     /**
      * Creates a loading bar gui which 'loads' the program during startup
+     *
+     * @author Lee Khoon Hong
      */
     public static void loadingBar(){
 
@@ -174,15 +181,14 @@ public class Main {
         }
         catch (NullPointerException ignored){}
 
-
         progressBar.setValue(0); // set progress bar value to zero
         progressBar.setStringPainted(true); // display numeric percentage indicator
-        progressBar.setForeground(new Color(30,129,176));
-        progressBar.setPreferredSize(new Dimension(100, 30));
+        progressBar.setForeground(new Color(30,129,176)); // set loading bar background color
+        progressBar.setPreferredSize(new Dimension(100, 30)); // set loading bar size
 
-        panel.setLayout(new BorderLayout());
-        panel.add(progressBar, BorderLayout.NORTH);
-        frame.add(panel);
+        panel.setLayout(new BorderLayout()); // apply border layout on panel
+        panel.add(progressBar, BorderLayout.NORTH); // add loading bar onto panel
+        frame.add(panel); // add panel onto frame
 
         frame.setSize(500, 150);
         frame.setLocationRelativeTo(null);
@@ -190,7 +196,7 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // set close button operation
 
         String[] texts = {"Torturing Jia Wei", "Dying in assignment", "Generating records", "Tormenting Shi Jing", "Agonizing Jia Hui",
-                "Man's best pet shop", "Tending to pets", "World class pet shop", "Treat your pet to self care !"};
+                "Man's best pet shop", "Tending to pets", "World class pet shop", "Treat your pet to self care !" , "Ms Liew is very pretty"};
 
         setText(label, panel, frame, texts, font);
 
@@ -200,9 +206,20 @@ public class Main {
         frame.setVisible(false);
     }
 
+    /**
+     * Set randomized text on loading bar gui
+     *
+     * @author Lee Khoon Hong
+     *
+     * @param label Label to be set with text
+     * @param panel Panel to be placed within frame of gui
+     * @param frame Frame of the entire gui
+     * @param texts An array of texts for display
+     * @param font {@code Font} object
+     */
     public static void setText(JLabel label, JPanel panel, JFrame frame, String[] texts, Font font) {
         // change text
-        label.setText(texts[ThreadLocalRandom.current().nextInt(0, 8 + 1)]);
+        label.setText(texts[ThreadLocalRandom.current().nextInt(0, 9 + 1)]);
 
         label.setFont(font.deriveFont(18f));
         panel.add(label, BorderLayout.CENTER);
@@ -210,6 +227,18 @@ public class Main {
         frame.setVisible(true);
     }
 
+    /**
+     * Handles the progress bar loading actions
+     *
+     * @author Lee Khoon Hong
+     *
+     * @param progressBar Progress bar object to be modified
+     * @param panel Panel to be placed within frame of gui
+     * @param frame Frame of the entire gui
+     * @param label Label to be set with text
+     * @param texts An array of texts for display
+     * @param font {@code Font} object
+     */
     public static void fill(JProgressBar progressBar, JPanel panel, JFrame frame, JLabel label, String[] texts, Font font)
     {
         int i = 0, randomValue, loopCount;
@@ -241,6 +270,8 @@ public class Main {
 
     /**
      * This is the main menu of the entire program
+     *
+     * @author Lee Khoon Hong
      *
      * @param currentUser Current session user
      * @param customerList An {@code ArrayList} of {@code Customer} objects
@@ -300,6 +331,8 @@ public class Main {
     /**
      * This is the owner login page
      *
+     * @author Lee Khoon Hong
+     *
      * @param currentUser Current session user
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      * @param employeeList An {@code ArrayList} of {@code Employee} objects
@@ -349,6 +382,8 @@ public class Main {
     /**
      * This is the owner account main menu
      *
+     * @author Lee Khoon Hong
+     *
      * @param currentUser Current session user
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      * @param employeeList An {@code ArrayList} of {@code Employee} objects
@@ -391,6 +426,8 @@ public class Main {
 
     /**
      * This is the customer login page
+     *
+     * @author Lee Khoon Hong
      *
      * @param currentUser Current session user
      * @param customerList An {@code ArrayList} of {@code Customer} objects
@@ -441,6 +478,8 @@ public class Main {
     /**
      * This is the customer signup page
      *
+     * @author Lee Khoon Hong
+     *
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      */
     public static void customerSignup(ArrayList<Customer> customerList) {
@@ -463,6 +502,8 @@ public class Main {
 
     /**
      * This is the customer account main menu
+     *
+     * @author Lee Khoon Hong
      *
      * @param currentUser Current session user
      * @param customerList An {@code ArrayList} of {@code Customer} objects
@@ -503,7 +544,9 @@ public class Main {
     }
 
     /**
-     * This is the promotion menu which can be through owner account
+     * This is the promotion menu which can be accessed through owner account
+     *
+     * @author Chan Jia Wei
      *
      * @param promotions An {@code ArrayList} of {@code Promotion} objects
      */
@@ -544,6 +587,8 @@ public class Main {
     /**
      * Displays all the {@code Promotion} objects in a table format
      *
+     * @author Chan Jia Wei
+     *
      * @param promotions An {@code ArrayList} of {@code Promotion} objects
      */
     public static void displayPromo(ArrayList<Promotion> promotions) {
@@ -565,6 +610,8 @@ public class Main {
     /**
      * Let user be able to edit a {@code Promotion} object.
      * Namely, description, start date, end date and promo rate.
+     *
+     * @author Chan Jia Wei
      *
      * @param promotions An {@code ArrayList} of {@code Promotion} objects
      */
@@ -619,6 +666,8 @@ public class Main {
 
     /**
      * Displays all the details of the services offered by the pet shop
+     *
+     * @author Ong Jia Hui
      */
     public static void availableServices() {
         System.out.println("\n\t\t\t\t\t    Available Services\n");
@@ -634,6 +683,8 @@ public class Main {
 
     /**
      * This is the employee login page
+     *
+     * @author Lee Khoon Hong
      *
      * @param currentUser Current session user
      * @param customerList An {@code ArrayList} of {@code Customer} objects
@@ -684,6 +735,8 @@ public class Main {
     /**
      * This is the employee sign up page, which can be accessed through {@code Owner} account
      *
+     * @author Lee Khoon Hong
+     *
      * @param employeeList An {@code ArrayList} of {@code Employee} objects
      */
     public static void employeeSignup(ArrayList<Employee> employeeList) {
@@ -706,6 +759,8 @@ public class Main {
 
     /**
      * This is the employee account main menu
+     *
+     * @author Lee Khoon Hong
      *
      * @param currentUser Current session user
      * @param customerList An {@code ArrayList} of {@code Customer} objects
@@ -746,6 +801,8 @@ public class Main {
     /**
      * Displays the {@code Employee} schedule for employee
      *
+     * @author Chan Jia Wei
+     *
      * @param currentUser Current session user
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      */
@@ -776,6 +833,8 @@ public class Main {
     /**
      * Get customer ID with reservation object
      *
+     * @author Chan Jia Wei
+     *
      * @param reservation A {@code Reservation} object
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      * @return {@code Customer} object id, return empty {@code String} if not found
@@ -795,6 +854,8 @@ public class Main {
     /**
      * Display reservation menu.
      * Customers will be able to add, edit, cancel and display reservations.
+     *
+     * @author Chan Jia Wei
      *
      * @param currentUser Current session user
      * @param customerList An {@code ArrayList} of {@code Customer} objects
@@ -830,6 +891,8 @@ public class Main {
     /**
      * Display pet menu.
      * Customers will be able to add pet, edit pet, remove pet and display pet.
+     *
+     * @author Tan Shi Jing
      *
      * @param currentUser Current session user
      */
@@ -870,6 +933,8 @@ public class Main {
     /**
      * To redirect customer to reservation display method.
      *
+     * @author Chan Jia Wei
+     *
      * @param currentUser Current session user account object
      * @param customerList An ArrayList of customers
      */
@@ -883,6 +948,8 @@ public class Main {
     /**
      * Prompts and get input for address such as street, zipcode, city, region, state and city.
      * {@code inputZipcode()}, {@code inputRegion()} will be called to take in input & do validation
+     *
+     * @author Chan Jia Wei
      *
      * @return {@code Address} object
      */
@@ -904,6 +971,8 @@ public class Main {
      * Prompts and get input for zipcode.
      * Validates for 5 digits only.
      *
+     * @author Chan Jia Wei
+     *
      * @return String, 5 digits zipcode
      */
     public static String inputZipcode() {
@@ -923,6 +992,8 @@ public class Main {
 
     /**
      * Prompts and get input for region.
+     *
+     * @author Chan Jia Wei
      *
      * @return String, region depends on user choice
      */
@@ -964,6 +1035,8 @@ public class Main {
 
     /**
      * Current customer can choose a pet, then remove it from record.
+     *
+     * @author Tan Shi Jing
      *
      * @param currentUser Current session user
      */
@@ -1017,8 +1090,10 @@ public class Main {
 
     /**
      * Prompt user to choose a type of pet to create.
-     * After choosing a type of pet, customer will need to input the attributes for {@code Pet} object
-     * The {@code Pet} object will be added to the
+     * After choosing a type of pet, customer will need to input the attributes for {@code Pet} object.
+     * The {@code Pet} object will be added to the {@code Pet} {@code ArrayList}
+     *
+     * @author Tan Shi Jing
      *
      * @param currentUser Current session user
      */
@@ -1078,6 +1153,8 @@ public class Main {
     /**
      * Menu for editing pet info.
      * Age, gender, color, size and aggressiveness can be modified.
+     *
+     * @author Tan Shi Jing
      *
      * @param currentUser Current session user
      */
@@ -1139,6 +1216,8 @@ public class Main {
     /**
      * Prompts and get input to choose pet in current customer records
      *
+     * @author Tan Shi Jing
+     *
      * @param currentUser Current session user
      * @return Selected {@code Pet} object
      */
@@ -1165,6 +1244,8 @@ public class Main {
     /**
      * Menu for billing card.
      * Customers will be able to add, display, remove and edit billing card.
+     *
+     * @author Chan Jia Wei
      *
      * @param currentUser Current session user
      */
@@ -1197,6 +1278,11 @@ public class Main {
 
     /**
      * Menu for displaying system reports
+     *
+     * @author Lee Khoon Hong
+     * @author Chan Jia Wei
+     * @author Tan Shi Jing
+     * @author Ong Jia Hui
      *
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      */
@@ -1233,6 +1319,8 @@ public class Main {
      * Search Menu.
      * Owner can search for employee records, customer records, reservation records, bill records and bill history records.
      *
+     * @author Lee Khoon Hong
+     *
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      * @param employeeList An {@code ArrayList} of {@code Employee} objects
      */
@@ -1268,6 +1356,8 @@ public class Main {
     /**
      * Display employee records 10 by 10 for the owner to view
      * Owner can choose to exit viewing if they wish to
+     *
+     * @author Lee Khoon Hong
      *
      * @param employeeList An {@code ArrayList} of {@code Employee} objects
      */
@@ -1310,6 +1400,8 @@ public class Main {
      * Display customer records 10 by 10 for the owner to view
      * Owner can choose to exit viewing if they wish to
      *
+     * @author Lee Khoon Hong
+     *
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      */
     public static void displayCustomerRecords(ArrayList<Customer> customerList) {
@@ -1350,6 +1442,8 @@ public class Main {
     /**
      * Display customers reservation records 10 by 10 for the owner to view
      * Owner can choose to exit viewing if they wish to
+     *
+     * @author Chan Jia Wei
      *
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      */
@@ -1415,6 +1509,8 @@ public class Main {
      * Display customer billing records 10 by 10 for the owner to view
      * Owner can choose to exit viewing if they wish to
      *
+     * @author Lee Khoon Hong
+     *
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      */
     public static void displayBillRecords(ArrayList<Customer> customerList) {
@@ -1472,6 +1568,8 @@ public class Main {
      * Display customer billing history records 10 by 10 for the owner to view
      * Owner can choose to exit viewing if they wish to
      *
+     * @author Lee Khoon Hong
+     *
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      */
     public static void displayBillHistoryRecords(ArrayList<Customer> customerList) {
@@ -1526,6 +1624,8 @@ public class Main {
     /**
      * Display menu for owner account
      *
+     * @author Lee Khoon Hong
+     *
      * @param employeeList An {@code ArrayList} of {@code Employee} objects
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      */
@@ -1571,6 +1671,8 @@ public class Main {
     /**
      * Profile menu for owner account
      *
+     * @author Lee Khoon Hong
+     *
      * @param currentUser Current session user
      * @param ownerList An {@code ArrayList} of {@code Owner} objects
      * @param customerList An {@code ArrayList} of {@code Customer} objects
@@ -1610,6 +1712,8 @@ public class Main {
     /**
      * Profile menu for employee account
      *
+     * @author Lee Khoon Hong
+     *
      * @param currentUser Current session user
      * @param employeeList An {@code ArrayList} of {@code Employee} objects
      * @param customerList An {@code ArrayList} of {@code Customer} objects
@@ -1646,6 +1750,8 @@ public class Main {
 
     /**
      * Profile menu for customer account
+     *
+     * @author Lee Khoon Hong
      *
      * @param currentUser Current session user
      * @param employeeList An {@code ArrayList} of {@code Employee} objects
@@ -1688,6 +1794,8 @@ public class Main {
     /**
      * Owner can delete any employee accounts through this method
      *
+     * @author Lee Khoon Hong
+     *
      * @param employee {@code Employee} object to be deleted
      * @param employeeList An {@code ArrayList} of {@code Employee} objects
      */
@@ -1701,6 +1809,8 @@ public class Main {
 
     /**
      * Customer can delete their own account through this method
+     *
+     * @author Lee Khoon Hong
      *
      * @param currentUser Current session user
      * @param customerList An {@code ArrayList} of {@code Customer} objects
@@ -1720,6 +1830,8 @@ public class Main {
     /**
      * Owner can delete their own account through this method
      *
+     * @author Lee Khoon Hong
+     *
      * @param currentUser Current session user
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      * @param employeeList An {@code ArrayList} of {@code Employee} objects
@@ -1737,6 +1849,8 @@ public class Main {
 
     /**
      * Prompt and get input from user for selecting {@code Promotion} object
+     *
+     * @author Chan Jia Wei
      *
      * @param promotions An {@code ArrayList} of {@code Promotion} objects
      * @return Selected {@code Promotion} object
@@ -1770,6 +1884,8 @@ public class Main {
      * Profile editing menu for {@code Owner}, {@code Employee} and {@code Customer}
      * Users can edit their first name, last name, gender, phone no, date of birth,
      * username, password, e-mail and housing address.
+     *
+     * @author Lee Khoon Hong
      *
      * @param currentUser Current session user
      * @param customerList An {@code ArrayList} of {@code Customer} objects
@@ -1849,6 +1965,8 @@ public class Main {
     /**
      * For current user to edit current password to new password.
      *
+     * @author Lee Khoon Hong
+     *
      * @param currentUser Current session user
      * @return Validated new password
      */
@@ -1861,6 +1979,8 @@ public class Main {
 
     /**
      * Check for status of reservation records
+     *
+     * @author Lee Khoon Hong
      *
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      * @return true if there are records else false
@@ -1881,6 +2001,8 @@ public class Main {
     /**
      * Check for status of billing records
      *
+     * @author Lee Khoon Hong
+     *
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      * @return true if there are records else false
      */
@@ -1900,6 +2022,8 @@ public class Main {
     /**
      * Check for status of bill history records
      *
+     * @author Lee Khoon Hong
+     *
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      * @return true if there are records else false
      */
@@ -1916,11 +2040,11 @@ public class Main {
         return false;
     }
 
-    //--------------------------------------------------------------------------------------------
-
     /**
      * Sub employee menu in owner account menu
      * Owner can modify employee salary, add employee, remove employee and display employee
+     *
+     * @author Lee Khoon Hong
      *
      * @param employeeList An {@code ArrayList} of {@code Employee} objects
      */
@@ -1978,6 +2102,8 @@ public class Main {
      * Customers will need to go through here to check out.
      * Customers will be able to check personal billing and billing history through here too
      *
+     * @author Lee Khoon Hong
+     *
      * @param currentUser Current session user
      * @param promotions An {@code ArrayList} of {@code Promotion} objects
      * @param employeeList An {@code ArrayList} of {@code Employee} objects
@@ -2011,6 +2137,8 @@ public class Main {
 
     /**
      * Cancel reservation method for current session customer
+     *
+     * @author Chan Jia Wei
      *
      * @param currentUser Current session user
      * @param employeeList An {@code ArrayList} of {@code Employee} objects
@@ -2057,6 +2185,8 @@ public class Main {
 
     /**
      * Create a service for reservation purposes
+     *
+     * @author Ong Jia Hui
      *
      * @param pet Pet to book for reservation
      * @return Initialized {@code Service} object
@@ -2131,6 +2261,8 @@ public class Main {
     /**
      * Prompt and get input from user to select {@code Reservation} object
      *
+     * @author Chan Jia Wei
+     *
      * @param currentUser Current session user
      * @return Selected {@code Reservation} object
      */
@@ -2156,6 +2288,8 @@ public class Main {
     /**
      * To check which employee is available at specified date and session
      *
+     * @author Chan Jia Wei
+     *
      * @param date Date of reservation
      * @param session Session of reservation
      * @param employeeList An {@code ArrayList} of {@code Employee} objects
@@ -2175,6 +2309,8 @@ public class Main {
     /**
      * Prompt and get input for remarks
      *
+     * @author Chan Jia Wei
+     *
      * @return Validated remarks
      */
     public static String inputRemarks() {
@@ -2193,6 +2329,8 @@ public class Main {
 
     /**
      * For current session customer to edit their {@code Reservation} objects
+     *
+     * @author Chan Jia Wei
      *
      * @param currentUser Current session user
      * @param employeeList An {@code ArrayList} of {@code Employee} objects
@@ -2381,6 +2519,8 @@ public class Main {
     /**
      * Create a {@code Reservation} object then store it into current session customer
      *
+     * @author Chan Jia Wei
+     *
      * @param currentUser Current session user
      * @param employeeList An {@code ArrayList} of {@code Employee} objects
      */
@@ -2523,6 +2663,8 @@ public class Main {
     /**
      * Search customer by name
      *
+     * @author Lee Khoon Hong
+     *
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      */
     public static void searchCustomer(ArrayList<Customer> customerList) {
@@ -2601,6 +2743,8 @@ public class Main {
     /**
      * Search billing history menu
      *
+     * @author Lee Khoon Hong
+     *
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      */
     public static void searchBillingHistory(ArrayList<Customer> customerList) {
@@ -2626,6 +2770,8 @@ public class Main {
 
     /**
      * Search billing history by total amount
+     *
+     * @author Lee Khoon Hong
      *
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      */
@@ -2729,6 +2875,8 @@ public class Main {
 
     /**
      * Search billing history by date
+     *
+     * @author Lee Khoon Hong
      *
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      */
@@ -2837,6 +2985,8 @@ public class Main {
     /**
      * Search billing by total amount
      *
+     * @author Lee Khoon Hong
+     *
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      */
     public static void searchTotalBilling(ArrayList<Customer> customerList) {
@@ -2923,6 +3073,8 @@ public class Main {
     /**
      * Search employee menu
      *
+     * @author Lee Khoon Hong
+     *
      * @param employeeList An {@code ArrayList} of {@code Employee} objects
      */
     public static void searchEmployee(ArrayList<Employee> employeeList) {
@@ -2948,6 +3100,8 @@ public class Main {
 
     /**
      * Search {@code Employee} objects by salary
+     *
+     * @author Lee Khoon Hong
      *
      * @param employeeList An {@code ArrayList} of {@code Employee} objects
      */
@@ -3036,6 +3190,8 @@ public class Main {
     /**
      * Search {@code Employee} objects by name
      *
+     * @author Lee Khoon Hong
+     *
      * @param employeeList An {@code ArrayList} of {@code Employee} objects
      */
     public static void searchNameEmployee(ArrayList<Employee> employeeList) {
@@ -3119,6 +3275,8 @@ public class Main {
     /**
      * Search reservation menu
      *
+     * @author Chan Jia Wei
+     *
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      */
     public static void searchReservation(ArrayList<Customer> customerList) {
@@ -3144,6 +3302,8 @@ public class Main {
 
     /**
      * Search reservation records by date range
+     *
+     * @author Chan Jia Wei
      *
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      */
@@ -3235,6 +3395,8 @@ public class Main {
     /**
      * Prompt and get input for search start date
      *
+     * @author Ong Jia Hui
+     *
      * @return Validated start date in {@code LocalDate}
      */
     public static LocalDate inputSearchStartDate() {
@@ -3257,6 +3419,8 @@ public class Main {
 
     /**
      * Prompt and get input for search end date
+     *
+     * @author Ong Jia Hui
      *
      * @param startDate Start date for validation
      * @return Validated end date in {@code LocalDate}
@@ -3281,6 +3445,8 @@ public class Main {
 
     /**
      * Owner can search for reservations through customer name.
+     *
+     * @author Lee Khoon Hong
      *
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      */
@@ -3345,6 +3511,8 @@ public class Main {
     /**
      * Add a billing card to current {@code Customer} object
      *
+     * @author Chan Jia Wei
+     *
      * @param currentUser Current session user
      */
     public static void addCard(Person currentUser) {
@@ -3368,6 +3536,8 @@ public class Main {
      * Displays all the billing cards of current customer.
      * Customers can toggle in to view card in detail.
      *
+     * @author Chan Jia Wei
+     *
      * @param currentUser Current session user
      */
     public static void displayCard(Person currentUser){
@@ -3383,6 +3553,8 @@ public class Main {
 
     /**
      * Enable customer to edit their specific card details.
+     *
+     * @author Chan Jia Wei
      *
      * @param currentUser Current session user
      */
@@ -3433,6 +3605,8 @@ public class Main {
     /**
      * Remove a card from current customer
      *
+     * @author Chan Jia Wei
+     *
      * @param currentUser Current session user
      */
     public static void removeCard(Person currentUser) {
@@ -3448,6 +3622,8 @@ public class Main {
 
     /**
      * Convert words in text into capitals
+     *
+     * @author Ong Jia Hui
      *
      * @param input {@code String} to be capitalized
      * @return Capitalized {@code String}
@@ -3475,6 +3651,8 @@ public class Main {
     /**
      * Prompt and get input for billing card number
      *
+     * @author Chan Jia Wei
+     *
      * @param currentUser Current session user
      * @return {@code String}, Validated card number
      */
@@ -3499,6 +3677,8 @@ public class Main {
     /**
      * Check if the card number entered is unique within current customer account.
      *
+     * @author Chan Jia Wei
+     *
      * @param currentUser Current session user
      * @param cardNumber Card number of debit or credit card
      * @return true if it is unique else false
@@ -3516,6 +3696,8 @@ public class Main {
     /**
      * Prompt and get input for billing card CVV
      *
+     * @author Chan Jia Wei
+     *
      * @return Validated CVV
      */
     public static String inputCardCvv() {
@@ -3531,6 +3713,8 @@ public class Main {
 
     /**
      * Prompt and get input from user to chose debit card or credit card
+     *
+     * @author Chan Jia Wei
      *
      * @return "Debit" or "Credit" depends on user choice
      */
@@ -3558,6 +3742,8 @@ public class Main {
     /**
      * Prompt and get input for billing card expire date
      *
+     * @author Chan Jia Wei
+     *
      * @return Validated card expire date in {@code LocalDate}
      */
     public static LocalDate inputCardExpireDate() {
@@ -3583,6 +3769,8 @@ public class Main {
     /**
      * Prompt and get input for name on billing card
      *
+     * @author Chan Jia Wei
+     *
      * @return Validated name
      */
     public static String inputNameOnCard() {
@@ -3602,6 +3790,8 @@ public class Main {
 
     /**
      * Prompt and get input from user to chose card issuer
+     *
+     * @author Chan Jia Wei
      *
      * @return Validated issuer
      */
@@ -3625,6 +3815,8 @@ public class Main {
 
     /**
      * Prompt and get input from user for creating new {@code Promotion} object
+     *
+     * @author Chan Jia Wei
      *
      * @param promo New {@code Promotion} object
      * @param promotions An {@code ArrayList} of {@code Promotion} objects
@@ -3658,6 +3850,8 @@ public class Main {
     /**
      * To check if new promo code is unique or not
      *
+     * @author Chan Jia Wei
+     *
      * @param code Promo code to be validated
      * @param promotions An {@code ArrayList} of {@code Promotion} objects
      * @return boolean, true if it is unique else false
@@ -3674,6 +3868,8 @@ public class Main {
 
     /**
      * Prompt and get input for {@code Bath} object
+     *
+     * @author Ong Jia Hui
      *
      * @param bath Pass in new {@code Bath} object for initialization
      * @return Initialized {@code Bath} object
@@ -3735,6 +3931,8 @@ public class Main {
     /**
      * Prompt and get input for {@code Groom} object
      *
+     * @author Ong Jia Hui
+     *
      * @param groom Pass in new {@code Groom} object for initialization
      * @return Initialized {@code Groom} object
      */
@@ -3775,6 +3973,8 @@ public class Main {
     /**
      * Prompt and get input for {@code Massage} object
      *
+     * @author Ong Jia Hui
+     *
      * @param massage Pass in new {@code Massage} object for initialization
      * @return Initialized {@code Massage} object
      */
@@ -3806,6 +4006,8 @@ public class Main {
 
     /**
      * Prompt and get input for {@code Shelter} object
+     *
+     * @author Ong Jia Hui
      *
      * @param shelter Pass in new {@code Shelter} object for initialization
      * @return Initialized {@code Shelter} object
@@ -3868,6 +4070,8 @@ public class Main {
     /**
      * Prompt and get input from user to choose {@code Promotion} object
      *
+     * @author Chan Jia Wei
+     *
      * @param promotions An {@code ArrayList} of {@code Promotion} objects
      * @return Selected {@code Promotion} object
      */
@@ -3896,6 +4100,8 @@ public class Main {
     /**
      * For user to input {@code Promotion} object promo rate
      *
+     * @author Chan Jia Wei
+     *
      * @return Validated promo rate
      */
     public static double inputRate() {
@@ -3911,6 +4117,8 @@ public class Main {
 
     /**
      * Uses {@code Scanner} object to simulate system pause
+     *
+     * @author Lee Khoon Hong
      */
     public static void pressAnyKeyToContinue() {
         System.out.println("\n  Press Enter key to continue...");
@@ -3922,6 +4130,8 @@ public class Main {
 
     /**
      * Prompts and get input for {@code Level} enum
+     *
+     * @author Tan Shi Jing
      *
      * @param title Title to be displayed while getting input
      * @return {@code String}, selected {@code Level} enum
@@ -3951,6 +4161,8 @@ public class Main {
 
     /**
      * Prompts and get input for {@code Size} enum
+     *
+     * @author Tan Shi Jing
      *
      * @param title Title to be displayed while getting input
      * @return {@code String}, selected {@code Size} enum
@@ -3989,6 +4201,8 @@ public class Main {
     /**
      * Convert a {@code Size} enum into a displayable format.
      *
+     * @author Tan Shi Jing
+     *
      * @param size {@code Size} enum
      * @return {@code String}, "Extra Small", "Small", "Medium", "Large", "Extra Large"
      */
@@ -4016,6 +4230,8 @@ public class Main {
     /**
      * Convert a {@code Level} enum into a displayable format.
      *
+     * @author Tan Shi Jing
+     *
      * @param level {@code Level} enum
      * @return {@code String}, "Low", "Medium" or "High"
      */
@@ -4036,6 +4252,8 @@ public class Main {
 
     /**
      * Prompt and get input for choice (yes or no)
+     *
+     * @author Lee Khoon Hong
      *
      * @param promptMessage Text to be prompted while getting input
      * @return boolean, true if user inputs 'y' or 'Y',
@@ -4069,6 +4287,8 @@ public class Main {
     /**
      * Prompt and get input for pet age
      *
+     * @author Tan Shi Jing
+     *
      * @param promptMessage Text to be prompted while getting input
      * @return integer, age of pet within 1 to 20 range
      */
@@ -4086,6 +4306,8 @@ public class Main {
 
     /**
      * Prompt and get input for start date.
+     *
+     * @author Lee Khoon Hong
      *
      * @param text Text to be prompted while getting input
      * @return Start date in {@code LocalDate}
@@ -4110,6 +4332,8 @@ public class Main {
 
     /**
      * Prompt and get input for end date.
+     *
+     * @author Lee Khoon Hong
      *
      * @param text Text to be prompted while getting input
      * @param startDate Start date for validation
@@ -4136,6 +4360,8 @@ public class Main {
     /**
      * Converts {@code LocalDateTime} into a displayable date format
      *
+     * @author Lee Khoon Hong
+     *
      * @param datetime Date & time in {@code LocalDateTime}
      * @return Date in {@code String} formatted in dd/mm/yyyy format
      */
@@ -4147,6 +4373,8 @@ public class Main {
     /**
      * Convert {@code LocalDate} into a displayable date format
      *
+     * @author Lee Khoon Hong
+     *
      * @param date Date in {@code LocalDate}
      * @return Date in {@code String} formatted in dd/mm/yyyy format
      */
@@ -4157,6 +4385,8 @@ public class Main {
 
     /**
      * Convert {@code LocalDateTime} into a displayable date and time format
+     *
+     * @author Lee Khoon Hong
      *
      * @param datetime Date & time in {@code LocalDateTime}
      * @return Date and time in {@code String} formatted in dd/mm/yyyy hh:mm format
@@ -4170,6 +4400,8 @@ public class Main {
      * To validate the CVV of a card using regular expression.
      * Check if value entered have only 3 digits.
      *
+     * @author Chan Jia Wei
+     *
      * @param cvv Card security code
      * @return boolean, true if correct else false
      */
@@ -4180,6 +4412,8 @@ public class Main {
     /**
      * A regular expression for validating card number
      * This regex can validate card number from vendors such as Visa, MasterCard, American Express, Diners Club, Discover, and JCB cards
+     *
+     * @author Chan Jia Wei
      *
      * @param cardNumber Number of credit card or debit card
      * @return boolean, true if correct else false
@@ -4197,6 +4431,8 @@ public class Main {
     /**
      * To validate pet age within 1 - 20 value
      *
+     * @author Tan Shi Jing
+     *
      * @param age Age to be validated
      * @return boolean, true if correct else false
      */
@@ -4212,6 +4448,8 @@ public class Main {
      * <pre>
      *     E.g. not match   pets1 | 1234567 | petshop
      * </pre>
+     *
+     * @author Lee Khoon Hong
      *
      * @param userpass username or password to be validated
      * @return boolean, true if correct else false
@@ -4247,6 +4485,8 @@ public class Main {
      *     E.g. not match   .@eee.com | eee@e-.com | eee@ee.eee.eeeeeeeeee
      * </pre>
      *
+     * @author Lee Khoon Hong
+     *
      * @param email E-mail address to be validated
      * @return boolean, true if correct else false
      */
@@ -4268,6 +4508,8 @@ public class Main {
      * <pre>
      *      E.g. not match  0978456123 | a012345678 | 0464331725
      * </pre>
+     *
+     * @author Lee Khoon Hong
      *
      * @param tel Phone number to be validated
      * @return boolean, true if correct else false
@@ -4291,6 +4533,8 @@ public class Main {
      *      E.g. no match   Dom1nos | !Dominic | Sa*na
      * </pre>
      *
+     * @author Lee Khoon Hong
+     *
      * @param name Name to be validated
      * @return boolean, true if correct else false
      */
@@ -4308,6 +4552,8 @@ public class Main {
     /**
      * Prompts and get user input for last name
      * {@code nameValidation()} will be called to validate first name
+     *
+     * @author Lee Khoon Hong
      *
      * @return Validated first name
      */
@@ -4331,6 +4577,8 @@ public class Main {
      * Prompts and get user input for last name
      * {@code nameValidation()} will be called to validate last name
      *
+     * @author Lee Khoon Hong
+     *
      * @return Validated last name
      */
     public static String inputLastname() {
@@ -4351,6 +4599,8 @@ public class Main {
 
     /**
      * Prompts and get user input for user gender
+     *
+     * @author Lee Khoon Hong
      *
      * @return Gender in character format, 'M' or 'F'
      */
@@ -4379,6 +4629,8 @@ public class Main {
     /**
      * Prompts and get user input for date of birth
      *
+     * @author Lee Khoon Hong
+     *
      * @return Date of birth in {@code LocalDate}
      */
     public static LocalDate inputDOB() {
@@ -4405,6 +4657,8 @@ public class Main {
      * Prompts and get user input for phone number
      * {@code telValidation()} will be called to validate phone number
      *
+     * @author Lee Khoon Hong
+     *
      * @return Validated phone number
      */
     public static String inputTel() {
@@ -4427,6 +4681,8 @@ public class Main {
      * Prompts and get user input for e-mail address
      * {@code emailValidation()} will be called to validate email address
      *
+     * @author Lee Khoon Hong
+     *
      * @return Validated e-mail address
      */
     public static String inputEmail() {
@@ -4447,6 +4703,8 @@ public class Main {
 
     /**
      * Displays username rules when called
+     *
+     * @author Tan Shi Jing
      */
     public static void displayUsernameRules() {
         System.out.println("\n  +--------------------------------------------------------------------+");
@@ -4465,6 +4723,8 @@ public class Main {
      * Prompt and get user input for customer username.
      * Validation will be applied in order to ensure username uniqueness.
      * {@code userpassValidation()} will be called to validate username.
+     *
+     * @author Lee Khoon Hong
      *
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      * @return Validated employee username
@@ -4505,6 +4765,8 @@ public class Main {
      * Validation will be applied in order to ensure username uniqueness.
      * {@code userpassValidation()} will be called to validate username.
      *
+     * @author Lee Khoon Hong
+     *
      * @param employeeList An {@code ArrayList} of {@code Employee} objects
      * @return Validated employee username
      */
@@ -4543,6 +4805,8 @@ public class Main {
      * Prompt and get user input for owner username.
      * Validation will be applied in order to ensure username uniqueness.
      * {@code userpassValidation()} will be called to validate username.
+     *
+     * @author Lee Khoon Hong
      *
      * @param ownerList An {@code ArrayList} of {@code Owner} objects
      * @return Validated owner username
@@ -4583,6 +4847,8 @@ public class Main {
      * Validates it with several constraints such as at least 7 characters, only letter & digits and at least one letter and one digit.
      * {@code userpassValidation()} will be called to validate password.
      *
+     * @author Lee Khoon Hong
+     *
      * @return Validated password
      */
     public static String inputPassword() {
@@ -4621,6 +4887,9 @@ public class Main {
     }
 
     /**
+     * Check the status of employee array records whether is empty or not
+     *
+     * @author Lee Khoon Hong
      *
      * @param employeeList An {@code ArrayList} of {@code Employee} objects
      * @return boolean, true if there are records, else false.
@@ -4630,6 +4899,9 @@ public class Main {
     }
 
     /**
+     * Check the status of promotion array records whether is empty or not
+     *
+     * @author Lee Khoon Hong
      *
      * @param promotions An {@code ArrayList} of {@code Promotion} objects
      * @return boolean, true if there are records, else false.
@@ -4639,6 +4911,9 @@ public class Main {
     }
 
     /**
+     * Check the status of customer array records whether is empty or not
+     *
+     * @author Lee Khoon Hong
      *
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      * @return boolean, true if there are records, else false.
@@ -4649,6 +4924,8 @@ public class Main {
 
     /**
      * Prompt user to choose a {@code Employee} object.
+     *
+     * @author Lee Khoon Hong
      *
      * @param employeeList An {@code ArrayList} of {@code Employee} objects
      * @return Selected {@code Employee} object
@@ -4679,6 +4956,8 @@ public class Main {
 
     /**
      *  Displays the reservation info of a specific {@code Customer} object
+     *
+     *  @author Chan Jia Wei
      *
      * @param customer {@code Customer} object to display reservation
      */
@@ -4712,6 +4991,8 @@ public class Main {
     /**
      * Prompt user to choose a {@code Customer} object.
      *
+     * @author Lee Khoon Hong
+     *
      * @param customerList An {@code ArrayList} of {@code Customer} objects
      * @return Selected {@code Customer} object
      */
@@ -4738,6 +5019,8 @@ public class Main {
     /**
      * Change the {@code currentUser} into null to simulate logout
      *
+     * @author Lee Khoon Hong
+     *
      * @param currentUser Current session user
      */
     public static void logout(Person currentUser) {
@@ -4746,6 +5029,8 @@ public class Main {
 
     /**
      * To prompt and get input from user with {@code Scanner} object
+     *
+     * @author Lee Khoon Hong
      *
      * @param promptMessage Text to be displayed while prompting user to input
      * @return Inputted {@code String}
@@ -4765,6 +5050,8 @@ public class Main {
 
     /**
      * To prompt and get input from user with {@code Scanner} object
+     *
+     * @author Lee Khoon Hong
      *
      * @param promptMessage Text to be displayed while prompting user to input
      * @return Inputted integer value
@@ -4787,6 +5074,8 @@ public class Main {
     /**
      * To prompt and get input from user with {@code Scanner} object
      *
+     * @author Lee Khoon Hong
+     *
      * @param promptMessage Text to be displayed while prompting user to input
      * @return Inputted double value
      */
@@ -4808,6 +5097,8 @@ public class Main {
     /**
      * To prompt and get input from user with {@code Scanner} object
      *
+     * @author Lee Khoon Hong
+     *
      * @param promptMessage Text to be displayed while prompting user to input
      * @return Inputted Character
      */
@@ -4821,6 +5112,8 @@ public class Main {
      * Prompts start date for {@code Promotion} object.
      * It will validate whether if user input invalid date such as
      * date that are invalid and date that is in the past.
+     *
+     * @author Chan Jia Wei
      *
      * @param promo Sets the {@code LocalDate} start date obtained from user into this {@code Promotion} object
      */
@@ -4848,6 +5141,8 @@ public class Main {
      * Prompts end date fpr {@code Promotion} object
      * It will validate whether if user input invalid date such as
      * date that are invalid, date that are before the start date and date that is in the past.
+     *
+     * @author Chan Jia Wei
      *
      * @param promo Sets the {@code LocalDate} end date obtained from user into this {@code Promotion} object
      */
@@ -4877,6 +5172,8 @@ public class Main {
      * Allows currency to be displayed more easily.
      * Format an "RM" in front of the {@code String}
      *
+     * @author Lee Khoon Hong
+     *
      * @param amount The amount to be converted
      * @return Formatted Malaysia currency amount into {@code String}
      */
@@ -4886,6 +5183,8 @@ public class Main {
 
     /**
      * Converts boolean data into a more distinguishable format (symbol)
+     *
+     * @author Lee Khoon Hong
      *
      * @param bool Boolean value to be converted
      * @return Character, 'O' if {@code bool} is true, else return 'X'
@@ -4900,6 +5199,8 @@ public class Main {
      * calls {@code dispGrandTotal()} method, displays discount information (if applied) and tax and grand total.
      * gets promoCode user wants to apply, then validates it and deduct from the total amount.
      * gets payment method to make payment.
+     *
+     * @author Lee Khoon Hong
      *
      * @param currentUser Object of current customer making payment
      * @param promotions All valid promotion info
@@ -4988,6 +5289,8 @@ public class Main {
     /**
      * displays discount information (if applied) and tax and grand total clearly
      *
+     * @author Lee Khoon Hong
+     *
      * @param cb Billing object of current customer, contains all billing info
      * @param promoYesNo Indicate whether promo code is applied
      * @param totalAmt Total amount without discount
@@ -5013,6 +5316,8 @@ public class Main {
 
     /**
      * displays the reservations and each reservation's service details and add-ons in a table clearly
+     *
+     * @author Lee Khoon Hong
      *
      * @param cb Billing object of current customer, contains all billing info
      * @param amt Charges for each reservation in the bill
@@ -5041,13 +5346,15 @@ public class Main {
             dispServiceDetails(cb.getBillDetails().get(i).getServices());
         }
         System.out.println("  ====================================================================================================================");
-        System.out.println("  |  Total Amount                                 :  RM" + String.format("%9.2f", totalAmt) + "                                                     |");
+        System.out.println("  |  Total Amount                                 : RM" + String.format("%9.2f", totalAmt) + "                                                      |");
         System.out.println("  ====================================================================================================================");
 
     }
 
     /**
      * displays each reservation's service add on chosen by customer, like price and name of add-ons
+     *
+     * @author Lee Khoon Hong
      *
      * @param s Service object of a reservation, contains all 4 services info and price
      */
@@ -5116,6 +5423,8 @@ public class Main {
      * calls methods {@code dispBillSummary()} and {@code dispGrandTotal()} to display the reservations details and the grand total details
      * for final checking before making payment
      *
+     * @author Lee Khoon Hong
+     *
      * @param amt Charges for each reservation in the bill
      * @param totalAmt Total amount of all the reservations in the bill
      * @param promoYesNo Indicate whether promo code is applied
@@ -5167,6 +5476,8 @@ public class Main {
      * calls methods {@code dispBillSummary()} and {@code dispGrandTotal()} to display the reservations details and the grand total details
      * for final checking before making payment
      *
+     * @author Lee Khoon Hong
+     *
      * @param amt Charges for each reservation in the bill
      * @param totalAmt Total amount of all the reservations in the bill
      * @param promoYesNo Indicate whether promo code is applied
@@ -5215,6 +5526,8 @@ public class Main {
     /**
      * Causes the current thread to suspend execution for a specified period when processing car payment to imitate loading.
      *
+     * @author Lee Khoon Hong
+     *
      * @param ms Amount of time to pause system in milliseconds
      */
     public static void wait(int ms) {
@@ -5228,8 +5541,9 @@ public class Main {
     /**
      * displays all the cards linked with his account, and let customer select a card
      *
-     * @param currentUser Object of current customer making payment
+     * @author Lee Khoon Hong
      *
+     * @param currentUser Object of current customer making payment
      * @return Card, returns the card object of the card selected by customer
      */
     public static Card selectCard(Person currentUser) {
@@ -5259,6 +5573,8 @@ public class Main {
     /**
      * displays all the payment method available, and let customer select one
      *
+     * @author Lee Khoon Hong
+     *
      * @return int, returns the int number of the payment method chosen
      */
     public static int selectPaymentMethod() {
@@ -5276,6 +5592,8 @@ public class Main {
     /**
      * search and assign the promo object to billing
      *
+     * @author Chan Jia Wei
+     *
      * @param promoCodeEntered String of the {@code promocode} customer entered
      * @param promotions All valid promotion info
      *
@@ -5292,6 +5610,8 @@ public class Main {
 
     /**
      * search whether promo obj of the entered promo code exists
+     *
+     * @author Chan Jia Wei
      *
      * @param promoCodeEntered String of the {@code promocode} customer entered
      * @param promotions All valid promotion info
@@ -5312,6 +5632,8 @@ public class Main {
 
     /**
      * validate whether promo code entered by customer is in the valid period
+     *
+     * @author Chan Jia Wei
      *
      * @param promoCodeEntered String of the {@code promocode} customer entered
      * @param promotions All valid promotion info
@@ -5334,6 +5656,8 @@ public class Main {
     /**
      * display short description of all past billings paid of a specific customer (customer's own bill history)
      * then customer can choose a {@code billHistory} to view in detail
+     *
+     * @author Lee Khoon Hong
      *
      * @param currentUser Object of current customer making payment
      *
@@ -5400,6 +5724,8 @@ public class Main {
     /**
      * display current bill that has not been paid and its reservation details
      *
+     * @author Lee Khoon Hong
+     *
      * @param currentUser Object of current customer making payment
      *
      */
@@ -5421,6 +5747,8 @@ public class Main {
     /**
      * lets customer choose a search method to search bill history, either by grand total amount or payment date.
      * gets start search date, end search date.
+     *
+     * @author Lee Khoon Hong
      *
      * if search by grand total amount, calls method {@code searchCurrentCustBillingHistoryGrandTotal()}.
      * if search by payment date, calls method {@code searchCurrentCustBillingHistoryPaymentDate()}.
@@ -5513,6 +5841,8 @@ public class Main {
      * search by grand total amount, displays brief description of bill history in the grand total amount range
      * allows customer to choose one to view in detail, the reservation details and also the discount info (if applied) and tax info
      *
+     * @author Lee Khoon Hong
+     *
      * @param min Min grand total amount
      * @param max Max grand total amount
      * @param cbh Array of all past billing  (customer's own bill history)
@@ -5581,6 +5911,8 @@ public class Main {
      * searchCurrentCustBillingHistoryPaymentDate
      * search by date of payment, displays brief description of bill history in the date range
      * allows customer to choose one to view in detail, the reservation details and also the discount info (if applied) and tax info
+     *
+     * @author Lee Khoon Hong
      *
      * @param minDate Min date to search
      * @param maxDate Max date to search

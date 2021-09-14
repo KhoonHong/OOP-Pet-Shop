@@ -14,6 +14,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * This main class is for records generating purposes
+ *
+ * @author Lee Khoon Hong
  */
 
 public class Main2 {

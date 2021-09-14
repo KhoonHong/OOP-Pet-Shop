@@ -10,9 +10,10 @@ import java.util.Arrays;
 public class Main3 {
 
     // reports
-
     /**
      * Generate and displays customer demographic report
+     *
+     * @author Chan Jia Wei
      *
      * @param customerList An array of {@code Customer} objects
      */
@@ -116,6 +117,8 @@ public class Main3 {
     /**
      * To calculate region count for customer demographic report
      *
+     * @author Chan Jia Wei
+     *
      * @param c {@code Customer} to obtain bill history
      * @param start Start date in {@code LocalDate}
      * @param end End date in {@code LocalDate}
@@ -131,6 +134,8 @@ public class Main3 {
 
     /**
      * To calculate the total amount of billing history of a specific customer within a specific range of dates
+     *
+     * @author Chan Jia Wei
      *
      * @param c {@code Customer} to obtain bill history
      * @param start Start date in {@code LocalDate}
@@ -148,6 +153,8 @@ public class Main3 {
 
     /**
      * Generate and displays source of promo code report
+     *
+     * @author Ong Jia Hui
      *
      * @param customer An array of {@code Customer} objects
      */
@@ -237,6 +244,8 @@ public class Main3 {
 
     /**
      * Generates and displays pet demographic report
+     *
+     * @author Chan Jia Wei
      *
      * @param customerList An array of {@code Customer} objects
      */
@@ -473,6 +482,8 @@ public class Main3 {
     /**
      * Sort figures for pet demographic report
      *
+     * @author Chan Jia Wei
+     *
      * @param naming Sorted based on the arrangement of {@code figures}
      * @param figures The values to be sorted
      */
@@ -500,6 +511,8 @@ public class Main3 {
     /**
      * To prompt user for start date input and validate it
      *
+     * @author Chan Jia Wei
+     *
      * @param text Text to prompt user for date input
      * @return Start date in {@code LocalDate}
      */
@@ -526,6 +539,8 @@ public class Main3 {
 
     /**
      * To prompt user for end date input and validate it
+     *
+     * @author Chan Jia Wei
      *
      * @param text Text to prompt user for date input
      * @param startDate Start date to validate the end date
@@ -559,6 +574,8 @@ public class Main3 {
 
     /**
      * Generate and displays top 10 most spending customer report
+     *
+     * @author Lee Khoon Hong
      *
      * @param customerList An array of {@code Customer} objects
      */
@@ -632,6 +649,8 @@ public class Main3 {
     /**
      * Add the customers who have billing history in a specified date range
      *
+     * @author Lee Khoon Hong
+     *
      * @param customer a {@code Customer} object
      * @param custFiltered an {@code ArrayList} to store selected customers
      * @param startDate Start date to filter
@@ -648,6 +667,8 @@ public class Main3 {
 
     /**
      * Sort figures for top 10 customer spending report
+     *
+     * @author Lee Khoon Hong
      *
      * @param custFiltered An {@code ArrayList} of selected customer to be sorted accordingly with {@code figures}
      * @param figures The values to be sorted with bubble sort
@@ -677,6 +698,8 @@ public class Main3 {
 
     /**
      * Generate and displays payment method report
+     *
+     * @author Tan Shi Jing
      *
      * @param customerList An array of {@code Customer} objects
      */

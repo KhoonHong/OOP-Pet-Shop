@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -5,6 +6,11 @@ import java.util.Arrays;
 
 /**
  * This main class is for storing report methods
+ *
+ * @author Lee Khoon Hong
+ * @author Chan Jia Wei
+ * @author Tan Shi Jing
+ * @author Ong Jia Hui
  */
 
 public class Main3 {

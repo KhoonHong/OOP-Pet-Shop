@@ -51,8 +51,8 @@ public class Main {
                 LocalDate.of(2001, 12, 15),
                 new Address("15, Lorong Jamban 3", "Bayan Lepas", "11900", "North", "Penang", "Malaysia"),
                 "leekhoonhong@hotmail.com",
-                "o",
-                "o"));
+                "leekh12345",
+                "leekh12345"));
 
         // adds a default employee object into the employee array list
         employeeList.add(new Employee("Jia Wei",
@@ -62,8 +62,8 @@ public class Main {
                 LocalDate.of(2001, 1, 12),
                 new Address("1, Tingkat Kenari 5", "Bayan Baru", "11900", "South", "Penang", "Malaysia"),
                 "chanjiawei@gmail.com",
-                "e",
-                "e",
+                "chanjw12345",
+                "chanjw12345",
                 20000.00));
 
         // adds a default customer object into the customer array list
@@ -74,8 +74,8 @@ public class Main {
                 LocalDate.of(2002, 3, 22),
                 new Address("11, Lorong sepit 2", "Kulim", "12111", "East", "Kedah", "Malaysia"),
                 "tanshijing@gmail.com",
-                "c",
-                "c"));
+                "tansj12345",
+                "tansj12345"));
 
         // add a cat into first customer
         customerList.get(0).addPet(new Cat(true, 1, 'M', "Black", Level.MEDIUM, Size.MEDIUM, false));
@@ -1245,7 +1245,7 @@ public class Main {
      * Menu for billing card.
      * Customers will be able to add, display, remove and edit billing card.
      *
-     * @author Chan Jia Wei
+     * @author Lee Khoon Hong
      *
      * @param currentUser Current session user
      */
@@ -3031,7 +3031,6 @@ public class Main {
             System.out.println("  |     2. Descending      |");
             System.out.println("  |________________________|");
 
-
             switch (promptInt("\n  Enter a selection > ")) {
                 case 1 -> customers.sort((c1, c2) -> Double.compare(c1.getBill().calcTotalAmount(), c2.getBill().calcTotalAmount()));
                 case 2 -> customers.sort((c1, c2) -> Double.compare(c2.getBill().calcTotalAmount(), c1.getBill().calcTotalAmount()));
@@ -3511,7 +3510,7 @@ public class Main {
     /**
      * Add a billing card to current {@code Customer} object
      *
-     * @author Chan Jia Wei
+     * @author Lee Khoon Hong
      *
      * @param currentUser Current session user
      */
@@ -3536,7 +3535,7 @@ public class Main {
      * Displays all the billing cards of current customer.
      * Customers can toggle in to view card in detail.
      *
-     * @author Chan Jia Wei
+     * @author Lee Khoon Hong
      *
      * @param currentUser Current session user
      */
@@ -3554,7 +3553,7 @@ public class Main {
     /**
      * Enable customer to edit their specific card details.
      *
-     * @author Chan Jia Wei
+     * @author Lee Khoon Hong
      *
      * @param currentUser Current session user
      */
@@ -3605,7 +3604,7 @@ public class Main {
     /**
      * Remove a card from current customer
      *
-     * @author Chan Jia Wei
+     * @author Lee Khoon Hong
      *
      * @param currentUser Current session user
      */
@@ -3651,7 +3650,7 @@ public class Main {
     /**
      * Prompt and get input for billing card number
      *
-     * @author Chan Jia Wei
+     * @author Lee Khoon Hong
      *
      * @param currentUser Current session user
      * @return {@code String}, Validated card number
@@ -3677,7 +3676,7 @@ public class Main {
     /**
      * Check if the card number entered is unique within current customer account.
      *
-     * @author Chan Jia Wei
+     * @author Lee Khoon Hong
      *
      * @param currentUser Current session user
      * @param cardNumber Card number of debit or credit card
@@ -3696,7 +3695,7 @@ public class Main {
     /**
      * Prompt and get input for billing card CVV
      *
-     * @author Chan Jia Wei
+     * @author Lee Khoon Hong
      *
      * @return Validated CVV
      */
@@ -3714,7 +3713,7 @@ public class Main {
     /**
      * Prompt and get input from user to chose debit card or credit card
      *
-     * @author Chan Jia Wei
+     * @author Lee Khoon Hong
      *
      * @return "Debit" or "Credit" depends on user choice
      */
@@ -3742,7 +3741,7 @@ public class Main {
     /**
      * Prompt and get input for billing card expire date
      *
-     * @author Chan Jia Wei
+     * @author Lee Khoon Hong
      *
      * @return Validated card expire date in {@code LocalDate}
      */
@@ -3769,7 +3768,7 @@ public class Main {
     /**
      * Prompt and get input for name on billing card
      *
-     * @author Chan Jia Wei
+     * @author Lee Khoon Hong
      *
      * @return Validated name
      */
@@ -3791,7 +3790,7 @@ public class Main {
     /**
      * Prompt and get input from user to chose card issuer
      *
-     * @author Chan Jia Wei
+     * @author Lee Khoon Hong
      *
      * @return Validated issuer
      */
@@ -5200,7 +5199,7 @@ public class Main {
      * gets promoCode user wants to apply, then validates it and deduct from the total amount.
      * gets payment method to make payment.
      *
-     * @author Lee Khoon Hong
+     * @author Chan Jia Wei
      *
      * @param currentUser Object of current customer making payment
      * @param promotions All valid promotion info
@@ -5244,16 +5243,24 @@ public class Main {
                     }
                 } while (reenterPromoCode);
 
+                boolean sourceFlag;
                 if (promoYesNo) {
-                    System.out.println("\n  Please share the source of promo code with us");
-                    System.out.println("  1. Youtube\n  2. Instagram\n  3. Facebook\n  4. Twitter\n  5. Friends");
-                    switch (Main.promptInt("  Source > ")) {
-                        case 1 -> cb.setPromoOrigin("Youtube");
-                        case 2 -> cb.setPromoOrigin("Instagram");
-                        case 3 -> cb.setPromoOrigin("Facebook");
-                        case 4 -> cb.setPromoOrigin("Twitter");
-                        case 5 -> cb.setPromoOrigin("Friends");
-                    }
+                    do {
+                        sourceFlag = false;
+                        System.out.println("\n  Please share the source of promo code with us");
+                        System.out.println("  1. Youtube\n  2. Instagram\n  3. Facebook\n  4. Twitter\n  5. Friends");
+                        switch (Main.promptInt("  Source > ")) {
+                            case 1 -> cb.setPromoOrigin("Youtube");
+                            case 2 -> cb.setPromoOrigin("Instagram");
+                            case 3 -> cb.setPromoOrigin("Facebook");
+                            case 4 -> cb.setPromoOrigin("Twitter");
+                            case 5 -> cb.setPromoOrigin("Friends");
+                            default -> {
+                                System.out.println("Invalid selection...");
+                                sourceFlag = true;
+                            }
+                        }
+                    } while(sourceFlag);
                     // add promotion to customer billing
                     ((Customer) currentUser).getBill().setPromoApplied(searchAssignPromo(promoCodeEntered, promotions));
                     promoRate = ((Customer) currentUser).getBill().getPromoApplied().getPromoRate();
@@ -5289,7 +5296,7 @@ public class Main {
     /**
      * displays discount information (if applied) and tax and grand total clearly
      *
-     * @author Lee Khoon Hong
+     * @author Chan Jia Wei
      *
      * @param cb Billing object of current customer, contains all billing info
      * @param promoYesNo Indicate whether promo code is applied
@@ -5317,7 +5324,7 @@ public class Main {
     /**
      * displays the reservations and each reservation's service details and add-ons in a table clearly
      *
-     * @author Lee Khoon Hong
+     * @author Chan Jia Wei
      *
      * @param cb Billing object of current customer, contains all billing info
      * @param amt Charges for each reservation in the bill
@@ -5354,7 +5361,7 @@ public class Main {
     /**
      * displays each reservation's service add on chosen by customer, like price and name of add-ons
      *
-     * @author Lee Khoon Hong
+     * @author Chan Jia Wei
      *
      * @param s Service object of a reservation, contains all 4 services info and price
      */
@@ -5423,7 +5430,7 @@ public class Main {
      * calls methods {@code dispBillSummary()} and {@code dispGrandTotal()} to display the reservations details and the grand total details
      * for final checking before making payment
      *
-     * @author Lee Khoon Hong
+     * @author Chan Jia Wei
      *
      * @param amt Charges for each reservation in the bill
      * @param totalAmt Total amount of all the reservations in the bill
@@ -5476,7 +5483,7 @@ public class Main {
      * calls methods {@code dispBillSummary()} and {@code dispGrandTotal()} to display the reservations details and the grand total details
      * for final checking before making payment
      *
-     * @author Lee Khoon Hong
+     * @author Chan Jia Wei
      *
      * @param amt Charges for each reservation in the bill
      * @param totalAmt Total amount of all the reservations in the bill
@@ -5526,7 +5533,7 @@ public class Main {
     /**
      * Causes the current thread to suspend execution for a specified period when processing car payment to imitate loading.
      *
-     * @author Lee Khoon Hong
+     * @author Chan Jia Wei
      *
      * @param ms Amount of time to pause system in milliseconds
      */
@@ -5541,7 +5548,7 @@ public class Main {
     /**
      * displays all the cards linked with his account, and let customer select a card
      *
-     * @author Lee Khoon Hong
+     * @author Chan Jia Wei
      *
      * @param currentUser Object of current customer making payment
      * @return Card, returns the card object of the card selected by customer
@@ -5573,7 +5580,7 @@ public class Main {
     /**
      * displays all the payment method available, and let customer select one
      *
-     * @author Lee Khoon Hong
+     * @author Chan Jia Wei
      *
      * @return int, returns the int number of the payment method chosen
      */
@@ -5657,7 +5664,7 @@ public class Main {
      * display short description of all past billings paid of a specific customer (customer's own bill history)
      * then customer can choose a {@code billHistory} to view in detail
      *
-     * @author Lee Khoon Hong
+     * @author Chan Jia Wei
      *
      * @param currentUser Object of current customer making payment
      *
@@ -5724,7 +5731,7 @@ public class Main {
     /**
      * display current bill that has not been paid and its reservation details
      *
-     * @author Lee Khoon Hong
+     * @author Chan Jia Wei
      *
      * @param currentUser Object of current customer making payment
      *
@@ -5748,7 +5755,7 @@ public class Main {
      * lets customer choose a search method to search bill history, either by grand total amount or payment date.
      * gets start search date, end search date.
      *
-     * @author Lee Khoon Hong
+     * @author Chan Jia Wei
      *
      * if search by grand total amount, calls method {@code searchCurrentCustBillingHistoryGrandTotal()}.
      * if search by payment date, calls method {@code searchCurrentCustBillingHistoryPaymentDate()}.
@@ -5841,7 +5848,7 @@ public class Main {
      * search by grand total amount, displays brief description of bill history in the grand total amount range
      * allows customer to choose one to view in detail, the reservation details and also the discount info (if applied) and tax info
      *
-     * @author Lee Khoon Hong
+     * @author Chan Jia Wei
      *
      * @param min Min grand total amount
      * @param max Max grand total amount
@@ -5912,7 +5919,7 @@ public class Main {
      * search by date of payment, displays brief description of bill history in the date range
      * allows customer to choose one to view in detail, the reservation details and also the discount info (if applied) and tax info
      *
-     * @author Lee Khoon Hong
+     * @author Chan Jia Wei
      *
      * @param minDate Min date to search
      * @param maxDate Max date to search

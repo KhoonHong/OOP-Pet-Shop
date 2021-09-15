@@ -1,10 +1,14 @@
+---------------------------------------------------------------------
+Please choose Main.java to build and run in order to run the program.
+---------------------------------------------------------------------
+
 In the pet shop reservation system, there are login for owner, employee, customer, customer sign-up and exit program.
 
 User can create new account through customer sign-up.
 The predefined login credentials are as below:
 ----owner----
-username :  o
-password :  o
+username :  leekh12345
+password :  leekh12345
 functions :
    ->employee	: add, edit, display, remove employee records
    ->promotion	: add, edit, display, remove promotion records
@@ -15,8 +19,8 @@ functions :
    ->log out
 
 ----employee----
-username :  e
-password :  e
+username :  chanjw12345
+password :  chanjw12345
 functions :
    ->schedule	: work schedule and reservation details
    ->search customer : search customers records by name
@@ -24,8 +28,8 @@ functions :
    ->user profile	: display, edit profile
 
 ----customer----
-username :  c
-password :  c
+username :  tansj12345
+password :  tansj12345
 function :
    ->reservation	: add, edit, cancel, display reservation
    ->billing	: check out, search and display billing history, display billing
@@ -42,6 +46,14 @@ customer sign up(no account) -> customer log in -> add pet (if not yet register 
 Username and password of generated Customer and Employee objects can be found in customer_credidentials.txt and employee_credidentials.txt
 
 The text files can be found in the same path as the .java files.
+
+Main.java is the main file for storing main methods.
+
+Main2.java is for storing record generating methods.
+
+Main3.java is for storing the reports generating methods.
+
+
 
 
 

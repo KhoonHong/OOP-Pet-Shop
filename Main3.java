@@ -110,7 +110,7 @@ public class Main3 {
         System.out.println("\n\n                        CUSTOMER DEMOGRAPHIC REPORT                      ");
         System.out.println("\n\n  From: " + startDate + "   To: " + endDate);
         System.out.print("\n  ------------------------------------------------------------------------");
-        System.out.print("\n        Region         Customer        Weight(%%)        Total Amount(RM) ");
+        System.out.print("\n        Region         Customer        Weight(%)        Total Amount(RM) ");
         System.out.print("\n  ------------------------------------------------------------------------\n");
         for(int i = 0; i < 9; i++){
             double weight =  100.0*(double)regionCount[i]/(double)totalCustCount;

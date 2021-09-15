@@ -167,7 +167,7 @@ public class Main {
      */
     public static void loadingBar(){
 
-        JFrame frame = new JFrame("Pet Shop System"); // frame for loading bar gui
+        JFrame frame = new JFrame("Happy Pet Shop System"); // frame for loading bar gui
         JPanel panel = new JPanel(); // panel in frame for loading bar gui
         JProgressBar progressBar = new JProgressBar(); // loading bar to be placed into panel
         JLabel label = new JLabel("", SwingConstants.CENTER); // label to be display with loading bar
@@ -195,8 +195,8 @@ public class Main {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // set close button operation
 
-        String[] texts = {"Torturing Jia Wei", "Dying in assignment", "Generating records", "Tormenting Shi Jing", "Agonizing Jia Hui",
-                "Man's best pet shop", "Tending to pets", "World class pet shop", "Treat your pet to self care !" , "Ms Liew is very pretty"};
+        String[] texts = {"LIVE LOVE WOOF", "We love your pet too !", "Generating records", "Your pet's favorite store", "Anything is pawsible",
+                "Man's best pet shop", "Tending to pets", "World class pet shop", "Treat your pet to self care !" , "Enjoy a pupsicle !"};
 
         setText(label, panel, frame, texts, font);
 
@@ -219,7 +219,7 @@ public class Main {
      */
     public static void setText(JLabel label, JPanel panel, JFrame frame, String[] texts, Font font) {
         // change text
-        label.setText(texts[ThreadLocalRandom.current().nextInt(0, 9 + 1)]);
+        label.setText(texts[ThreadLocalRandom.current().nextInt(0, texts.length + 1)]);
 
         label.setFont(font.deriveFont(18f));
         panel.add(label, BorderLayout.CENTER);

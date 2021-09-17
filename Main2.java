@@ -250,8 +250,10 @@ public class Main2 {
 
         LocalDateTime reserveDateTime = date == null ? generateLocalDateTime(2021, 7, 1) : date;
 
-        return new Reservation(reserveDateTime.with(LocalTime.of(generateSessionHours(), 0)), service,
-                pet, "No remarks", ThreadLocalRandom.current().nextInt(1, 4 + 1),
+        int sessionHrs = ThreadLocalRandom.current().nextInt(1, 4 + 1);
+
+        return new Reservation(reserveDateTime.with(LocalTime.of(Reservation.sessionToTime(sessionHrs), 0)), service,
+                pet, "No remarks", sessionHrs,
                 employee, reserveDateTime.minusDays(ThreadLocalRandom.current().nextInt(1,7 + 1)));
     }
 
